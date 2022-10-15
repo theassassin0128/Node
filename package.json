@@ -1,0 +1,16 @@
+{
+  "name": "megatron",
+  "version": "1.0.0",
+  "description": "A multipurpose Discord Bot for Moderation, Server Management, ETC.",
+  "main": "SRC/index.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "keywords": ["Bot", "Discord"],
+  "author": "THE ASSASSIN#0128",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.6.0",
+    "dotenv": "^16.0.3"
+  }
+}
