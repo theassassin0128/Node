@@ -1,16 +1,22 @@
 {
   "name": "megatron",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "description": "A multipurpose Discord Bot for Moderation, Server Management, ETC.",
   "main": "SRC/index.js",
   "scripts": {
     "test": "node ."
   },
-  "keywords": ["Bot", "Discord"],
+  "keywords": [
+    "Bot",
+    "Discord"
+  ],
   "author": "THE ASSASSIN#0128",
   "license": "MIT",
   "dependencies": {
+    "ascii-table": "^0.0.9",
     "discord.js": "^14.6.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "glob": "^8.0.3",
+    "mongoose": "^6.6.7"
   }
 }
