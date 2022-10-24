@@ -1,25 +1,25 @@
 const {
-  Client,
-  Collection,
-  Partials,
-  GatewayIntentBits,
-  Events,
+    Client,
+    Collection,
+    Partials,
+    GatewayIntentBits,
+    Events,
 } = require("discord.js");
 require("dotenv").config();
 const { Token } = process.env;
 
 //Making a client property to use globally.
 const client = new Client({
-  intents: 3276799,
-  partials: [
-    Partials.User,
-    Partials.Message,
-    Partials.GuildMember,
-    Partials.ThreadMember,
-  ],
-  allowedMentions: {
-    repliedUser: false,
-  },
+    intents: 3276799,
+    partials: [
+        Partials.User,
+        Partials.Message,
+        Partials.GuildMember,
+        Partials.ThreadMember,
+    ],
+    allowedMentions: {
+        repliedUser: false,
+    },
 });
 
 const { loadEvents } = require("./Functions/Handlers/events.js");

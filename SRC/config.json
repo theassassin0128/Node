@@ -16,14 +16,9 @@
         "slowdown": "⏪"
     },
     "bot": {
-        "name": "Feather Bot",
-        "id": "1001103699843756182",
-        "prefix": "#"
-    },
-    "testBot": {
-        "name": "Mr. Idiot",
-        "id": "869536670683369482",
-        "prefix": "M!"
+        "name": "Megatron",
+        "id": "1030698369435320350",
+        "prefix": "m!"
     },
     "owner": {
         "name": "THE ASSASSIN",
