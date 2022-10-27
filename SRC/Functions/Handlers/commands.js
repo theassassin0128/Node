@@ -10,8 +10,8 @@ async function loadCommands(client) {
 
     await client.commands.clear();
 
-    let commandsArray = [];
-    let Commands = [];
+    let commands = [];
+    let developerCommands = [];
 
     const Files = await loadFiles("SRC/Commands");
 
@@ -19,12 +19,17 @@ async function loadCommands(client) {
         const command = require(file);
         client.commands.set(command.data.name, command);
 
-        commandsArray.push(command.data.toJSON());
+        if (command.developer){
+            developerCommands.push(command.data.toJSON());
+        } else {
+            commands.push(command.data.toJSON());
+        }
 
         table.addRow(command.data.name, "Success");
     });
 
-    rest.put(Routes.applicationGuildCommands(bot.id, guilds.test), { body: commandsArray });
+    rest.put(Routes.applicationGuildCommands(bot.id, guilds.test), { body: developerCommands });
+    rest.put(Routes.applicationCommands(bot.id), { body: commands });
   
 
     return console.log(table.toString(), "\nCommands are loaded.");

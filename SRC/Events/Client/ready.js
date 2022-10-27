@@ -1,7 +1,7 @@
 const ascii = require("ascii-table");
 const { bot } = require(`${process.cwd()}/SRC/config.json`);
 const { DataBase } = process.env;
-const mongoose = require("mongoose");
+const { connect } = require("mongoose");
 const { loadCommands } = require("../../Functions/Handlers/commands.js");
 
 module.exports = {
@@ -28,14 +28,13 @@ module.exports = {
         Table.addRow("guild(s)", `${client.guilds.cache.size}`);
 
         console.log(Table.toString(), `\nReady! Logged in as ${client.user.tag}`);
-
         if (!DataBase) return;
         try {
-            mongoose.connect(DataBase, {
+            connect(DataBase, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
             });
-            console.log("[🟢] DataBase Connected.");
+            console.log("🟢 DataBase Connected.");
         } catch (error) {
         console.error(error);
         }

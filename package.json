@@ -1,6 +1,6 @@
 {
   "name": "megatron",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "A multipurpose Discord Bot for Moderation, Server Management, ETC.",
   "main": "SRC/index.js",
   "scripts": {
@@ -17,6 +17,6 @@
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.3",
     "glob": "^8.0.3",
-    "mongoose": "^6.6.7"
+    "mongoose": "^6.7.0"
   }
 }
