@@ -1,6 +1,6 @@
 {
   "name": "megatron",
-  "version": "0.0.6",
+  "version": "0.0.6-1",
   "description": "A multipurpose Discord Bot for Moderation, Server Management, ETC.",
   "main": "SRC/index.js",
   "scripts": {

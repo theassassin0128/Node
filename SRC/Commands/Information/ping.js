@@ -15,7 +15,7 @@ module.exports = {
      */
     execute: async(interaction, client) => {
         interaction.reply({
-            content: "Pong!",
+            content: `Pong! Your Latency ${client.ws.ping}`,
             ephemeral: true
         })
     }

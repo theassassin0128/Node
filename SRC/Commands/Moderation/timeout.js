@@ -37,7 +37,7 @@ module.exports = {
      * @param {Client} client 
      */
     execute: async(interaction, client) => {
-        const {options, guild, member} = interaction;
+        const {options, guild, member, user} = interaction;
 
         const target = options.getMember("target");
         const duration = options.getString("duration");
@@ -81,7 +81,7 @@ module.exports = {
 
         const newInfractionObject = {
             Issuer: member.id,
-            IssuerTag: member.tag,
+            IssuerTag: user.tag,
             Reason: reason,
             Date: Date.now
         }
