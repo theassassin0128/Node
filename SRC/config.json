@@ -16,9 +16,9 @@
         "slowdown": "⏪"
     },
     "bot": {
-        "name": "Megatron",
+        "name": "Node",
         "id": "1030698369435320350",
-        "prefix": "m!"
+        "prefix": "n!"
     },
     "owner": {
         "name": "THE ASSASSIN",
@@ -32,7 +32,7 @@
         "userLogs": "882485308782960680"
     },
     "colour": {
-        "bot": "FBB94C",
+        "main": "90B63E",
         "welcome": "86A9C5",
         "giveaway": "FFAF00",
         "cooldown": "000000",

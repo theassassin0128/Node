@@ -32,4 +32,8 @@ client.aliases = new Collection();
 loadEvents(client);
 
 //Connect to your bot by using a token (provided by discord)
-client.login(Token).catch((err) => console.log(err));
+try {
+    client.login(Token);
+} catch (err) {
+    console.error(err);
+};
