@@ -3,11 +3,13 @@ const {
     ChatInputCommandInteraction,
     PermissionFlagsBits,
     SlashCommandBuilder,
-    EmbedBuilder,
-    MembershipScreeningFieldType
+    EmbedBuilder
 } = require("discord.js");
 const DataBase = require("../../Schemas/infractions.js");
 const ms = require("ms");
+const {
+    colour
+} = require("../../config.json");
 
 module.exports = {
     developer: true,
@@ -47,7 +49,7 @@ module.exports = {
 
         const errorEmbed = new EmbedBuilder()
         .setAuthor({name: "Could not timeout member due to"})
-        .setColor("Red")
+        .setColor(colour.error)
 
         if(!target) return interaction.reply({
             embeds: [errorEmbed.setDescription("Member has most likely left the guild.")],
@@ -96,11 +98,11 @@ module.exports = {
 
         const sEmbed = new EmbedBuilder()
         .setAuthor({name: "Timeout Issues", iconURL: guild.iconURL()})
-        .setColor("Gold")
+        .setColor(colour.main)
         .setDescription([
             `${target} was issued a timeout for **${ms(ms(duration), {long: true})}** by ${member}`,
-            `bringing their total infractions to **${userData.Infractions.length} points**`,
-            `\nReason : ${reason}`
+            `Bringing their total infractions to **${userData.Infractions.length} points**`,
+            `\n**Reason :** ${reason}`
         ].join("\n"));
 
         return interaction.reply({embeds: [sEmbed]});

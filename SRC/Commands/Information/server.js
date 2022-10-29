@@ -26,11 +26,8 @@ module.exports = {
   
       
         let server = new EmbedBuilder()
+        .setTitle(`${Guild.name}`)
         .addFields(
-            {
-                name: "🏛️ Name",
-                value: `${Guild.name}`,
-            },
             {
                 name: "🆔 ID",
                 value: `${Guild.id}`,
@@ -41,15 +38,15 @@ module.exports = {
             },
             {
                 name: "👑 Owned by",
-                value: `${owner}`
+                value: `${owner} (${owner.id})`
             },
             {
                 name: `👥 Members [${Guild.memberCount}]`,
-                value: "More information will be added in next Update."
+                value: "More information will be added in future Updates."
             },
             {
                 name: `💬 Channels [${Channels.size}]`,
-                value: "More information will be added in the next update."
+                value: "More information will be added in the future updates."
             },
             {
                 name: `🔐 Roles [${Roles.size}]`,
