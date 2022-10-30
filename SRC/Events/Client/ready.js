@@ -27,7 +27,10 @@ module.exports = {
         Table.addRow("prefix", `${bot.prefix}`);
         Table.addRow("guild(s)", `${client.guilds.cache.size}`);
 
-        console.log(Table.toString(), `\nReady! Logged in as ${client.user.tag}`);
+        console.log(
+            Table.toString(),
+            `\nReady! Logged in as ${client.user.tag}`
+        );
         if (!DataBase) return;
         try {
             connect(DataBase, {
@@ -36,7 +39,7 @@ module.exports = {
             });
             console.log("🟢 DataBase Connected.");
         } catch (error) {
-        console.error(error);
+            console.error(error);
         }
     },
 };

@@ -1,5 +1,7 @@
 async function loadEvents(client) {
-    const { loadFiles } = require(`${process.cwd()}/SRC/Functions/Loaders/loadFiles.js`);
+    const {
+        loadFiles,
+    } = require(`${process.cwd()}/SRC/Functions/Loaders/loadFiles.js`);
     const ascii = require("ascii-table");
     const table = new ascii("TABLE").setHeading("Events", "Status");
 
@@ -31,6 +33,6 @@ async function loadEvents(client) {
     });
 
     return console.log(table.toString(), "\nLoaded Event Files.");
-};
+}
 
 module.exports = { loadEvents };

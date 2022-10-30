@@ -36,4 +36,4 @@ try {
     client.login(Token);
 } catch (err) {
     console.error(err);
-};
+}
