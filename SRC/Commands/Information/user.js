@@ -16,13 +16,18 @@ module.exports = {
         .addUserOption((options) =>
             options.setName("user").setDescription("The user")
         ),
+    /**
+     *
+     * @param {ChatInputCommandInteraction} interaction
+     * @param {Client} client
+     */
     execute: async (interaction, client) => {
         const user = interaction.options.getUser("user") || interaction.user;
         const User = interaction.guild.members.cache.get(user.id);
 
         let Roles = User.roles.cache;
 
-        let info1 = new MessageEmbed()
+        let info1 = new EmbedBuilder()
             .setTitle("General Information")
             .setThumbnail(
                 `${user.avatarURL({
@@ -33,35 +38,29 @@ module.exports = {
             .setDescription(
                 `**🪧 Name : ${User.displayName} | ${user}\n🏷️ Tag : __${user.tag}__\n🆔 ID : __${user.id}__**`
             )
-            .addField(
-                "Joined Server",
-                `${moment(User.joinedAt).format(
-                    "dddd, MMMM Do YYYY, h:mm:ss A"
-                )}\n** - ${moment(User.joinedAt, "YYYYMMDD").fromNow()}**`
-            )
-            .addField(
-                "Joined Discord",
-                `${moment(user.createdAt).format(
-                    "dddd, MMMM Do YYYY, h:mm:ss A"
-                )}\n** - ${moment(user.createdAt, "YYYYMMDD").fromNow()}**`
+            .addFields(
+                {
+                    name: "Joined Server",
+                    value: `${moment(User.joinedAt).format(
+                        "dddd, MMMM Do YYYY, h:mm:ss A"
+                    )}\n** - ${moment(User.joinedAt, "YYYYMMDD").fromNow()}**`,
+                },
+                {
+                    name: "Joined Discord",
+                    value: `${moment(user.createdAt).format(
+                        "dddd, MMMM Do YYYY, h:mm:ss A"
+                    )}\n** - ${moment(user.createdAt, "YYYYMMDD").fromNow()}**`,
+                }
             );
 
-        let info2 = new MessageEmbed()
+        let info2 = new EmbedBuilder()
             .setTitle(`Roles [${Roles.size - 1}]`)
             .setDescription(
                 `**${User.roles.cache
                     .map((r) => r)
                     .join("\n")
                     .replace("@everyone", " ")}**`
-            )
-            .setTimestamp()
-            .setFooter({
-                text: `Requested by ${interaction.user.tag}`,
-                iconURL: `${interaction.user.avatarURL({
-                    dynamic: true,
-                    size: 4096,
-                })}`,
-            });
+            );
 
         axios
             .get(`https://discord.com/api/users/${user.id}`, {
