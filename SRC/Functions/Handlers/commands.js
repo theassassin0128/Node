@@ -33,7 +33,7 @@ async function loadCommands(client) {
     });
     rest.put(Routes.applicationCommands(bot.id), { body: commands });
 
-    return console.log(table.toString(), "\nCommands are loaded.");
+    return console.log(table.toString());
 }
 
 module.exports = { loadCommands };

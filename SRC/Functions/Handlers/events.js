@@ -32,7 +32,7 @@ async function loadEvents(client) {
         table.addRow(event.name, "Success");
     });
 
-    return console.log(table.toString(), "\nLoaded Event Files.");
+    return console.log(table.toString());
 }
 
 module.exports = { loadEvents };
