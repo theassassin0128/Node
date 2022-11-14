@@ -2,14 +2,17 @@ const ascii = require("ascii-table");
 const { bot } = require(`${process.cwd()}/SRC/config.json`);
 const { DataBase } = process.env;
 const { connect } = require("mongoose");
-const { loadCommands } = require("../../Functions/Handlers/commands.js");
+const { Client } = require("discord.js");
 
 module.exports = {
     name: "ready",
     once: true,
+    /**
+     *
+     * @param {Client} client
+     * @returns
+     */
     execute: async (client) => {
-        loadCommands(client);
-
         client.user.setPresence({
             activities: [
                 {
@@ -17,7 +20,7 @@ module.exports = {
                     name: "?help",
                 },
             ],
-            status: "idle",
+            status: "online",
         });
 
         console.log(`Ready! Logged in as ${client.user.tag}`);
@@ -27,6 +30,7 @@ module.exports = {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
             });
+            console.log("DataBase is Connected.");
         } catch (error) {
             console.error(error);
         }

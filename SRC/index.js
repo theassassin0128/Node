@@ -23,6 +23,7 @@ const client = new Client({
 });
 
 const { loadEvents } = require("./Functions/Handlers/events.js");
+const { loadCommands } = require("./Functions/Handlers/commands.js");
 
 //Collections to store data
 client.events = new Collection();
@@ -30,6 +31,7 @@ client.commands = new Collection();
 client.aliases = new Collection();
 
 loadEvents(client);
+loadCommands(client);
 
 //Connect to your bot by using a token (provided by discord)
 try {
