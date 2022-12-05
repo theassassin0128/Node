@@ -1,3 +1,4 @@
-/.env
+.env
 node_modules
 Extra.js
+package-lock.json
