@@ -2,9 +2,9 @@
 	"name": "node",
 	"version": "1.0.0",
 	"description": "A multipurpose Discord Bot for Moderation, Server Management, ETC.",
-	"main": "SRC/index.js",
+	"main": "src/index.js",
 	"scripts": {
-		"test": "nodemon SRC/index.js"
+		"test": "nodemon src/index.js"
 	},
 	"keywords": [
 		"Bot",
@@ -24,5 +24,13 @@
 		"discord.js": "^14.7.1",
 		"glob": "^8.0.3",
 		"nodemon": "^2.0.20"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/THE-ASSASSIN0128/Node.git"
+	},
+	"bugs": {
+		"url": "https://github.com/THE-ASSASSIN0128/Node/issues"
+	},
+	"homepage": "https://github.com/THE-ASSASSIN0128/Node#readme"
 }

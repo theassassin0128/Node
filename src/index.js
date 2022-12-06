@@ -18,8 +18,8 @@ const client = new Client({
 });
 
 //Requiring functions
-const { loadEvents } = require("./Functions/Handlers/events.js");
-const { loadCommands } = require("./Functions/Handlers/commands.js");
+const { loadEvents } = require("./functions/handlers/events.js");
+const { loadCommands } = require("./functions/handlers/commands.js");
 
 //Collections to store data
 client.events = new Collection();

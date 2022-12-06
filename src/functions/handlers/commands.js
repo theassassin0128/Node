@@ -7,7 +7,7 @@ const { bot, guilds } = require("../../config.json");
 //Creating a function to load command files
 async function loadCommands(client) {
 	//Requiring properties
-	const { loadFiles } = require("../Loaders/loadFiles.js");
+	const { loadFiles } = require("../loaders/loadFiles.js");
 	const ascii = require("ascii-table");
 	const table = new ascii("COMMANDS").setHeading("files", "status");
 
@@ -19,7 +19,7 @@ async function loadCommands(client) {
 	let developerCommands = [];
 
 	//Getting loadFiles function
-	const Files = await loadFiles("SRC/Commands");
+	const Files = await loadFiles("src/commands");
 
 	//A for lop to add all files client.commands collection
 	Files.forEach((file) => {
