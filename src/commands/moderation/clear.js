@@ -16,9 +16,6 @@ module.exports = {
 				.setDescription("Number of messages to delete.")
 				.setRequired(true)
 		)
-		.addUserOption((option) =>
-			option.setName("member").setDescription("Pick a guild member.")
-		)
 		.setDMPermission(false)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
 	/**
@@ -27,10 +24,9 @@ module.exports = {
 	 * @param {Client} client
 	 */
 	execute: async (interaction, client) => {
-		const { user, options } = interaction;
+		const { options } = interaction;
 
 		const amount = options.getInteger("amount");
-		const mUser = options.getUser("member");
 
 		if (100 < amount < 0) {
 			return interaction.reply(
@@ -38,18 +34,14 @@ module.exports = {
 			);
 		}
 
-		if (mUser) {
-			const msg = await await interaction.channel.messages.fetch();
-			let i = [];
-			const uMsg = await msg.filter((m) => m.author.id === mUser.id);
-			i.push(uMsg);
-			const dMsg = await interaction.channel.bulkDelete(uMsg, true);
+		const dMsg = await interaction.channel.bulkDelete(amount, true);
 
+		if (dMsg.size <= 0) {
 			interaction.reply({
-				content: `Deleted ${dMsg.size} of ${mUser}.`,
+				content: `Couldn't delete any message.`,
+				ephemeral: true,
 			});
 		} else {
-			const dMsg = await interaction.channel.bulkDelete(amount, true);
 			interaction.reply({
 				content: `Successfully deleted ${dMsg.size} messages.`,
 				ephemeral: true,
