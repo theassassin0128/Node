@@ -8,42 +8,49 @@ module.exports = {
 	 * @param {Client} client
 	 */
 	async execute(interaction, client) {
-		const errEmbed = new EmbedBuilder()
+		const errorEmbed = new EmbedBuilder()
 			.setAuthor({
 				name: "ERROR",
 				iconURL: `${image.error}`,
 			})
-			.setColor(colour.error);
+			.setColor(colour.error)
+			.setDescription(
+				"There was an error while executing the interaction."
+			);
 
-		const cmdError = new EmbedBuilder()
+		const commandError = new EmbedBuilder()
 			.setTitle("ERROR")
 			.setDescription(
-				`**Sorry**, This [${interaction.commandName}] command doesn't exist. Try using /help to get help with commands.`
+				`**Sorry**, This [${interaction.commandName}] command doesn't exist.`
 			)
 			.setColor(colour.error)
-			.setThumbnail(
-				client.user.avatarURL({
-					dynamic: true,
-					size: 4096,
-				})
-			)
+			.setThumbnail(client.user.displayAvatarURL({ size: 4096 }))
 			.setFooter({
 				text: client.user.username,
-				icomURL: client.user.avatarURL({
-					dynamic: true,
-					size: 4096,
-				}),
+				icomURL: client.user.displayAvatarURL({ size: 4096 }),
+			})
+			.setTimestamp();
+
+		const buttonError = new EmbedBuilder()
+			.setTitle("ERROR")
+			.setDescription(`**Sorry**, This Button doesn't exist or removed.`)
+			.setColor(colour.error)
+			.setThumbnail(client.user.displayAvatarURL({ size: 4096 }))
+			.setFooter({
+				text: client.user.username,
+				icomURL: client.user.displayAvatarURL({ size: 4096 }),
 			})
 			.setTimestamp();
 
 		if (interaction.isChatInputCommand()) {
 			try {
-				//Getting the command
-				const command = client.commands.get(interaction.commandName);
-				//Returning a message if the command isn't valid
+				const command = await client.commands.get(
+					interaction.commandName
+				);
+
 				if (!command) {
 					interaction.reply({
-						embeds: [cmdError],
+						embeds: [commandError],
 					}) && client.interactions.delete(interaction.command);
 					return;
 				}
@@ -51,34 +58,24 @@ module.exports = {
 				command.execute(interaction, client);
 			} catch (error) {
 				interaction.reply({
-					embeds: [
-						errEmbed.setDescription(
-							`There was an error while executing the interaction\n**ERROR :**\n${error}`
-						),
-					],
+					embeds: [errorEmbed],
 				});
 				console.error(error);
 			}
 		} else if (interaction.isButton()) {
-			const { customId } = interaction;
-			const button = client.buttons.get(customId);
-
-			if (!button) {
-				interaction.reply({
-					embeds: [cmdError],
-				});
-				return;
-			}
-
 			try {
+				const { customId } = interaction;
+				const button = await client.buttons.get(customId);
+
+				if (!button)
+					return interaction.reply({
+						embeds: [buttonError],
+					});
+
 				button.execute(interaction, client);
 			} catch (error) {
 				interaction.reply({
-					embeds: [
-						errEmbed.setDescription(
-							`There was an error while executing the interaction\n**ERROR :**\n${error}`
-						),
-					],
+					embeds: [errorEmbed],
 				});
 				console.error(error);
 			}

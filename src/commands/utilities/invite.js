@@ -6,12 +6,12 @@ const {
 	ActionRowBuilder,
 	ButtonStyle,
 } = require("discord.js");
-
+const { url } = require("../../config.json");
 module.exports = {
 	developer: true,
 	data: new SlashCommandBuilder()
-		.setName("button")
-		.setDescription("Returns a button"),
+		.setName("invite")
+		.setDescription("Returns a link button"),
 	/**
 	 *
 	 * @param {ChatInputCommandInteraction} interaction
@@ -19,14 +19,14 @@ module.exports = {
 	 */
 	execute: async (interaction, client) => {
 		const button = new ButtonBuilder()
-			.setCustomId("invite")
 			.setLabel("Invie the Bot")
-			.setStyle(ButtonStyle.Primary);
+			.setStyle(ButtonStyle.Link)
+			.setURL(url.invite);
 
 		const AR = new ActionRowBuilder().addComponents(button);
 
 		interaction.reply({
-			content: "Invite the bot by clicking the command.",
+			content: "Invite the bot by clicking the button.",
 			components: [AR],
 		});
 	},

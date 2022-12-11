@@ -1,18 +1,24 @@
-const { ChatInputCommandInteraction, Client } = require("discord.js");
+const {
+	ChatInputCommandInteraction,
+	Client,
+	ButtonBuilder,
+	ButtonStyle,
+} = require("discord.js");
 const { url } = require("../../config.json");
 
 module.exports = {
-	data: {
-		name: "invite",
-	},
+	name: "test",
 	/**
 	 *
 	 * @param {ChatInputCommandInteraction} interaction
 	 * @param {Client} client
 	 */
 	execute: async (interaction, client) => {
+		const invite = new ButtonBuilder()
+			.setLabel("Click Me!")
+			.setStyle(ButtonStyle.Link);
 		interaction.reply({
-			content: url.invite,
+			content: `[Click Me!](${url.invite})`,
 		});
 	},
 };
