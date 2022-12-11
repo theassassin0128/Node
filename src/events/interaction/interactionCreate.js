@@ -41,6 +41,18 @@ module.exports = {
 				icomURL: client.user.displayAvatarURL({ size: 4096 }),
 			})
 			.setTimestamp();
+		const selectMenuError = new EmbedBuilder()
+			.setTitle("ERROR")
+			.setDescription(
+				`**Sorry**, This SelectMenu doesn't exist or removed.`
+			)
+			.setColor(colour.error)
+			.setThumbnail(client.user.displayAvatarURL({ size: 4096 }))
+			.setFooter({
+				text: client.user.username,
+				icomURL: client.user.displayAvatarURL({ size: 4096 }),
+			})
+			.setTimestamp();
 
 		if (interaction.isChatInputCommand()) {
 			try {
@@ -73,6 +85,24 @@ module.exports = {
 					});
 
 				button.execute(interaction, client);
+			} catch (error) {
+				interaction.reply({
+					embeds: [errorEmbed],
+				});
+				console.error(error);
+			}
+		} else if (interaction.isStringSelectMenu()) {
+			try {
+				const { customId } = interaction;
+				const selectMenu = await client.selectMenus.get(customId);
+
+				if (!selectMenu) {
+					interaction.reply({
+						embeds: [selectMenuError],
+					});
+				}
+
+				selectMenu.execute(interaction, client);
 			} catch (error) {
 				interaction.reply({
 					embeds: [errorEmbed],
