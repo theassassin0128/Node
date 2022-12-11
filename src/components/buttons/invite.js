@@ -3,7 +3,7 @@ const { url } = require("../../config.json");
 
 module.exports = {
 	data: {
-		name: "test",
+		name: "invite",
 	},
 	/**
 	 *

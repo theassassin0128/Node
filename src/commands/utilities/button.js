@@ -25,7 +25,7 @@ module.exports = {
 
 		const AR = new ActionRowBuilder().addComponents(button);
 
-		await interaction.reply({
+		interaction.reply({
 			content: "Invite the bot by clicking the command.",
 			components: [AR],
 		});
