@@ -3,7 +3,7 @@ const {
 	Client,
 	ChatInputCommandInteraction,
 } = require("discord.js");
-const { image, colour } = require("../../config.json");
+const { image, colour } = require("../../../config.json");
 
 module.exports = {
 	name: "interactionCreate",

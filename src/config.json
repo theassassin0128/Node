@@ -1,60 +1,62 @@
 {
-    "guilds": {
-        "main": "788066040830754817",
-        "test": "883543290035716166"
-    },
-    "emotes": {
-        "resume": "▶️",
-        "pause": "⏸️",
-        "next": "⏭️",
-        "previous": "⏮️",
-        "stop": "⏹️",
-        "loop": "🔁",
-        "loop2": "🔂",
-        "shuffle": "🔀",
-        "speedup": "⏩",
-        "slowdown": "⏪"
-    },
-    "bot": {
-        "name": "Node",
-        "id": "1030698369435320350",
-        "prefix": "n!"
-    },
-    "owner": {
-        "name": "THE ASSASSIN",
-        "tag": "THE ASSASSIN#0128",
-        "id": "720186844540567583"
-    },
-    "channels": {
-        "suggestion": "979693704497492008",
-        "welcome": "882470006640754738",
-        "status": "979693624671473694",
-        "userLogs": "882485308782960680"
-    },
-    "colour": {
-        "main": "90B63E",
-        "welcome": "86A9C5",
-        "giveaway": "FFAF00",
-        "cooldown": "000000",
-        "failed": "FF0000",
-        "error": "E3C647",
-        "success": "2EFF00",
-        "standby": "000000",
-        "log": {
-            "msg": "2EFF00",
-            "mod": "FF0000",
-            "svr": "00FF00"
-        }
-    },
-    "url": {
-        "status": "https://stats.uptimerobot.com/GXjDLSBpnD",
-        "invite": "https://discord.com/oauth2/authorize?client_id=883663080633040936&permissions=8&scope=applications.commands%20bot",
-        "server": "https://discord.gg/9E6SUUMfCm"
-    },
-    "image": {
-        "welcome1": "https://media.discordapp.net/attachments/882478874410242098/882679735879094302/WallpaperDog-20472229.jpg",
-        "success": "https://media.discordapp.net/attachments/963097171966705744/989572441816838194/SGN_06_23_2022_1656002817538.png",
-        "failed": "https://media.discordapp.net/attachments/963097171966705744/991641904796155984/SGN_06_29_2022_1656496232124.png",
-        "error": "https://media.discordapp.net/attachments/963097171966705744/992274114800799754/SGN_07_01_2022_1656646951492.png"
-    }
+	"guilds": {
+		"main": "788066040830754817",
+		"test": "883543290035716166"
+	},
+	"emotes": {
+		"resume": "▶️",
+		"pause": "⏸️",
+		"next": "⏭️",
+		"previous": "⏮️",
+		"stop": "⏹️",
+		"loop": "🔁",
+		"loop2": "🔂",
+		"shuffle": "🔀",
+		"speedup": "⏩",
+		"slowdown": "⏪"
+	},
+	"bot": {
+		"name": "Node",
+		"id": "1030698369435320350",
+		"prefix": "n!"
+	},
+	"owner": {
+		"name": "THE ASSASSIN",
+		"tag": "THE ASSASSIN#0128",
+		"id": "720186844540567583",
+		"github": "https://github.com/THE-ASSASSIN0128"
+	},
+	"channels": {
+		"suggestion": "979693704497492008",
+		"welcome": "882470006640754738",
+		"status": "979693624671473694",
+		"userLogs": "882485308782960680"
+	},
+	"colour": {
+		"main": "90B63E",
+		"welcome": "86A9C5",
+		"giveaway": "FFAF00",
+		"cooldown": "000000",
+		"failed": "FF0000",
+		"error": "E3C647",
+		"success": "2EFF00",
+		"standby": "000000",
+		"log": {
+			"msg": "2EFF00",
+			"mod": "FF0000",
+			"svr": "00FF00"
+		}
+	},
+	"url": {
+		"status": "https://stats.uptimerobot.com/GXjDLSBpnD",
+		"invite": "https://discord.com/api/oauth2/authorize?client_id=1030698369435320350&permissions=8&scope=bot%20applications.commands",
+		"server": "https://discord.gg/9E6SUUMfCm",
+		"github": "https://github.com/THE-ASSASSIN0128/Node"
+	},
+	"image": {
+		"welcome1": "https://media.discordapp.net/attachments/882478874410242098/882679735879094302/WallpaperDog-20472229.jpg",
+		"success": "https://media.discordapp.net/attachments/963097171966705744/989572441816838194/SGN_06_23_2022_1656002817538.png",
+		"failed": "https://media.discordapp.net/attachments/963097171966705744/991641904796155984/SGN_06_29_2022_1656496232124.png",
+		"error": "https://media.discordapp.net/attachments/963097171966705744/992274114800799754/SGN_07_01_2022_1656646951492.png"
+	}
 }

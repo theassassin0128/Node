@@ -39,10 +39,10 @@ async function loadCommands(client) {
 
 		/* 
         //command file validation
-		if (!command.data.name) {
+		if (!command.name) {
 			table.addRow(F[8], "file is missing command name.");
 		}
-		if (!command.data.description) {
+		if (!command.description) {
 			table.addRow(F[8], "file is missing command description.");
 		}
         */ // Note this will only work if you are not using SlashCommandBuilders.

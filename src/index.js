@@ -20,15 +20,18 @@ const client = new Client({
 //Requiring functions
 const { loadEvents } = require("./functions/handlers/events.js");
 const { loadCommands } = require("./functions/handlers/commands.js");
+const { loadButtons } = require("./functions/handlers/buttons.js");
 
 //Collections to store data
 client.events = new Collection();
 client.commands = new Collection();
 client.aliases = new Collection();
+client.buttons = new Collection();
 
 //loading the functions
 loadEvents(client);
 loadCommands(client);
+loadButtons(client);
 
 //Connect to your bot by using a token (provided by discord)
 try {

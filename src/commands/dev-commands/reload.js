@@ -6,6 +6,7 @@ const {
 
 const { loadEvents } = require("../../functions/handlers/events.js");
 const { loadCommands } = require("../../functions/handlers/commands.js");
+const { loadButtons } = require("../../functions/handlers/buttons.js");
 
 module.exports = {
 	developer: true,
@@ -17,6 +18,9 @@ module.exports = {
 		)
 		.addSubcommand((options) =>
 			options.setName("commands").setDescription("Relaod command files.")
+		)
+		.addSubcommand((option) =>
+			option.setName("button").setDescription("Reload buttons files.")
 		),
 	/**
 	 *
@@ -47,6 +51,14 @@ module.exports = {
 					});
 				}
 				break;
+			case "button": {
+				loadButtons(client);
+				interaction.reply({
+					content: "Reloaded Buttons",
+					ephemeral: true,
+				});
+				break;
+			}
 		}
 	},
 };
