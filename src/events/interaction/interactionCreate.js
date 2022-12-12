@@ -1,4 +1,9 @@
-const { EmbedBuilder, Client, Interaction } = require("discord.js");
+const {
+	EmbedBuilder,
+	Client,
+	Interaction,
+	InteractionType,
+} = require("discord.js");
 const { image, colour } = require("../../config.json");
 
 module.exports = {
@@ -8,69 +13,21 @@ module.exports = {
 	 * @param {Client} client
 	 */
 	async execute(interaction, client) {
-		const errorEmbed = new EmbedBuilder()
-			.setAuthor({
-				name: "ERROR",
-				iconURL: `${image.error}`,
-			})
-			.setColor(colour.error)
-			.setDescription(
-				"There was an error while executing the interaction."
-			);
-
-		const commandError = new EmbedBuilder()
-			.setTitle("ERROR")
-			.setDescription(
-				`**Sorry**, This [${interaction.commandName}] command doesn't exist.`
-			)
-			.setColor(colour.error)
-			.setThumbnail(client.user.displayAvatarURL({ size: 4096 }))
-			.setFooter({
-				text: client.user.username,
-				icomURL: client.user.displayAvatarURL({ size: 4096 }),
-			})
-			.setTimestamp();
-
-		const buttonError = new EmbedBuilder()
-			.setTitle("ERROR")
-			.setDescription(`**Sorry**, This Button doesn't exist or removed.`)
-			.setColor(colour.error)
-			.setThumbnail(client.user.displayAvatarURL({ size: 4096 }))
-			.setFooter({
-				text: client.user.username,
-				icomURL: client.user.displayAvatarURL({ size: 4096 }),
-			})
-			.setTimestamp();
-		const selectMenuError = new EmbedBuilder()
-			.setTitle("ERROR")
-			.setDescription(
-				`**Sorry**, This SelectMenu doesn't exist or removed.`
-			)
-			.setColor(colour.error)
-			.setThumbnail(client.user.displayAvatarURL({ size: 4096 }))
-			.setFooter({
-				text: client.user.username,
-				icomURL: client.user.displayAvatarURL({ size: 4096 }),
-			})
-			.setTimestamp();
-
 		if (interaction.isChatInputCommand()) {
 			try {
 				const command = await client.commands.get(
 					interaction.commandName
 				);
 
-				if (!command) {
-					interaction.reply({
-						embeds: [commandError],
-					}) && client.interactions.delete(interaction.command);
-					return;
-				}
+				if (!command)
+					return new Error("There is no code for this command");
 
 				command.execute(interaction, client);
 			} catch (error) {
 				interaction.reply({
-					embeds: [errorEmbed],
+					content:
+						"There was an error while executing the interaction",
+					ephemeral: true,
 				});
 				console.error(error);
 			}
@@ -80,32 +37,48 @@ module.exports = {
 				const button = await client.buttons.get(customId);
 
 				if (!button)
-					return interaction.reply({
-						embeds: [buttonError],
-					});
+					return new Error("There is no code for this button");
 
 				button.execute(interaction, client);
 			} catch (error) {
 				interaction.reply({
-					embeds: [errorEmbed],
+					content:
+						"There was an error while executing the interaction",
+					ephemeral: true,
 				});
 				console.error(error);
 			}
-		} else if (interaction.isStringSelectMenu()) {
+		} else if (interaction.isAnySelectMenu()) {
 			try {
 				const { customId } = interaction;
 				const selectMenu = await client.selectMenus.get(customId);
 
-				if (!selectMenu) {
-					interaction.reply({
-						embeds: [selectMenuError],
-					});
-				}
+				if (!selectMenu)
+					return new Error("There is no code for this select Menu");
 
 				selectMenu.execute(interaction, client);
 			} catch (error) {
 				interaction.reply({
-					embeds: [errorEmbed],
+					content:
+						"There was an error while executing the interaction",
+					ephemeral: true,
+				});
+				console.error(error);
+			}
+		} else if (interaction.type == InteractionType.ModalSubmit) {
+			try {
+				const { customId } = interaction;
+				const modal = await client.modals.get(customId);
+
+				if (!modal)
+					return new Error("There is no code for this modal.");
+
+				modal.execute(interaction, client);
+			} catch (error) {
+				interaction.reply({
+					content:
+						"There was an error while executing the interaction",
+					ephemeral: true,
 				});
 				console.error(error);
 			}

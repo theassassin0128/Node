@@ -6,7 +6,11 @@ const {
 
 const { loadEvents } = require("../../functions/handlers/events.js");
 const { loadCommands } = require("../../functions/handlers/commands.js");
-const { loadButtons } = require("../../functions/handlers/buttons.js");
+const {
+	loadButtons,
+	loadModals,
+	loadSelectMenus,
+} = require("../../functions/handlers/components.js");
 
 module.exports = {
 	developer: true,
@@ -20,7 +24,15 @@ module.exports = {
 			options.setName("commands").setDescription("Relaod command files.")
 		)
 		.addSubcommand((option) =>
-			option.setName("button").setDescription("Reload buttons files.")
+			option.setName("button").setDescription("Reload button files.")
+		)
+		.addSubcommand((option) =>
+			option.setName("modal").setDescription("Reload modal files.")
+		)
+		.addSubcommand((option) =>
+			option
+				.setName("select-menu")
+				.setDescription("Reload selectMenu files.")
 		),
 	/**
 	 *
@@ -51,14 +63,33 @@ module.exports = {
 					});
 				}
 				break;
-			case "button": {
-				loadButtons(client);
-				interaction.reply({
-					content: "Reloaded Buttons",
-					ephemeral: true,
-				});
+			case "button":
+				{
+					loadButtons(client);
+					interaction.reply({
+						content: "Reloaded Button Files",
+						ephemeral: true,
+					});
+				}
 				break;
-			}
+			case "modal":
+				{
+					loadModals(client);
+					interaction.reply({
+						content: "Reloaded Modal Files",
+						ephemeral: true,
+					});
+				}
+				break;
+			case "selectMenu":
+				{
+					loadSelectMenus(client);
+					interaction.reply({
+						content: "Reloaded Select Menu Files",
+						ephemeral: true,
+					});
+				}
+				break;
 		}
 	},
 };

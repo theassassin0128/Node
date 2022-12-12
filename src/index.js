@@ -17,20 +17,25 @@ const client = new Client({
 
 const { loadEvents } = require("./functions/handlers/events.js");
 const { loadCommands } = require("./functions/handlers/commands.js");
-const { loadButtons } = require("./functions/handlers/buttons.js");
-const { loadSelectMenus } = require("./functions/handlers/selectMenus.js");
+const {
+	loadButtons,
+	loadModals,
+	loadSelectMenus,
+} = require("./functions/handlers/components.js");
 
 client.events = new Collection();
 client.commands = new Collection();
 client.aliases = new Collection();
 client.buttons = new Collection();
 client.selectMenus = new Collection();
+client.modals = new Collection();
 
 try {
 	loadEvents(client);
 	loadCommands(client);
 	loadButtons(client);
 	loadSelectMenus(client);
+	loadModals(client);
 	client.login(Token);
 } catch (err) {
 	console.error(err);
