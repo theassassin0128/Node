@@ -15,6 +15,7 @@ const client = new Client({
 	},
 });
 
+const { loadConfig } = require("./functions/loaders/loadConfig.js");
 const { loadEvents } = require("./functions/handlers/events.js");
 const { loadCommands } = require("./functions/handlers/commands.js");
 const {
@@ -29,8 +30,10 @@ client.aliases = new Collection();
 client.buttons = new Collection();
 client.selectMenus = new Collection();
 client.modals = new Collection();
+client.guildConfig = new Collection();
 
 try {
+	loadConfig(client);
 	loadEvents(client);
 	loadCommands(client);
 	loadButtons(client);
