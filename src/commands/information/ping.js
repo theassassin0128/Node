@@ -4,11 +4,9 @@ const {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 } = require("discord.js");
-const { version } = require(`${process.cwd()}/package.json`);
 const { colour } = require("../../config.json");
 
 module.exports = {
-	developer: true,
 	data: new SlashCommandBuilder()
 		.setName("ping")
 		.setDescription("Replies with API & WS ping."),
@@ -55,20 +53,8 @@ module.exports = {
 							? emLatency.Yellow
 							: emLatency.Red
 					}\` \`${apiLatency}\`ms`,
-				},
-				{
-					name: "⏲ Uptime",
-					value: `\`${days}Days\` : \`${hours}Hrs\` : \`${minutes}Mins\` : \`${seconds}Secs\``,
 				}
-			)
-			.setFooter({
-				text: `${client.user.username} • v${version}`,
-				iconURL: `${client.user.avatarURL({
-					dynamic: true,
-					size: 4096,
-				})}`,
-			})
-			.setTimestamp();
+			);
 
 		//Sending the ping Embed
 		interaction.reply({

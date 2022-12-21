@@ -18,11 +18,7 @@ const client = new Client({
 const { loadConfig } = require("./functions/loaders/loadConfig.js");
 const { loadEvents } = require("./functions/handlers/events.js");
 const { loadCommands } = require("./functions/handlers/commands.js");
-const {
-	loadButtons,
-	loadModals,
-	loadSelectMenus,
-} = require("./functions/handlers/components.js");
+const { loadComponents } = require("./functions/handlers/components.js");
 
 client.events = new Collection();
 client.commands = new Collection();
@@ -33,13 +29,11 @@ client.modals = new Collection();
 client.guildConfig = new Collection();
 
 try {
+	client.login(Token);
 	loadConfig(client);
 	loadEvents(client);
 	loadCommands(client);
-	loadButtons(client);
-	loadSelectMenus(client);
-	loadModals(client);
-	client.login(Token);
-} catch (err) {
-	console.error(err);
+	loadComponents(client);
+} catch (error) {
+	console.error(error);
 }
