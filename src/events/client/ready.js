@@ -1,8 +1,6 @@
-const ascii = require("ascii-table");
-const { bot } = require("../../config.json");
 const { DataBase } = process.env;
 const { connect } = require("mongoose");
-const { Client } = require("discord.js");
+const { Client, ActivityType } = require("discord.js");
 
 module.exports = {
 	name: "ready",
@@ -16,8 +14,8 @@ module.exports = {
 		client.user.setPresence({
 			activities: [
 				{
-					type: "LISTENING",
-					name: "?help",
+					name: `${client.guilds.cache.size} Servers!`,
+					type: ActivityType.Watching,
 				},
 			],
 			status: "online",

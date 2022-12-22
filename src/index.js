@@ -33,7 +33,7 @@ try {
 	loadConfig(client);
 	loadEvents(client);
 	loadCommands(client);
-	loadComponents(client);
+	//loadComponents(client);
 } catch (error) {
 	console.error(error);
 }

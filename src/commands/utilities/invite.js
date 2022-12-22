@@ -5,6 +5,7 @@ const {
 	ButtonBuilder,
 	ActionRowBuilder,
 	ButtonStyle,
+	resolvePartialEmoji,
 } = require("discord.js");
 const { url } = require("../../config.json");
 module.exports = {
@@ -19,14 +20,15 @@ module.exports = {
 	 */
 	execute: async (interaction, client) => {
 		const button = new ButtonBuilder()
-			.setLabel("Invie the Bot")
+			.setLabel("Invite Link")
 			.setStyle(ButtonStyle.Link)
-			.setURL(url.invite);
+			.setURL(url.invite)
+			.setEmoji(resolvePartialEmoji("✉️"));
 
 		const AR = new ActionRowBuilder().addComponents(button);
 
 		interaction.reply({
-			content: "Invite the bot by clicking the button.",
+			content: "Invite me to your server by clicking the button.",
 			components: [AR],
 		});
 	},

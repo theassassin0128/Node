@@ -1,10 +1,4 @@
-const {
-	EmbedBuilder,
-	Client,
-	Interaction,
-	InteractionType,
-} = require("discord.js");
-const { image, colour } = require("../../config.json");
+const { Client, Interaction, InteractionType } = require("discord.js");
 
 module.exports = {
 	name: "interactionCreate",

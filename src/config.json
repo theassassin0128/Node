@@ -1,24 +1,10 @@
 {
 	"guilds": {
-		"main": "788066040830754817",
-		"test": "883543290035716166"
-	},
-	"emotes": {
-		"resume": "▶️",
-		"pause": "⏸️",
-		"next": "⏭️",
-		"previous": "⏮️",
-		"stop": "⏹️",
-		"loop": "🔁",
-		"loop2": "🔂",
-		"shuffle": "🔀",
-		"speedup": "⏩",
-		"slowdown": "⏪"
+		"main": "883543290035716166"
 	},
 	"bot": {
 		"name": "Node",
-		"id": "1030698369435320350",
-		"prefix": "n!"
+		"id": "1030698369435320350"
 	},
 	"owner": {
 		"name": "THE ASSASSIN",
@@ -26,17 +12,9 @@
 		"id": "720186844540567583",
 		"github": "https://github.com/THE-ASSASSIN0128"
 	},
-	"channels": {
-		"suggestion": "979693704497492008",
-		"welcome": "882470006640754738",
-		"status": "979693624671473694",
-		"userLogs": "882485308782960680"
-	},
+	"channels": {},
 	"colour": {
 		"main": "90B63E",
-		"welcome": "86A9C5",
-		"giveaway": "FFAF00",
-		"cooldown": "000000",
 		"failed": "FF0000",
 		"error": "E3C647",
 		"success": "2EFF00",
