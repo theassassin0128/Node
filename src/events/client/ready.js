@@ -1,5 +1,3 @@
-const { DataBase } = process.env;
-const { connect } = require("mongoose");
 const { Client, ActivityType } = require("discord.js");
 
 module.exports = {
@@ -17,20 +15,14 @@ module.exports = {
 					name: `${client.guilds.cache.size} Servers!`,
 					type: ActivityType.Watching,
 				},
+				{
+					name: `/help`,
+					type: ActivityType.Listening,
+				},
 			],
 			status: "online",
 		});
 
 		console.log(`Ready! Logged in as ${client.user.tag}`);
-		if (!DataBase) return;
-		try {
-			connect(DataBase, {
-				useNewUrlParser: true,
-				useUnifiedTopology: true,
-			});
-			console.log("DataBase is Connected.");
-		} catch (error) {
-			console.error(error);
-		}
 	},
 };

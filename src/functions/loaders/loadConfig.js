@@ -1,4 +1,4 @@
-const configDatabase = require("../../schemas/memberLog.js");
+const configDatabase = require("../../database/schemas/memberLog.js");
 
 async function loadConfig(client) {
 	(await configDatabase.find()).forEach((doc) => {

@@ -5,7 +5,7 @@ const {
 	SlashCommandBuilder,
 	EmbedBuilder,
 } = require("discord.js");
-const DataBase = require("../../schemas/infractions.js");
+const DataBase = require("../../database/schemas/infractions.js");
 const ms = require("ms");
 const { colour } = require("../../config.json");
 
