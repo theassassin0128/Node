@@ -1,9 +1,9 @@
 const {
 	SlashCommandBuilder,
 	PermissionFlagsBits,
-	ChatInputCommandInteraction,
 	EmbedBuilder,
 	ChannelType,
+	ChatInputCommandInteraction,
 	Client,
 } = require("discord.js");
 const database = require("../../database/schemas/memberLog.js");
@@ -11,7 +11,7 @@ const { colour } = require("../../config.json");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName("setup_member-log")
+		.setName("setup")
 		.setDescription("Configure the member logging system for your guild.")
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 		.setDMPermission(false)
@@ -25,21 +25,18 @@ module.exports = {
 		.addRoleOption((option) =>
 			option
 				.setName("member_role")
-				.setDescription(
-					"Set the role to be automatically added to new members."
-				)
+				.setDescription("Set a role to give to new members")
 		)
 		.addRoleOption((option) =>
 			option
 				.setName("bot_role")
-				.setDescription(
-					"Set the role to be automatically added to new bots."
-				)
+				.setDescription("Set a role to give to Bots")
 		),
 	/**
 	 *
 	 * @param {ChatInputCommandInteraction} interaction
 	 * @param {Client} client
+	 * @returns
 	 */
 	execute: async (interaction, client) => {
 		const logChannel = interaction.options.getChannel("log_channel").id;
@@ -67,14 +64,15 @@ module.exports = {
 		});
 
 		const embed = new EmbedBuilder()
+			.setTitle("Member Logger Setup")
 			.setColor(colour.main)
 			.setDescription(
 				[
-					`- Logging Channel Updated : <#${logChannel}>`,
-					`- Memebr Auto Role Updated : ${
+					`- Logging Channel : <#${logChannel}>`,
+					`- Memebr Auto Role : ${
 						memberRole ? `<@&${memberRole}>` : `None Specified`
 					}`,
-					`- Bot Auto Role Updated : ${
+					`- Bot Auto Role : ${
 						botRole ? `<@&${botRole}>` : `None Specified`
 					}`,
 				].join("\n")

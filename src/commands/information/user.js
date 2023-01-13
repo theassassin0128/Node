@@ -1,24 +1,15 @@
-const {
-	EmbedBuilder,
-	SlashCommandBuilder,
-	ChatInputCommandInteraction,
-	Client,
-} = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const { colour } = require("../../config.json");
 const moment = require("moment");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName("user")
+		.setName("userinfo")
 		.setDescription("Replies an embed containing user information")
+		.setDMPermission(false)
 		.addUserOption((options) =>
 			options.setName("user").setDescription("The user")
 		),
-	/**
-	 *
-	 * @param { ChatInputCommandInteraction } interaction
-	 * @param { Client } client
-	 */
 	execute: async (interaction, client) => {
 		try {
 			const user =
@@ -65,7 +56,7 @@ module.exports = {
 						].join("\n"),
 					},
 					{
-						name: `Role INFO`,
+						name: `__Role Information__`,
 						value: [
 							`**Roles** : Total - ${Roles.size - 1}`,
 							"More info will be added in the next update.",

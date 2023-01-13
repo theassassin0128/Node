@@ -27,7 +27,7 @@ async function loadEvents(client) {
 			}
 		}
 
-		table.addRow(file.split("/")[8], "success");
+		table.addRow(file.split("/")[8], "🟢");
 	});
 
 	return console.log(table.toString());

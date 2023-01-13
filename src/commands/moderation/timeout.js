@@ -10,7 +10,6 @@ const ms = require("ms");
 const { colour } = require("../../config.json");
 
 module.exports = {
-	developer: true,
 	data: new SlashCommandBuilder()
 		.setName("timeout")
 		.setDescription("Restrict a members ability to communicate.")
@@ -34,11 +33,6 @@ module.exports = {
 				.setDescription("Reason for this timeout")
 				.setMaxLength(512)
 		),
-	/**
-	 *
-	 * @param {ChatInputCommandInteraction} interaction
-	 * @param {Client} client
-	 */
 	execute: async (interaction, client) => {
 		const { options, guild, member, user } = interaction;
 

@@ -18,15 +18,13 @@ const client = new Client({
 const { loadConfig } = require("./functions/loaders/loadConfig.js");
 const { loadEvents } = require("./functions/handlers/events.js");
 const { loadCommands } = require("./functions/handlers/commands.js");
-const { loadComponents } = require("./functions/handlers/components.js");
 const { connectDB } = require("./database/config/connect.js");
+const { loadButtons } = require("./functions/handlers/buttons.js");
 
 client.events = new Collection();
 client.commands = new Collection();
 client.aliases = new Collection();
 client.buttons = new Collection();
-client.selectMenus = new Collection();
-client.modals = new Collection();
 client.guildConfig = new Collection();
 
 try {
@@ -35,7 +33,16 @@ try {
 	loadConfig(client);
 	loadEvents(client);
 	loadCommands(client);
-	//loadComponents(client);
+} catch (error) {
+	console.error(error);
+}
+try {
+	client.login(Token);
+	connectDB(DataBase);
+	loadCommands(client);
+	loadButtons(client);
+	loadEvents(client);
+	loadConfig(client);
 } catch (error) {
 	console.error(error);
 }

@@ -20,7 +20,7 @@ async function loadCommands(client) {
 		client.commands.set(command.data.name, command);
 		commands.push(command.data.toJSON());
 
-		table.addRow(F[8], "success");
+		table.addRow(F[8], "🟢");
 	});
 
 	rest.put(Routes.applicationGuildCommands(bot.id, guilds.main), {

@@ -1,26 +1,16 @@
-const {
-	ChatInputCommandInteraction,
-	Client,
-	EmbedBuilder,
-	SlashCommandBuilder,
-} = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const moment = require("moment");
 const { colour } = require("../../config.json");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName("server-info")
-		.setDescription("Replies with server information."),
-	/**
-	 *
-	 * @param {ChatInputCommandInteraction} interaction
-	 * @param {Client} client
-	 */
+		.setName("server")
+		.setDescription("Replies with server information.")
+		.setDMPermission(false),
 	execute: async (interaction, client) => {
 		let Guild = interaction.guild;
 		let Roles = Guild.roles.cache;
 		let owner = await Guild.members.cache.get(Guild.ownerId);
-		let Members = await Guild.members.fetch();
 		let Channels = await Guild.channels.fetch();
 
 		let server = new EmbedBuilder()
@@ -54,12 +44,7 @@ module.exports = {
 				}
 			)
 			.setColor(colour.main)
-			.setThumbnail(
-				`${Guild.iconURL({
-					dynamic: true,
-					size: 4096,
-				})}`
-			);
+			.setThumbnail(Guild.iconURL({ dynamic: true, size: 4096 }));
 
 		interaction.reply({
 			embeds: [server],

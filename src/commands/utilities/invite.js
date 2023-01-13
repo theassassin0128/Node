@@ -1,23 +1,16 @@
 const {
 	SlashCommandBuilder,
-	Client,
-	ChatInputCommandInteraction,
 	ButtonBuilder,
 	ActionRowBuilder,
 	ButtonStyle,
 	resolvePartialEmoji,
 } = require("discord.js");
-const { url } = require("../../config.json");
+const { owner, url } = require("../../config.json");
 module.exports = {
-	developer: true,
 	data: new SlashCommandBuilder()
 		.setName("invite")
-		.setDescription("Returns a link button"),
-	/**
-	 *
-	 * @param {ChatInputCommandInteraction} interaction
-	 * @param {Client} client
-	 */
+		.setDescription("returns a link button with bots invite url.")
+		.setDMPermission(false),
 	execute: async (interaction, client) => {
 		const button = new ButtonBuilder()
 			.setLabel("Invite Link")
@@ -27,9 +20,16 @@ module.exports = {
 
 		const AR = new ActionRowBuilder().addComponents(button);
 
-		interaction.reply({
-			content: "Invite me to your server by clicking the button.",
-			components: [AR],
-		});
+		if (interaction.user.id === owner.id) {
+			interaction.reply({
+				content: "Invite me to your server by clicking the button.",
+				ephemeral: true,
+				components: [AR],
+			});
+		} else {
+			interaction.reply({
+				content: "Only the owner is allowed to use this command.",
+			});
+		}
 	},
 };
