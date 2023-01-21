@@ -36,13 +36,3 @@ try {
 } catch (error) {
 	console.error(error);
 }
-try {
-	client.login(Token);
-	connectDB(DataBase);
-	loadCommands(client);
-	loadButtons(client);
-	loadEvents(client);
-	loadConfig(client);
-} catch (error) {
-	console.error(error);
-}

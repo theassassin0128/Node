@@ -1,11 +1,9 @@
 const { model, Schema } = require("mongoose");
 
 module.exports = model(
-	"memberLog",
+	"welcome",
 	new Schema({
 		Guild: String,
-		logChannel: String,
-		memberRole: String,
-		botRole: String,
+		welcomeChannel: String,
 	})
 );
