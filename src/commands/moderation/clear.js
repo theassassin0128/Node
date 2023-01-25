@@ -34,7 +34,6 @@ module.exports = {
 	execute: async (interaction, client) => {
 		const { options, channel } = interaction;
 		const amount = options.getInteger("amount");
-		const reason = options.getString("reason");
 		const member = options.getUser("target");
 
 		if (member) {
