@@ -4,7 +4,7 @@ const {
 	PermissionFlagsBits,
 	ChatInputCommandInteraction,
 } = require("discord.js");
-const transcripts = require("discord-html-transcripts");
+//const transcripts = require("discord-html-transcripts");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -20,18 +20,17 @@ module.exports = {
 				.setMinValue(1)
 				.setRequired(true)
 		)
-		.addStringOption((option) =>
-			option
-				.setName("reason")
-				.setDescription("Reason for deleting Messages")
-				.setRequired(true)
-		)
 		.addUserOption((option) =>
 			option
 				.setName("target")
 				.setDescription("The member to delete messages.")
 				.setRequired(false)
 		),
+	/**
+	 *
+	 * @param {ChatInputCommandInteraction} interaction
+	 * @param {Client} client
+	 */
 	execute: async (interaction, client) => {
 		const { options, channel } = interaction;
 		const amount = options.getInteger("amount");
@@ -49,24 +48,24 @@ module.exports = {
 				}
 			});
 
-			const ts = await transcripts.generateFromMessages(
+			/*const ts = await transcripts.generateFromMessages(
 				messagesToDelete,
 				channel
-			);
+			);*/
 
 			const dMessages = await channel.bulkDelete(messagesToDelete, true);
 			interaction.reply({
 				content: `Deleted \`${dMessages.size}\` messages of ${member}`,
-				files: [ts],
+				ephemeral: true,
 			});
 		} else {
-			const ts = await transcripts.createTranscript(channel, {
+			/*const ts = await transcripts.createTranscript(channel, {
 				limit: amount,
-			});
+			});*/
 			const dMessages = await channel.bulkDelete(amount, true);
 			interaction.reply({
-				content: `Deleted \`${dMessages.size}\` in ${channel}.`,
-				files: [ts],
+				content: `Deleted \`${dMessages.size}\` messages in ${channel}.`,
+				ephemeral: true,
 			});
 		}
 	},

@@ -1,7 +1,4 @@
-const {
-	SlashCommandBuilder,
-	EmbedBuilder,
-} = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { version } = require(`${process.cwd()}/package.json`);
 const { colour } = require("../../config.json");
 
@@ -18,7 +15,6 @@ module.exports = {
 			Red: "🔴",
 		};
 
-		
 		let latancy = new EmbedBuilder()
 			.setColor(colour.main)
 			.setTitle(`Latency And API Ping`)
@@ -43,9 +39,8 @@ module.exports = {
 							: emLatency.Red
 					}\` \`${apiLatency}\`ms`,
 				}
-			)
+			);
 
-		
 		interaction.reply({
 			embeds: [latancy],
 		});

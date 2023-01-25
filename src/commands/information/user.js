@@ -1,4 +1,9 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const {
+	EmbedBuilder,
+	SlashCommandBuilder,
+	Client,
+	ChatInputCommandInteraction,
+} = require("discord.js");
 const { colour } = require("../../config.json");
 const moment = require("moment");
 
@@ -10,6 +15,11 @@ module.exports = {
 		.addUserOption((options) =>
 			options.setName("user").setDescription("The user")
 		),
+	/**
+	 *
+	 * @param {ChatInputCommandInteraction} interaction
+	 * @param {Client} client
+	 */
 	execute: async (interaction, client) => {
 		try {
 			const user =

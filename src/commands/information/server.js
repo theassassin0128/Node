@@ -4,7 +4,7 @@ const { colour } = require("../../config.json");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName("server")
+		.setName("serverinfo")
 		.setDescription("Replies with server information.")
 		.setDMPermission(false),
 	execute: async (interaction, client) => {

@@ -4,7 +4,7 @@ const pkg = require("../../../package.json");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName("stats")
+		.setName("botinfo")
 		.setDescription("Replies with current stats of the bot."),
 	execute: async (interaction, client) => {
 		let days = Math.floor(client.uptime / 86400000);
