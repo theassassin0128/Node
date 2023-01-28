@@ -16,13 +16,16 @@ module.exports = {
 	 * @param {Client} client
 	 */
 	execute: async (interaction, client) => {
-		const roles = interaction.guild.roles.cache
-			.sort((a, b) => b.position - a.position)
-			.map((r) => r);
-		const size = roles.toString().length;
-		if (size > 5750)
+		const roles = interaction.guild.roles.cache.sort(
+			(a, b) => b.position - a.position
+		);
+		const roleString = roles.map((r) => r);
+		const size = roleString.toString().length;
+		if (size > 3608)
 			return interaction.reply({
-				content: "Too many roles to display.",
+				content: `Too many roles to display. About [${
+					roles.size - 1
+				}] roles.`,
 				ephemeral: true,
 			});
 
@@ -30,22 +33,6 @@ module.exports = {
 			.setTitle("ALL ROLES OF THIS SERVER")
 			.setColor(colour.main)
 			.setDescription(`${roles.join("\n").replace("@everyone", " ")}`);
-
-		const rEmbed1 = new EmbedBuilder()
-			.setTitle("ALL SERVER ROLES")
-			.setColor(colour.main);
-
-		const rEmbed2 = new EmbedBuilder()
-			.setTitle("ALL SERVER ROLES")
-			.setColor(colour.main);
-
-		const rEmbed3 = new EmbedBuilder()
-			.setTitle("ALL SERVER ROLES")
-			.setColor(colour.main);
-
-		const rEmbed4 = new EmbedBuilder()
-			.setTitle("ALL SERVER ROLES")
-			.setColor(colour.main);
 
 		interaction.reply({
 			embeds: [rEmbed],
