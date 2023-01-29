@@ -53,8 +53,8 @@ module.exports = {
 				.setDescription("Give/Remove | role action for multiple users")
 				.addStringOption((option) =>
 					option
-						.setName("give_or_remove")
-						.setDescription("Pick a type.")
+						.setName("action")
+						.setDescription("Pick an action.")
 						.setRequired(true)
 						.addChoices(
 							{ name: "Give", value: "g" },
@@ -86,28 +86,27 @@ module.exports = {
 	 * @param {Client} client
 	 */
 	execute: async (interaction, client) => {
-		const sub = interaction.options.getSubcommand();
-		switch (sub) {
+		const role = (await interaction.guild.roles.fetch()).get(
+			interaction.options.getRole("role").id
+		);
+		const user = (await interaction.guild.members.fetch()).get(
+			interaction.options.getUser("user").id
+		);
+		const bot = await interaction.guild.members.fetchMe();
+		const interactionUser = (await interaction.guild.members.fetch()).get(
+			interaction.user.id
+		);
+
+		if (role.position >= bot.roles.highest.position)
+			return interaction.reply({
+				content: `The role's [${role}] position is higher than mine. So, I am unable to manage this role.`,
+				ephemeral: true,
+			});
+
+		switch (interaction.options.getSubcommand()) {
 			case "give":
 				{
-					const role = (await interaction.guild.roles.fetch()).get(
-						interaction.options.getRole("role").id
-					);
-					const user = (await interaction.guild.members.fetch()).get(
-						interaction.options.getUser("user").id
-					);
-					const bot = await interaction.guild.members.fetchMe();
-					const interactionUser = (
-						await interaction.guild.members.fetch()
-					).get(interaction.user.id);
-
-					if (role.position >= bot.roles.highest.position)
-						return interaction.reply({
-							content: `The role's [${role}] position is higher than mine. So, I am unable to manage this role.`,
-							ephemeral: true,
-						});
-
-					if (interaction.user.id == interaction.guild.ownerId) {
+					if (interactionUser.id == interaction.guild.ownerId) {
 						await user.roles.add(role);
 						interaction.reply({
 							content: `Added role [${role}] to ${user}`,
@@ -119,13 +118,13 @@ module.exports = {
 							interactionUser.roles.highest.position
 						)
 							return interaction.reply({
-								content: `The role's [${role}] position is higher than your highest role's position. So, you are unable manage this role`,
+								content: `The role's [${role}] position is higher than your highest role's position.`,
 								ephemeral: true,
 							});
 						else {
 							await user.roles.add(role);
 							interaction.reply({
-								content: `Added role [${role}] to ${user}`,
+								content: `Added [${role}] role to ${user}`,
 								ephemeral: true,
 							});
 						}
@@ -134,26 +133,10 @@ module.exports = {
 				break;
 			case "remove":
 				{
-					const role = (await interaction.guild.roles.fetch()).get(
-						interaction.options.getRole("role").id
-					);
-					const user = (await interaction.guild.members.fetch()).get(
-						interaction.options.getUser("user").id
-					);
-					const bot = await interaction.guild.members.fetchMe();
-					const interactionUser = (
-						await interaction.guild.members.fetch()
-					).get(interaction.user.id);
-
-					if (role.position >= bot.roles.highest.position)
-						return interaction.reply({
-							content: `The role's [${role}] position is higher than mine. So, I am unable to manage this role.`,
-							ephemeral: true,
-						});
-					if (interaction.user.id == interaction.guild.ownerId) {
+					if (interactionUser.id == interaction.guild.ownerId) {
 						await user.roles.remove(role);
 						interaction.reply({
-							content: `Removed role [${role}] from ${user}`,
+							content: `Removed [${role}] role from ${user}`,
 							ephemeral: true,
 						});
 					} else {
@@ -162,21 +145,17 @@ module.exports = {
 							interactionUser.roles.highest.position
 						)
 							return interaction.reply({
-								content: `The role's [${role}] position is higher than your highest role's position. So, you are unable manage this role`,
+								content: `The role's [${role}] position is higher than your highest role's position.`,
 								ephemeral: true,
 							});
 						else {
 							await user.roles.add(role);
 							interaction.reply({
-								content: `Remove role [${role}] from ${user}`,
+								content: `Remove [${role}] role from ${user}`,
 								ephemeral: true,
 							});
 						}
 					}
-				}
-				break;
-			case "multiple":
-				{
 				}
 				break;
 

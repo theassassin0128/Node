@@ -1,4 +1,9 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const {
+	EmbedBuilder,
+	SlashCommandBuilder,
+	Client,
+	ChatInputCommandInteraction,
+} = require("discord.js");
 const moment = require("moment");
 const { colour } = require("../../config.json");
 
@@ -7,31 +12,36 @@ module.exports = {
 		.setName("serverinfo")
 		.setDescription("Replies with server information.")
 		.setDMPermission(false),
+	/**
+	 *
+	 * @param {ChatInputCommandInteraction} interaction
+	 * @param {Client} client
+	 */
 	execute: async (interaction, client) => {
-		let Guild = interaction.guild;
-		let Roles = Guild.roles.cache;
-		let owner = await Guild.members.cache.get(Guild.ownerId);
-		let Channels = await Guild.channels.fetch();
+		const { guild } = interaction;
+		let Roles = guild.roles.cache;
+		let owner = (await guild.members.fetch()).get(guild.ownerId);
+		let Channels = await guild.channels.fetch();
 
 		let server = new EmbedBuilder()
-			.setTitle(`${Guild.name}`)
+			.setTitle(`${interaction.guild.name}`)
 			.addFields(
 				{
 					name: "🆔 ID",
-					value: `${Guild.id}`,
+					value: `${guild.id}`,
 				},
 				{
 					name: "📅 Created On",
-					value: `${moment(Guild.createdAt).format(
+					value: `${moment(guild.createdAt).format(
 						"dddd, MMMM Do YYYY, h:mm:ss A"
-					)}\n- ${moment(Guild.createdAt, "yyMMdd").fromNow()}`,
+					)}\n - ${moment(guild.createdAt, "YYYYMMDD").fromNow()}`,
 				},
 				{
 					name: "👑 Owned by",
 					value: `${owner} (${owner.id})`,
 				},
 				{
-					name: `👥 Members [${Guild.memberCount}]`,
+					name: `👥 Members [${guild.memberCount}]`,
 					value: "More information will be added in future Updates.",
 				},
 				{
@@ -44,7 +54,7 @@ module.exports = {
 				}
 			)
 			.setColor(colour.main)
-			.setThumbnail(Guild.iconURL({ dynamic: true, size: 4096 }));
+			.setThumbnail(guild.iconURL({ size: 4096 }));
 
 		interaction.reply({
 			embeds: [server],

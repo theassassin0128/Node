@@ -19,14 +19,13 @@ module.exports = {
 			status: "online",
 		});
 
-		/*const table = new ascii("INFO");
+		const table = new ascii("INFO");
 
 		table.addRow("status", "🟢 online");
 		table.addRow("tag", client.user.tag);
 		table.addRow("id", client.user.id);
 		table.addRow("servers", client.guilds.cache.size);
-		
-		console.log(table.toString());*/
-		console.log(`ready! logged in as ${client.user.tag}`);
+
+		console.log(table.toString());
 	},
 };

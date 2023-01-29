@@ -6,7 +6,7 @@ const { bot, guilds } = require("../../config.json");
 async function loadCommands(client) {
 	const { loadFiles } = require("../loaders/loadFiles.js");
 	const ascii = require("ascii-table");
-	const table = new ascii("COMMANDS").setHeading("files", "status");
+	const table = new ascii("COMMANDS").setHeading("name", "status");
 
 	await client.commands.clear();
 
@@ -14,13 +14,12 @@ async function loadCommands(client) {
 	const Files = await loadFiles("src/commands");
 
 	Files.forEach((file) => {
-		const F = file.split("/");
 		const command = require(file);
 
 		client.commands.set(command.data.name, command);
 		commands.push(command.data.toJSON());
 
-		table.addRow(F[8], "🟢");
+		table.addRow(command.data.name, "🟢");
 	});
 
 	rest.put(Routes.applicationGuildCommands(bot.id, guilds.main), {
