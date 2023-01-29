@@ -32,7 +32,9 @@ module.exports = {
 		const rEmbed = new EmbedBuilder()
 			.setTitle("ALL ROLES OF THIS SERVER")
 			.setColor(colour.main)
-			.setDescription(`${roles.join("\n").replace("@everyone", " ")}`);
+			.setDescription(
+				`${roleString.join("\n").replace("@everyone", " ")}`
+			);
 
 		interaction.reply({
 			embeds: [rEmbed],
