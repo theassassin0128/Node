@@ -46,39 +46,6 @@ module.exports = {
 						.setDescription("The user to remove the role.")
 						.setRequired(true)
 				)
-		)
-		.addSubcommand((option) =>
-			option
-				.setName("multiple")
-				.setDescription("Give/Remove | role action for multiple users")
-				.addStringOption((option) =>
-					option
-						.setName("action")
-						.setDescription("Pick an action.")
-						.setRequired(true)
-						.addChoices(
-							{ name: "Give", value: "g" },
-							{ name: "Remove", value: "r" }
-						)
-				)
-				.addRoleOption((option) =>
-					option
-						.setName("role")
-						.setDescription("The role to give/remove")
-						.setRequired(true)
-				)
-				.addStringOption((option) =>
-					option
-						.setName("type")
-						.setDescription(
-							"Choose a type for the role multiple action."
-						)
-						.addChoices(
-							{ name: "Bots", value: "bots" },
-							{ name: "Humans", value: "humans" },
-							{ name: "All Members", value: "all" }
-						)
-				)
 		),
 	/**
 	 *
@@ -157,9 +124,6 @@ module.exports = {
 						}
 					}
 				}
-				break;
-
-			default:
 				break;
 		}
 	},
