@@ -6,6 +6,7 @@ const {
 	Client,
 } = require("discord.js");
 const { colour } = require("../../config.json");
+const wait = require("timers/promises").setTimeout;
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -13,38 +14,92 @@ module.exports = {
 		.setDescription("Give | Remove role(s) from server members")
 		.setDMPermission(false)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles)
-		.addSubcommand((option) =>
+		.addSubcommandGroup((option) =>
 			option
-				.setName("give")
-				.setDescription("Gives a role to a user.")
-				.addRoleOption((option) =>
+				.setName("single")
+				.setDescription("Role command for single user.")
+				.addSubcommand((option) =>
 					option
-						.setName("role")
-						.setDescription("The role to give.")
-						.setRequired(true)
+						.setName("give")
+						.setDescription("Gives a role to a user.")
+						.addRoleOption((option) =>
+							option
+								.setName("role")
+								.setDescription("The role to give.")
+								.setRequired(true)
+						)
+						.addUserOption((option) =>
+							option
+								.setName("user")
+								.setDescription("The user to give the role.")
+								.setRequired(true)
+						)
 				)
-				.addUserOption((option) =>
+				.addSubcommand((option) =>
 					option
-						.setName("user")
-						.setDescription("The user to give the role.")
-						.setRequired(true)
+						.setName("remove")
+						.setDescription("Removes a role from a user.")
+						.addRoleOption((option) =>
+							option
+								.setName("role")
+								.setDescription("The role to remove.")
+								.setRequired(true)
+						)
+						.addUserOption((option) =>
+							option
+								.setName("user")
+								.setDescription("The user to remove the role.")
+								.setRequired(true)
+						)
 				)
 		)
-		.addSubcommand((option) =>
+		.addSubcommandGroup((option) =>
 			option
-				.setName("remove")
-				.setDescription("Removes a role from a user.")
-				.addRoleOption((option) =>
+				.setName("multiple")
+				.setDescription("Role command for multiple users.")
+				.addSubcommand((option) =>
 					option
-						.setName("role")
-						.setDescription("The role to remove.")
-						.setRequired(true)
+						.setName("give")
+						.setDescription("Give a role to multiple user.")
+						.addRoleOption((option) =>
+							option
+								.setName("role")
+								.setDescription("The role to gives.")
+								.setRequired(true)
+						)
+						.addStringOption((option) =>
+							option
+								.setName("type")
+								.setDescription("Pick a type")
+								.setRequired(true)
+								.addChoices(
+									{ name: "All Members", value: "all" },
+									{ name: "Humans", value: "humans" },
+									{ name: "Bots", value: "bots" }
+								)
+						)
 				)
-				.addUserOption((option) =>
+				.addSubcommand((option) =>
 					option
-						.setName("user")
-						.setDescription("The user to remove the role.")
-						.setRequired(true)
+						.setName("remove")
+						.setDescription("Remove a role from multiple users.")
+						.addRoleOption((option) =>
+							option
+								.setName("role")
+								.setDescription("The role to remove.")
+								.setRequired(true)
+						)
+						.addStringOption((option) =>
+							option
+								.setName("type")
+								.setDescription("Pick a type")
+								.setRequired(true)
+								.addChoices(
+									{ name: "All Members", value: "all" },
+									{ name: "Humans", value: "humans" },
+									{ name: "Bots", value: "bots" }
+								)
+						)
 				)
 		),
 	/**
@@ -53,75 +108,139 @@ module.exports = {
 	 * @param {Client} client
 	 */
 	execute: async (interaction, client) => {
-		const role = (await interaction.guild.roles.fetch()).get(
-			interaction.options.getRole("role").id
-		);
-		const user = (await interaction.guild.members.fetch()).get(
-			interaction.options.getUser("user").id
-		);
-		const bot = await interaction.guild.members.fetchMe();
-		const interactionUser = (await interaction.guild.members.fetch()).get(
-			interaction.user.id
-		);
-
-		if (role.position >= bot.roles.highest.position)
-			return interaction.reply({
-				content: `The role's [${role}] position is higher than mine. So, I am unable to manage this role.`,
-				ephemeral: true,
-			});
-
-		switch (interaction.options.getSubcommand()) {
-			case "give":
+		switch (interaction.options.getSubcommandGroup()) {
+			case "single":
 				{
-					if (interactionUser.id == interaction.guild.ownerId) {
-						await user.roles.add(role);
+					const role = (await interaction.guild.roles.fetch()).get(
+						interaction.options.getRole("role").id
+					);
+					const user = (await interaction.guild.members.fetch()).get(
+						interaction.options.getUser("user").id
+					);
+					const bot = await interaction.guild.members.fetchMe();
+					const interactionUser = (
+						await interaction.guild.members.fetch()
+					).get(interaction.user.id);
+
+					if (role.position >= bot.roles.highest.position)
 						interaction.reply({
-							content: `Added role [${role}] to ${user}`,
+							content: `Due to role hierarchy I am unable to manage this role.`,
 							ephemeral: true,
 						});
-					} else {
-						if (
-							role.position >=
-							interactionUser.roles.highest.position
-						)
-							return interaction.reply({
-								content: `The role's [${role}] position is higher than your highest role's position.`,
-								ephemeral: true,
-							});
-						else {
-							await user.roles.add(role);
-							interaction.reply({
-								content: `Added [${role}] role to ${user}`,
-								ephemeral: true,
-							});
+					if (
+						interactionUser.id == interaction.guild.ownerId ||
+						interactionUser.roles.highest.position > role.position
+					) {
+						switch (interaction.options.getSubcommand()) {
+							case "give":
+								{
+									await user.roles.add(role);
+									interaction.reply({
+										content: `${role} | Role given to ${user}.`,
+										ephemeral: true,
+									});
+								}
+								break;
+							case "remove":
+								{
+									await user.roles.remove(role);
+									interaction.reply({
+										content: `${role} | Role removed from ${user}.`,
+										ephemeral: true,
+									});
+								}
+								break;
 						}
+					} else {
+						interaction.reply({
+							content: `${role} | You are not allowed to manage this role.`,
+							ephemeral: true,
+						});
 					}
 				}
 				break;
-			case "remove":
+			case "multiple":
 				{
-					if (interactionUser.id == interaction.guild.ownerId) {
-						await user.roles.remove(role);
+					const role = (await interaction.guild.roles.fetch()).get(
+						interaction.options.getRole("role").id
+					);
+					const type = interaction.options.getString("type");
+					const bot = await interaction.guild.members.fetchMe();
+					const interactionUser = (
+						await interaction.guild.members.fetch()
+					).get(interaction.user.id);
+					let memberArray = [];
+
+					(await interaction.guild.members.fetch()).forEach(
+						(member) => {
+							switch (type) {
+								case "all":
+									{
+										memberArray.push(member);
+									}
+									break;
+								case "humans":
+									{
+										if (!member.user.bot) {
+											memberArray.push(member);
+										}
+									}
+									break;
+								case "bots":
+									{
+										if (member.user.bot) {
+											memberArray.push(member);
+										}
+									}
+									break;
+							}
+						}
+					);
+
+					if (role.position >= bot.roles.highest.position)
 						interaction.reply({
-							content: `Removed [${role}] role from ${user}`,
+							content: `Due to role hierarchy I am unable to manage this role.`,
 							ephemeral: true,
 						});
-					} else {
-						if (
-							role.position >=
-							interactionUser.roles.highest.position
-						)
-							return interaction.reply({
-								content: `The role's [${role}] position is higher than your highest role's position.`,
-								ephemeral: true,
-							});
-						else {
-							await user.roles.add(role);
-							interaction.reply({
-								content: `Remove [${role}] role from ${user}`,
-								ephemeral: true,
-							});
+					if (
+						interactionUser.id == interaction.guild.ownerId ||
+						interactionUser.roles.highest.position > role.position
+					) {
+						switch (interaction.options.getSubcommand()) {
+							case "give":
+								{
+									await interaction.reply({
+										content: `Started giving roles..........`,
+									});
+									memberArray.forEach((member) => {
+										member.roles.add(role);
+									});
+									await wait(3 * 1000);
+									interaction.editReply({
+										content: `${role} | Given the role to the selected members.`,
+									});
+								}
+								break;
+							case "remove":
+								{
+									await interaction.reply({
+										content: `Started removing roles..........`,
+									});
+									memberArray.forEach((member) => {
+										member.roles.remove(role);
+									});
+									await wait(3 * 1000);
+									interaction.editReply({
+										content: `${role} | Removed the role from the selected members.`,
+									});
+								}
+								break;
 						}
+					} else {
+						interaction.reply({
+							content: `${role} | You are not allowed to manage this role.`,
+							ephemeral: true,
+						});
 					}
 				}
 				break;
