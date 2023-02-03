@@ -1,7 +1,13 @@
-const { EmbedBuilder } = require("discord.js");
+const { ButtonInteraction, Client } = require("discord.js");
 
 module.exports = {
 	name: "interactionCreate",
+	/**
+	 *
+	 * @param {ButtonInteraction} interaction
+	 * @param {Client} client
+	 * @returns
+	 */
 	async execute(interaction, client) {
 		if (!interaction.isButton()) return;
 
