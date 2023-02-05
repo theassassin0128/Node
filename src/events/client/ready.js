@@ -12,7 +12,15 @@ module.exports = {
 		client.user.setPresence({
 			activities: [
 				{
-					name: `Genshin Impact`,
+					name: `${client.guilds.cache.size} Servers!`,
+					type: ActivityType.Watching,
+				},
+				{
+					name: "/help",
+					type: ActivityType.Listening,
+				},
+				{
+					name: "Genshin Impact",
 					type: ActivityType.Playing,
 				},
 			],
