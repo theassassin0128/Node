@@ -1,11 +1,24 @@
-const configDatabase = require("../../database/schemas/logs/member.js");
+const {
+	memberlog,
+	welcomer,
+	autorole,
+} = require("../../database/schemas/system.js");
 
 async function loadConfig(client) {
-	(await configDatabase.find()).forEach((doc) => {
+	(await memberlog.find()).forEach((doc) => {
 		client.guildConfig.set(doc.Guild, {
-			memberLogChannel: doc.memberLogChannel,
-			welcomeChannel: doc.welcommeChannel,
-			moderationLogChanne: doc.moderationLogChannel,
+			logChannel: doc.Channel,
+		});
+	});
+	(await welcomer.find()).forEach((doc) => {
+		client.guildConfig.set(doc.Guild, {
+			welcomeChannel: doc.Channel,
+		});
+	});
+	(await autorole.find()).forEach((doc) => {
+		client.guildConfig.set(doc.Guild, {
+			memberRole: doc.memberRole,
+			botRole: doc.botRole,
 		});
 	});
 	return;

@@ -5,7 +5,7 @@ const {
 	SlashCommandBuilder,
 	EmbedBuilder,
 } = require("discord.js");
-const DataBase = require("../../database/schemas/moderation/infractions.js");
+const { infractions } = require("../../database/schemas/moderation.js");
 const ms = require("ms");
 const { colour } = require("../../config.json");
 
@@ -94,13 +94,13 @@ module.exports = {
 			Date: Date.now,
 		};
 
-		let userData = await DataBase.findOne({
+		let userData = await infractions.findOne({
 			Guild: guild.id,
 			User: target.id,
 		});
 
 		if (!userData) {
-			userData = await DataBase.create({
+			userData = await infractions.create({
 				Guild: guild.id,
 				User: target.id,
 				Infractions: [newInfractionObject],
@@ -118,7 +118,7 @@ module.exports = {
 					`${target} was issued a timeout for **${ms(ms(duration), {
 						long: true,
 					})}** by ${member}`,
-					`Bringing their total infractions to **${userData.Infractions.length} points**`,
+					`\nBringing their total infractions to **${userData.Infractions.length} points**`,
 					`\n**Reason :** ${reason}`,
 				].join("\n")
 			);
