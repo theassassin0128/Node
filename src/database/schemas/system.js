@@ -1,7 +1,7 @@
 const { model, Schema } = require("mongoose");
 
 const memberlog = model(
-	"memberlogger",
+	"memberlog",
 	new Schema({
 		Guild: String,
 		Channel: String,
@@ -11,16 +11,15 @@ const welcomer = model(
 	"welcomer",
 	new Schema({
 		Guild: String,
-		Channel: String,
-		MessageContent: String,
-		Embed: Object,
+		Option: String,
+		Data: Object,
 	})
 );
 const autorole = model(
 	"autorole",
 	new Schema({
 		Guild: String,
-		memberRole: String,
+		memberRole: Array,
 		botRole: String,
 	})
 );
