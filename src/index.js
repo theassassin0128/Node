@@ -18,7 +18,7 @@ const client = new Client({
 const { loadConfig } = require("./functions/loaders/loadConfig.js");
 const { loadEvents } = require("./functions/handlers/events.js");
 const { loadCommands } = require("./functions/handlers/commands.js");
-const { connectDB } = require("./database/config/connect.js");
+const { connectDB } = require("./database/connect.js");
 const { loadButtons } = require("./functions/handlers/buttons.js");
 
 client.events = new Collection();

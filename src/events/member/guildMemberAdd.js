@@ -3,13 +3,22 @@ const {
 	ActionRowBuilder,
 	ButtonBuilder,
 	ButtonStyle,
+	Client,
+	GuildMember,
 } = require("discord.js");
 const moment = require("moment");
 const { colour } = require("../../config.json");
 const wait = require("timers/promises").setTimeout;
+const { welcomer } = require("../../database/schemas.js");
 
 module.exports = {
 	name: "guildMemberAdd",
+	/**
+	 *
+	 * @param {GuildMember} member
+	 * @param {Client} client
+	 * @returns
+	 */
 	execute: async (member, client) => {
 		const gConfig = client.guildConfig.get(member.guild.id);
 		if (!gConfig) return;

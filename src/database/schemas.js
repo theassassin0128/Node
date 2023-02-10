@@ -7,14 +7,7 @@ const memberlog = model(
 		Channel: String,
 	})
 );
-const welcomer = model(
-	"welcomer",
-	new Schema({
-		Guild: String,
-		Option: String,
-		Data: Object,
-	})
-);
+
 const autorole = model(
 	"autorole",
 	new Schema({
@@ -23,5 +16,13 @@ const autorole = model(
 		botRole: String,
 	})
 );
+const infractions = model(
+	"Infractions",
+	new Schema({
+		Guild: String,
+		User: String,
+		Infractions: Array,
+	})
+);
 
-module.exports = { memberlog, welcomer, autorole };
+module.exports = { memberlog, welcomer, autorole, infractions };
