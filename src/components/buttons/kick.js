@@ -33,22 +33,6 @@ module.exports = {
 				ephemeral: true,
 			});
 
-		const kEmbed = new EmbedBuilder()
-			.setTitle("__KICK NOTICE__")
-			.setDescription(
-				`Dear User,\nI am sorry to say this but you are officially been kicked out of ${interaction.guild.name}. Your account is created not long ago. Because of this the moderator found your account suspicious. As a result you have been **KICKED** out of the server.`
-			)
-			.setColor(colour.main)
-			.setFooter({ text: "KICKED" })
-			.setTimestamp();
-
-		if (!member.bot) {
-			await member.send({
-				content: `${member}`,
-				embeds: [kEmbed],
-			});
-		}
-
 		try {
 			member.kick(
 				`Kicked by ${interaction.user.tag} & Member Logging System.`

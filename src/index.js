@@ -27,6 +27,7 @@ try {
 	client.login(Token);
 	loadEvents(client);
 	loadCommands(client);
+	loadButtons(client);
 } catch (error) {
 	console.error(error);
 }
