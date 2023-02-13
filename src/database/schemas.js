@@ -25,4 +25,4 @@ const infractions = model(
 	})
 );
 
-module.exports = { memberlog, welcomer, autorole, infractions };
+module.exports = { memberlog, autorole, infractions };

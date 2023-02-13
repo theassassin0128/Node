@@ -1,6 +1,6 @@
 const { Client, Collection, Partials } = require("discord.js");
 require("dotenv").config();
-const { Token, DataBase } = process.env;
+const { Token } = process.env;
 
 const client = new Client({
 	intents: 3276799,
@@ -15,22 +15,16 @@ const client = new Client({
 	},
 });
 
-const { loadConfig } = require("./functions/loaders/loadConfig.js");
 const { loadEvents } = require("./functions/handlers/events.js");
 const { loadCommands } = require("./functions/handlers/commands.js");
-const { connectDB } = require("./database/connect.js");
 const { loadButtons } = require("./functions/handlers/buttons.js");
 
 client.events = new Collection();
 client.commands = new Collection();
-client.aliases = new Collection();
 client.buttons = new Collection();
-client.guildConfig = new Collection();
 
 try {
 	client.login(Token);
-	connectDB(DataBase);
-	loadConfig(client);
 	loadEvents(client);
 	loadCommands(client);
 } catch (error) {

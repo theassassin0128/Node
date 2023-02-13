@@ -1,5 +1,6 @@
 const { ActivityType, Client } = require("discord.js");
-const ascii = require("ascii-table");
+const { connect } = require("mongoose");
+const mongoURL = process.env("DataBase");
 
 module.exports = {
 	name: "ready",
@@ -19,21 +20,21 @@ module.exports = {
 					name: "/help",
 					type: ActivityType.Listening,
 				},
-				{
-					name: "Genshin Impact",
-					type: ActivityType.Playing,
-				},
 			],
-			status: "online",
+			status: "dnd",
 		});
 
-		const table = new ascii("INFO");
+		if (!mongoURL) return;
 
-		table.addRow("status", "🟢 online");
-		table.addRow("tag", client.user.tag);
-		table.addRow("id", client.user.id);
-		table.addRow("servers", client.guilds.cache.size);
+		connect(mongoURL, {
+			keepAlive: true,
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
+		if (connect) {
+			console.log("MongoDB".green, "database is connected.");
+		}
 
-		console.log(table.toString());
+		console.log(`Ready! Logged in as ${client.user.tag}`);
 	},
 };
