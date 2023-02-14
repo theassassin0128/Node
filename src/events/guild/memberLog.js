@@ -20,9 +20,7 @@ module.exports = {
 	execute: async (member, client) => {
 		const { user, guild } = member;
 
-		const channel = (await member.guild.channels.fetch()).get(
-			"1063525411050487819"
-		);
+		const channel = (await member.guild.channels.fetch()).get("");
 		if (!channel) return;
 
 		let color = colour.main;

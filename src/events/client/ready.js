@@ -1,5 +1,5 @@
 const { ActivityType, Client } = require("discord.js");
-const { connect } = require("mongoose");
+const mongoose = require("mongoose");
 const { mongodb } = process.env;
 
 module.exports = {
@@ -26,12 +26,13 @@ module.exports = {
 
 		if (!mongodb) return;
 
-		connect(mongodb, {
+		mongoose.connect(mongodb, {
 			keepAlive: true,
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		});
-		if (connect) {
+		mongoose.set("strictQuery", false);
+		if (mongoose.connect) {
 			console.log("Successfully connected to the DATABASE.");
 		}
 
