@@ -200,38 +200,3 @@ module.exports = {
 		}
 	},
 };
-/*
-switch (interaction.options.getSubcommandGroup()) {
-			case "multiple":
-				{
-					const role = (await interaction.guild.roles.fetch()).get(
-						interaction.options.getRole("role").id
-					);
-					const type = interaction.options.getString("type");
-					const bot = await interaction.guild.members.fetchMe();
-					const interactionUser = (
-						await interaction.guild.members.fetch()
-					).get(interaction.user.id);
-					
-
-					
-					if (role.position >= bot.roles.highest.position)
-						interaction.reply({
-							content: `Due to role hierarchy I am unable to manage this role.`,
-							ephemeral: true,
-						});
-					if (
-						interactionUser.id == interaction.guild.ownerId ||
-						interactionUser.roles.highest.position > role.position
-					) {
-						
-					} else {
-						interaction.reply({
-							content: `${role} | You are not allowed to manage this role.`,
-							ephemeral: true,
-						});
-					}
-				}
-				break;
-		}
-*/
