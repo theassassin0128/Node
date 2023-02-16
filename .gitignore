@@ -1,4 +1,5 @@
 .env
 node_modules
-src/commands/test
+bot/commands/test
+website
 data.js

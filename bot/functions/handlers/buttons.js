@@ -4,7 +4,7 @@ const table = new ascii("BUTTONS").setHeading("name", "status");
 
 async function loadButtons(client) {
 	await client.buttons.clear();
-	const Files = await loadFiles("src/components/buttons");
+	const Files = await loadFiles("bot/components/buttons");
 	Files.forEach((file) => {
 		const button = require(file);
 		client.buttons.set(button.name, button);

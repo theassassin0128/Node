@@ -11,7 +11,7 @@ async function loadCommands(client) {
 	await client.commands.clear();
 
 	let commands = [];
-	const Files = await loadFiles("src/commands");
+	const Files = await loadFiles("bot/commands");
 
 	Files.forEach((file) => {
 		const command = require(file);
