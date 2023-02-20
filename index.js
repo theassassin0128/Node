@@ -15,9 +15,9 @@ const client = new Client({
 	},
 });
 
-const { loadEvents } = require("./bot/functions/handlers/events.js");
-const { loadCommands } = require("./bot/functions/handlers/commands.js");
-const { loadButtons } = require("./bot/functions/handlers/buttons.js");
+const { loadEvents } = require("./src/functions/handlers/events.js");
+const { loadCommands } = require("./src/functions/handlers/commands.js");
+const { loadButtons } = require("./src/functions/handlers/buttons.js");
 
 client.events = new Collection();
 client.commands = new Collection();
@@ -26,9 +26,9 @@ client.buttons = new Collection();
 client
 	.login(Token)
 	.then(() => {
-		loadEvents(client);
-		loadCommands(client);
-		loadButtons(client);
+		loadEvents(client, "src/events");
+		loadCommands(client, "src/commands");
+		loadButtons(client, "src/components/buttons");
 	})
 	.catch(() => {
 		console.error;

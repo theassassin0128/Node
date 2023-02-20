@@ -16,13 +16,5 @@ const autorole = model(
 		botRole: String,
 	})
 );
-const infractions = model(
-	"Infractions",
-	new Schema({
-		Guild: String,
-		User: String,
-		Infractions: Array,
-	})
-);
 
-module.exports = { memberlog, autorole, infractions };
+module.exports = { memberlog, autorole };

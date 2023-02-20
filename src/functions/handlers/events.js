@@ -1,11 +1,11 @@
-async function loadEvents(client) {
+async function loadEvents(client, dir) {
 	const { loadFiles } = require("../loaders/loadFiles.js");
 	const ascii = require("ascii-table");
 	const table = new ascii("EVENTS").setHeading("files", "Status");
 
 	await client.events.clear();
 
-	const Files = await loadFiles("bot/events");
+	const Files = await loadFiles(dir);
 
 	Files.forEach((file) => {
 		const event = require(file);
@@ -21,7 +21,7 @@ async function loadEvents(client) {
 			else client.on(event.name, execute);
 		}
 
-		table.addRow(file.split("/")[8], "🟢");
+		table.addRow(file.split("/")[8], "done");
 	});
 
 	return console.log(table.toString());

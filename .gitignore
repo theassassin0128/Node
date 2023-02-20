@@ -1,5 +1,5 @@
 .env
 node_modules
-bot/commands/test
-website
+src/commands/test
+src/events/test
 data.js
