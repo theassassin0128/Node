@@ -23,11 +23,13 @@ client.events = new Collection();
 client.commands = new Collection();
 client.buttons = new Collection();
 
-try {
-	client.login(Token);
-	loadEvents(client);
-	loadCommands(client);
-	loadButtons(client);
-} catch (error) {
-	console.error(error);
-}
+client
+	.login(Token)
+	.then(() => {
+		loadEvents(client);
+		loadCommands(client);
+		loadButtons(client);
+	})
+	.catch(() => {
+		console.error;
+	});
