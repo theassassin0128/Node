@@ -15,9 +15,9 @@ const client = new Client({
 	},
 });
 
-const { loadEvents } = require("./src/functions/handlers/events.js");
-const { loadCommands } = require("./src/functions/handlers/commands.js");
-const { loadButtons } = require("./src/functions/handlers/buttons.js");
+const { loadEvents } = require("./functions/handlers/events.js");
+const { loadCommands } = require("./functions/handlers/commands.js");
+const { loadButtons } = require("./functions/handlers/buttons.js");
 
 client.events = new Collection();
 client.commands = new Collection();
