@@ -20,8 +20,10 @@
 | serverinfo | Same as roleinfo replies with info about a discord server              |
 | timeout    | Can be used to timeout a single user for a specific period of time     |
 | userinfo   | Same as serverinfo replies with information of a discord user          |
+| member-log | Commands to setup/delete/toggle member logging system                  |
+| welcome    | Incomplete                                                             |
 
-Written above are some commands of the bot. I'm planing on adding new commands with each version update. As of now the bot has a _Member-Logging_ & _Welcoming-System_. But only availabe for the test server which is **[Ghost Nation](https://discord.gg/E6H9VvBdTk)**. You are welcome to join if you want. The above mentioned features will be updated soon. So, that everyone can use and make custome welcome messages for their own servers.
+Written above are some commands of the bot. I'm planing on adding new commands with each version update. As of now the bot has a multiguild _Member-Logging-system_ & _Welcoming-System(incomplete)_. My test server which is **[Ghost Nation](https://discord.gg/E6H9VvBdTk)** where i test my commands. You are welcome to join the server.
 
 ## Node Project & It's Development
 
