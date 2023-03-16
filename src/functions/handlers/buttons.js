@@ -9,7 +9,7 @@ async function loadButtons(client, dir) {
 		const button = require(file);
 		client.buttons.set(button.name, button);
 
-		table.addRow(button.name, "done");
+		table.addRow(button.name, "✅️");
 	});
 
 	return console.log(table.toString());

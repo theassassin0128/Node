@@ -1,30 +1,34 @@
+const { loadFiles } = require("../loaders/loadFiles.js");
+
 async function loadEvents(client, dir) {
-	const { loadFiles } = require("../loaders/loadFiles.js");
-	const ascii = require("ascii-table");
-	const table = new ascii("EVENTS").setHeading("files", "Status");
+	console.time("Events load time");
 
-	await client.events.clear();
+	client.events = new Map();
+	const events = new Array();
 
-	const Files = await loadFiles(dir);
+	const files = await loadFiles(dir);
 
-	Files.forEach((file) => {
-		const event = require(file);
+	for (const file of files) {
+		try {
+			const event = require(file);
+			const execute = (...args) => event.execute(...args, client);
+			const target = event.rest ? client.rest : client;
 
-		const execute = (...args) => event.execute(...args, client);
-		client.events.set(event.name, execute);
+			target[event.once ? "once" : "on"](event.name, execute);
+			client.events.set(event.name, execute);
 
-		if (event.rest) {
-			if (event.once) client.rest.once(event.name, execute);
-			else client.rest.on(event.name, execute);
-		} else {
-			if (event.once) client.once(event.name, execute);
-			else client.on(event.name, execute);
+			events.push({ Event: event.name, Status: "✅️" });
+		} catch (error) {
+			events.push({
+				Event: file.split("/").pop().slice(0, -3),
+				Status: "❌️",
+			});
 		}
+	}
 
-		table.addRow(file.split("/")[8], "done");
-	});
-
-	return console.log(table.toString());
+	console.table(events, ["Event", "Status"]);
+	console.info("\n\x1b[36m%s\x1b[0m", "Loaded Events.");
+	console.timeEnd("Events load time");
 }
 
 module.exports = { loadEvents };
