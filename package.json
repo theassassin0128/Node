@@ -1,10 +1,10 @@
 {
 	"name": "node",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "A multipurpose discord bot.",
-	"main": "src/index.js",
+	"main": "index.js",
 	"scripts": {
-		"test": "nodemon src/index.js"
+		"test": "node index.js"
 	},
 	"keywords": [
 		"bot",
