@@ -70,7 +70,6 @@ module.exports = {
 						{ Guild: guildId },
 						{
 							Channel: logChannel,
-							Toggle: "ON",
 							memberRole: memberRole,
 							botRole: botRole,
 						},
@@ -103,45 +102,19 @@ module.exports = {
 				break;
 			case "delete":
 				{
-					memberLog.findOne({ Guild: guildId }, async (err, data) => {
-						if (!data) {
-							interaction.reply({
-								content:
-									"**This server doesn't have a member-log system**",
-							});
-						} else {
-							await memberLog.deleteOne({ Guild: guildId });
-							interaction.reply({
-								content:
-									"**Successfully deleted member-log system.**",
-							});
-						}
-					});
-				}
-				break;
-			case "toggle":
-				{
-					memberLog.findOne({ Guild: guildId }, async (err, data) => {
-						if (!data)
-							return interaction.reply({
-								content:
-									"**This server doesn't have a member-log system.**",
-							});
-						if (data.Toggle == "ON") {
-							await memberLog.updateOne({ Toggle: "OFF" });
-							interaction.reply({
-								content:
-									":x: **Turned off the member-log system.**",
-							});
-						}
-						if (data.Toggle == "OFF") {
-							await memberLog.updateOne({ Toggle: "ON" });
-							interaction.reply({
-								content:
-									":white_check_mark: **Turned on the member-log system.**",
-							});
-						}
-					});
+					const data = memberLog.findOne({ Guild: guildId });
+					if (!data) {
+						interaction.reply({
+							content:
+								"**This server doesn't have a member-log system**",
+						});
+					} else {
+						await memberLog.deleteOne({ Guild: guildId });
+						interaction.reply({
+							content:
+								"**Successfully deleted member-log system.**",
+						});
+					}
 				}
 				break;
 		}

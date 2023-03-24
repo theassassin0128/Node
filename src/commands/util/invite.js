@@ -32,16 +32,10 @@ module.exports = {
 
 		const AR = new ActionRowBuilder().addComponents(button);
 
-		if (interaction.user.id === owner.id) {
-			interaction.reply({
-				content: "Invite me to your server by clicking the button.",
-				ephemeral: true,
-				components: [AR],
-			});
-		} else {
-			interaction.reply({
-				content: "Only the owner is allowed to use this command.",
-			});
-		}
+		interaction.reply({
+			content: "Invite me by clicking the button.",
+			ephemeral: false,
+			components: [AR],
+		});
 	},
 };

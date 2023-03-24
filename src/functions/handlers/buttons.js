@@ -1,6 +1,4 @@
 const { loadFiles } = require("../loaders/loadFiles.js");
-const ascii = require("ascii-table");
-const table = new ascii("BUTTONS").setHeading("name", "status");
 
 async function loadButtons(client, dir) {
 	console.time("Buttons load time");

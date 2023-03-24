@@ -1,7 +1,5 @@
 const { glob } = require("glob");
 const path = require("path");
-const { promisify } = require("util");
-const proGlob = promisify(glob);
 
 async function deleteCashedFile(file) {
 	const filePath = path.resolve(file);
@@ -12,7 +10,7 @@ async function deleteCashedFile(file) {
 
 async function loadFiles(dirName) {
 	try {
-		const files = await proGlob(
+		const files = await glob(
 			path.join(process.cwd(), dirName, "**/*.js").replace(/\\/g, "/")
 		);
 		const jsFiles = files.filter((file) => path.extname(file) === ".js");

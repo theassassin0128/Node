@@ -23,19 +23,18 @@ module.exports = {
 			],
 			status: "dnd",
 		});
+		console.log(`Ready! Logged in as ${client.user.tag}`);
 
 		if (!mongodb) return;
-
-		mongoose.connect(mongodb, {
-			keepAlive: true,
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		});
-		mongoose.set("strictQuery", false);
-		if (mongoose.connect) {
+		try {
+			mongoose.connect(mongodb, {
+				keepAlive: true,
+				useNewUrlParser: true,
+				useUnifiedTopology: true,
+			});
 			console.log("Successfully connected to the DATABASE.");
+		} catch (error) {
+			console.error(`Error Occured:\n${error}`);
 		}
-
-		console.log(`Ready! Logged in as ${client.user.tag}`);
 	},
 };
