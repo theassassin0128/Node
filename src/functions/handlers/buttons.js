@@ -27,7 +27,7 @@ async function loadButtons(client, dir) {
 	}
 
 	console.table(buttons, ["Button", "Status"]);
-	console.info("\n\x1b[36m%s\x1b[0m", "Loaded Buttons.");
+	console.info("\x1b[36m%s\x1b[0m", "Loaded Buttons.");
 	console.timeEnd("Buttons load time");
 }
 

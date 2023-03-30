@@ -37,7 +37,7 @@ async function loadCommands(client, dir) {
 	});
 
 	console.table(commands, ["Command", "Status"]);
-	console.info("\n\x1b[36m%s\x1b[0m", "Loaded Commands.");
+	console.info("\x1b[36m%s\x1b[0m", "Loaded Commands.");
 	console.timeEnd("Commands load time");
 }
 

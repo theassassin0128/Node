@@ -30,7 +30,7 @@ async function loadEvents(client, dir) {
 	}
 
 	console.table(events, ["Event", "Status"]);
-	console.info("\n\x1b[36m%s\x1b[0m", "Loaded Events.");
+	console.info("\x1b[36m%s\x1b[0m", "Loaded Events.");
 	console.timeEnd("Events load time");
 }
 

@@ -10,20 +10,10 @@ module.exports = {
 	 * @param {Client} client
 	 */
 	execute: async (client) => {
-		client.user.setPresence({
-			activities: [
-				{
-					name: `${client.guilds.cache.size} Servers!`,
-					type: ActivityType.Watching,
-				},
-				{
-					name: "/help",
-					type: ActivityType.Listening,
-				},
-			],
-			status: "dnd",
-		});
-		console.log(`Ready! Logged in as ${client.user.tag}`);
+		console.log(
+			"\n\x1b[36m%s\x1b[0m",
+			`Ready! Logged in as ${client.user.tag}`
+		);
 
 		if (!mongodb) return;
 		try {
@@ -32,7 +22,7 @@ module.exports = {
 				useNewUrlParser: true,
 				useUnifiedTopology: true,
 			});
-			console.log("Successfully connected to the DATABASE.");
+			console.log("DATABASE connected.");
 		} catch (error) {
 			console.error(`Error Occured:\n${error}`);
 		}
