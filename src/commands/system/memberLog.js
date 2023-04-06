@@ -11,7 +11,6 @@ const { colour } = require("../../config.json");
 const moment = require("moment");
 
 module.exports = {
-	dev: true,
 	data: new SlashCommandBuilder()
 		.setName("member-log")
 		.setDescription("Member Logging System.")
