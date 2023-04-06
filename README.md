@@ -10,10 +10,10 @@
 > **Warning**. _This is a work in progress project. Feel free to contribute._
 
 -   [x] **Basic Bot**
--   [] **Moderation Bot**
--   [] **Chat Bot**
--   [] **Web based Dashboard**
--   [] **Website**
+-   [ ] **Moderation Bot**
+-   [ ] **Chat Bot**
+-   [ ] **Web based Dashboard**
+-   [ ] **Website**
 
 ## Features
 
