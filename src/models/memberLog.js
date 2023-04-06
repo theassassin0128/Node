@@ -3,8 +3,9 @@ const { Schema, model } = require("mongoose");
 const memberLogSchema = new Schema({
 	Guild: String,
 	Channel: String,
-	memberRole: String,
-	botRole: String,
+	Toggle: String,
+	MemberRole: String,
+	BotRole: String,
 });
 
 module.exports = model("memberLog", memberLogSchema);

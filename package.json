@@ -1,16 +1,21 @@
 {
 	"name": "node",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"description": "A multipurpose discord bot.",
 	"main": "index.js",
 	"scripts": {
-		"test": "node index.js"
+		"dev": "nodemon index.js",
+		"test": "echo \"No test specified\" && exit 1",
+		"start": "node index.js"
 	},
 	"keywords": [
 		"bot",
 		"discord"
 	],
-	"author": "THE-ASSASSIN0128",
+	"author": {
+		"name": "THE-ASSASSIN0128",
+		"url": "https://www.github.com/THE-ASSASSIN0128/"
+	},
 	"license": "MIT",
 	"dependencies": {
 		"discord-arts": "^0.4.0",

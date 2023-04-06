@@ -1,12 +1,12 @@
 const { loadFiles } = require("../loaders/loadFiles.js");
 
-async function loadButtons(client, dir) {
+async function loadButtons(client) {
 	console.time("Buttons load time");
 
 	client.buttons = new Map();
 	const buttons = new Array();
 
-	const files = await loadFiles(dir);
+	const files = await loadFiles("src/components");
 
 	for (const file of files) {
 		try {

@@ -1,12 +1,12 @@
 const { loadFiles } = require("../loaders/loadFiles.js");
 
-async function loadEvents(client, dir) {
+async function loadEvents(client) {
 	console.time("Events load time");
 
 	client.events = new Map();
 	const events = new Array();
 
-	const files = await loadFiles(dir);
+	const files = await loadFiles("src/events");
 
 	for (const file of files) {
 		try {

@@ -1,11 +1,52 @@
 [![CodeQL](https://github.com/THE-ASSASSIN0128/Node/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/THE-ASSASSIN0128/Node/actions/workflows/codeql.yml)
 [![Dependency Review](https://github.com/THE-ASSASSIN0128/Node/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/THE-ASSASSIN0128/Node/actions/workflows/dependency-review.yml)
 
-## Inroduction
+# NODE
 
-**_Node_** is a multipurpose discord _Bot_. Specially made for _Moderation_ & _Server-Management_. It only supports slash-commands. It was made with [discord.js](https://github.com/discordjs/discord.js) which is a powerful [**Node.js**](https://nodejs.org/en/) module that allows you to easily interact with the [Discord API](https://discord.com/developers/docs/intro).
+**Node** is a multipurpose discord Bot. Specially made for _Moderation_ & _Server-Management_. It was made with [discord.js](https://github.com/discordjs/discord.js) which is a powerful [**Node.js**](https://nodejs.org/en/) module that allows you to easily interact with the [Discord API](https://discord.com/developers/docs/intro).
 
-## Commands & Features
+## Road Map
+
+> **Warning**. _This is a work in progress project. Feel free to contribute._
+
+-   [x] **Basic Bot**
+-   [] **Moderation Bot**
+-   [] **Chat Bot**
+-   [] **Web based Dashboard**
+-   [] **Website**
+
+## Features
+
+-   **Multiserver Member Logging System**
+-   **Welcome Messaging System** _(incomplete)_
+
+## Get Started
+
+1. Copy `.env.example` to `.env` and fill in the values as detailed below.
+1. Create a [MongoDB](https://www.mongodb.com/) database and fill in `DATABASE_URL`.
+1. Create a Discord application at https://discord.com/developers/applications.
+1. Go to the Bot tab and click "Add Bot"
+    - Click "Reset Token" and fill in `DISCORD_TOKEN`
+    - Disable "Public Bot" unless you want your bot to be visible to everyone
+    - Enable "Server Members Intent", "Presence Intent" and "Message Content Intent" under "Privileged Gateway Intents"
+1. Go to the OAuth2 tab (General), copy your "Client ID", and fill in `BOT_ID`.
+1. Install dependencies and run the bot
+    ```
+    npm install
+    npm start
+    ```
+1. Now go to URL generator tab, in scopes select "bot", "application.commands" scroll down select "Administrator" permission copy the url and invite the bot to your server.
+1. Start using the bot. Use `/ping` or `/botinfo` commands.
+
+## Customization
+
+1. If you want you can change the embed message `colours` or some links such as `github` or `discord server invite link`.
+1. To change these parametars head to `src/config.json`.
+1. Change however you like.
+
+> **Note** : use hex colour code for the colours. (example: #FF0000 means "RED")
+
+## Commands
 
 | Name       | description                                                            |
 | ---------- | ---------------------------------------------------------------------- |
@@ -21,10 +62,5 @@
 | timeout    | Can be used to timeout a single user for a specific period of time     |
 | userinfo   | Same as serverinfo replies with information of a discord user          |
 | member-log | Commands to setup/delete/toggle member logging system                  |
-| welcome    | Incomplete                                                             |
 
-Written above are some commands of the bot. I'm planing on adding new commands with each version update. As of now the bot has a multiguild _Member-Logging-system_ & _Welcoming-System(incomplete)_. My test server which is **[Ghost Nation](https://discord.gg/E6H9VvBdTk)** where i test my commands. You are welcome to join the server.
-
-## Node Project & It's Development
-
-Node is my personal project which i started as a way to test my javascript skills. I will keep updating the code and will be addin new features and commands.
+Written above are some commands of the bot.

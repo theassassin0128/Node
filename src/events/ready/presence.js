@@ -30,8 +30,8 @@ module.exports = {
 		setInterval(() => {
 			let random = Math.floor(Math.random() * activities.length);
 			client.user.setActivity(activities[random]);
-		}, 30 * 1000);
+		}, 5 * 60 * 1000);
 
-		client.user.setStatus("dnd");
+		client.user.setStatus("online");
 	},
 };

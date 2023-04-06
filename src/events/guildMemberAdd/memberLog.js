@@ -19,20 +19,20 @@ module.exports = {
 	 * @returns
 	 */
 	execute: async (member, client) => {
-		return; // Need to rebuild this again;
-		const { user, guild } = member;
+		const { guild, user } = member;
 		const roles = guild.roles.cache;
-		memberLog.findOne({ Guild: guild.id }, async (err, data) => {});
+		const doc = await memberLog.findOne({ Guild: guild.id });
 
-		if (!data) return;
+		if (doc.get("Toggle") == "OFF") return;
 
-		let channel = (await member.guild.channels.fetch()).get(data.Channel);
+		let channel = (await member.guild.channels.fetch()).get(
+			doc.get("Channel")
+		);
 		if (!channel) return;
 
 		let assingRole = user.bot
-			? roles.get(data.botRole)
-			: roles.get(data.memberRole);
-
+			? roles.get(doc.get("BotRole"))
+			: roles.get(doc.get("MemberRole"));
 		if (!assingRole) assingRole = "Not Configured";
 		else
 			await member.roles.add(assingRole).catch(() => {
@@ -72,7 +72,7 @@ module.exports = {
 			.setDescription(
 				[
 					`• User : ${user}`,
-					`• Account Type : ${user.bot ? "bot" : "user"}`,
+					`• Account Type : ${user.bot ? "**Bot**" : "**User**"}`,
 					`• Role Assigned : ${assingRole}`,
 					`• Risk Level : ${risk}\n`,
 					`• Account Created :\n<t:${accountCreation}:D> | <t:${accountCreation}:R>`,

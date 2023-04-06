@@ -1,17 +1,17 @@
 const { REST, Routes } = require("discord.js");
-const { Token } = process.env;
-const rest = new REST({ version: "10" }).setToken(Token);
-const { bot, guilds } = require("../../config.json");
+const { DISCORD_TOKEN, BOT_ID, GUILD_TEST } = process.env;
+const rest = new REST({ version: "10" }).setToken(DISCORD_TOKEN);
 const { loadFiles } = require("../loaders/loadFiles.js");
 
-async function loadCommands(client, dir) {
+async function loadCommands(client) {
 	console.time("Commands load time");
 
 	client.commands = new Map();
 	const commands = new Array();
 	const commandsArray = new Array();
+	const devCommandsArray = new Array();
 
-	const files = await loadFiles(dir);
+	const files = await loadFiles("src/commands");
 
 	for (const file of files) {
 		try {
@@ -23,8 +23,12 @@ async function loadCommands(client, dir) {
 				Command: file.split("/").pop().slice(0, -3) + ".js",
 				Status: "✅️",
 			});
-			commandsArray.push(command.data.toJSON());
+
+			if (command.dev == true)
+				devCommandsArray.push(command.data.toJSON());
+			else commandsArray.push(command.data.toJSON());
 		} catch (error) {
+			console.error(error);
 			commands.push({
 				Command: file.split("/").pop().slice(0, -3),
 				Status: "❌️",
@@ -32,7 +36,10 @@ async function loadCommands(client, dir) {
 		}
 	}
 
-	rest.put(Routes.applicationGuildCommands(bot.id, guilds.main), {
+	rest.put(Routes.applicationGuildCommands(BOT_ID, GUILD_TEST), {
+		body: devCommandsArray,
+	});
+	rest.put(Routes.applicationCommands(BOT_ID), {
 		body: commandsArray,
 	});
 

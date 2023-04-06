@@ -1,6 +1,6 @@
-const { ActivityType, Client } = require("discord.js");
+const { Client } = require("discord.js");
 const mongoose = require("mongoose");
-const { mongodb } = process.env;
+const { DATABASE_URL } = process.env;
 
 module.exports = {
 	name: "ready",
@@ -15,9 +15,9 @@ module.exports = {
 			`Ready! Logged in as ${client.user.tag}`
 		);
 
-		if (!mongodb) return;
+		if (!DATABASE_URL) return;
 		try {
-			mongoose.connect(mongodb, {
+			mongoose.connect(DATABASE_URL, {
 				keepAlive: true,
 				useNewUrlParser: true,
 				useUnifiedTopology: true,

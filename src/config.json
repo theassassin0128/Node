@@ -1,17 +1,4 @@
 {
-	"guilds": {
-		"main": "1054284394791178291"
-	},
-	"bot": {
-		"name": "Node",
-		"id": "1030698369435320350"
-	},
-	"owner": {
-		"name": "THE-ASSASSIN",
-		"tag": "THE-ASSASSIN#0128",
-		"id": "720186844540567583",
-		"github": "https://github.com/THE-ASSASSIN0128"
-	},
 	"colour": {
 		"main": "90B63E",
 		"failed": "FF0000",
