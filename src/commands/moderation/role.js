@@ -150,29 +150,23 @@ module.exports = {
 						switch (action) {
 							case "give":
 								{
-									await interaction.reply({
-										content: `Started giving roles..........`,
-									});
 									memberArray.forEach((member) => {
 										member.roles.add(role);
 									});
-									await wait(3 * 1000);
-									interaction.editReply({
-										content: `${role} | Given the role to the selected members.`,
+									interaction.reply({
+										content: `${role} | Given the role to selected members.`,
+										ephemeral: true,
 									});
 								}
 								break;
 							case "remove":
 								{
-									await interaction.reply({
-										content: `Started removing roles..........`,
-									});
 									memberArray.forEach((member) => {
 										member.roles.remove(role);
 									});
-									await wait(3 * 1000);
-									interaction.editReply({
-										content: `${role} | Removed the role from the selected members.`,
+									interaction.reply({
+										content: `${role} | Removed the role from selected members.`,
+										ephemeral: true,
 									});
 								}
 								break;
