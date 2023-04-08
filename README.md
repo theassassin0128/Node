@@ -9,16 +9,15 @@
 
 > **Warning**. _This is a work in progress project. Feel free to contribute._
 
--   [x] **Basic Bot**
--   [ ] **Moderation Bot**
--   [ ] **Chat Bot**
--   [ ] **Web based Dashboard**
--   [ ] **Website**
+- [x] **Basic Bot**
+- [ ] **Moderation Bot**
+- [ ] **Chat Bot**
+- [ ] **Web based Dashboard**
+- [ ] **Website**
 
 ## Features
 
--   **Multiserver Member Logging System**
--   **Welcome Messaging System** _(incomplete)_
+- **Multiserver Member Logging System**
 
 ## Get Started
 
@@ -26,21 +25,21 @@
 1. Create a [MongoDB](https://www.mongodb.com/) database and fill in `DATABASE_URL`.
 1. Create a Discord application at https://discord.com/developers/applications.
 1. Go to the Bot tab and click "Add Bot"
-    - Click "Reset Token" and fill in `DISCORD_TOKEN`
-    - Disable "Public Bot" unless you want your bot to be visible to everyone
-    - Enable "Server Members Intent", "Presence Intent" and "Message Content Intent" under "Privileged Gateway Intents"
+   - Click "Reset Token" and fill in `DISCORD_TOKEN`
+   - Disable "Public Bot" unless you want your bot to be visible to everyone
+   - Enable "Server Members Intent", "Presence Intent" and "Message Content Intent" under "Privileged Gateway Intents"
 1. Go to the OAuth2 tab (General), copy your "Client ID", and fill in `BOT_ID`.
 1. Install dependencies and run the bot
-    ```
-    npm install
-    npm start
-    ```
+   ```
+   npm install
+   npm start
+   ```
 1. Now go to URL generator tab, in scopes select "bot", "application.commands" scroll down select "Administrator" permission copy the url and invite the bot to your server.
 1. Start using the bot. Use `/ping` or `/botinfo` commands.
 
 ## Customization
 
-1. If you want you can change the embed message `colours` or some links such as `github` or `discord server invite link`.
+1. If you want you can change the embed message `colours`, `devs` or some links such as `github` or `discord server invite link`.
 1. To change these parametars head to `src/config.json`.
 1. Change however you like.
 
