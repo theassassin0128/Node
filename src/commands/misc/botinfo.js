@@ -12,8 +12,8 @@ module.exports = {
     let minutes = Math.floor(client.uptime / 60000) % 60;
     let seconds = Math.floor(client.uptime / 1000) % 60;
 
-    let webLatency = new Date() - interaction.createdAt;
-    let apiLatency = client.ws.ping;
+    let webLatency = client.ws.ping;
+    let apiLatency = new Date() - interaction.createdAt;
 
     let emLatency = {
       Green: "🟢",
@@ -26,10 +26,10 @@ module.exports = {
       .setTitle("__GENERAL INFO__")
       .setDescription(
         [
-          `**🪧 Name :** ${client.user.username}`,
-          `**🏷️ Tag :** ${client.user.tag}`,
-          `**⚙️ Version :** ${pkg.version}`,
-          `**🌐 Website :** Coming soon.`,
+          `**Name :** ${client.user.username}`,
+          `**Tag :** ${client.user.tag}`,
+          `**Version :** ${pkg.version}`,
+          `**Website :** Coming soon.`,
         ].join("\n")
       )
       .setThumbnail(client.user.avatarURL({ size: 4096 }))
@@ -37,27 +37,27 @@ module.exports = {
         {
           name: "__BOT INFO__",
           value: [
-            `**❕ Status** :  \`🟢\` Online`,
-            `**🏓 Ping** : \`${
+            `**Status** :  \`🟢\` Online`,
+            `**Ping** : \`${
               webLatency <= 200
                 ? emLatency.Green
                 : webLatency <= 400
                 ? emLatency.Yellow
                 : emLatency.Red
             }\` ${webLatency}ms`,
-            `**⏱️ Uptime** :\n\`\`\`\n${days}Days, ${hours}Hours, ${minutes}Minutes, ${seconds}Seconds\n\`\`\``,
+            `**Uptime** :\n\`\`\`\n${days}Days, ${hours}Hours, ${minutes}Minutes, ${seconds}Seconds\n\`\`\``,
           ].join("\n"),
         },
         {
           name: "__LANGUAGE & LIBRARY INFO__",
           value: [
-            `**🪧 Name :** [nodejs](https://nodejs.org/en/)`,
-            `📚 **Library :** [discord.js](https://discord.js.org/#/) | V•${version}`,
+            `**Name :** [nodejs](https://nodejs.org/en/)`,
+            `**Library :** [discord.js](https://discord.js.org/#/) | V•${version}`,
           ].join("\n"),
         }
       );
 
-    interaction.reply({
+    return interaction.reply({
       embeds: [stats],
     });
   },

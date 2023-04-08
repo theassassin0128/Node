@@ -20,6 +20,8 @@ module.exports = {
           { name: "Button", value: "b" }
         )
     ),
+  devOnly: true,
+  testOnly: true,
   execute: async (interaction, client) => {
     const string = interaction.options.getString("type");
 

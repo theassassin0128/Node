@@ -24,7 +24,7 @@ async function loadCommands(client) {
         Status: "✅️",
       });
 
-      if (command.dev == true) devCommandsArray.push(command.data.toJSON());
+      if (command.testOnly) devCommandsArray.push(command.data.toJSON());
       else commandsArray.push(command.data.toJSON());
     } catch (error) {
       console.error(error);

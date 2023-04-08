@@ -19,20 +19,27 @@ module.exports = {
     const roles = interaction.guild.roles.cache.sort(
       (a, b) => b.position - a.position
     );
-    const roleString = roles.map((r) => r);
-    const size = roleString.toString().length;
+    const allRoles = roles.map((r) => r);
+    const size = allRoles.toString().length;
+
+    /*const totalRoles = Array.from(roles.keys()).indexOf(
+      interaction.guild.roles.highest
+    );*/
+
     if (size > 3608)
       return interaction.reply({
-        content: `Too many roles to display. About [${roles.size - 1}] roles.`,
+        content: `Too many roles to display. About [${
+          allRoles.size - 1
+        }] roles.`,
         ephemeral: true,
       });
 
     const rEmbed = new EmbedBuilder()
       .setTitle("ALL ROLES OF THIS SERVER")
       .setColor(colour.main)
-      .setDescription(`${roleString.join("\n").replace("@everyone", " ")}`);
+      .setDescription(`${allRoles.join("\n").replace("@everyone", " ")}`);
 
-    interaction.reply({
+    return interaction.reply({
       embeds: [rEmbed],
     });
   },

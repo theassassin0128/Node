@@ -1,44 +1,65 @@
-const { EmbedBuilder } = require("discord.js");
+const {
+  EmbedBuilder,
+  PermissionFlagsBits,
+  Client,
+  ChatInputCommandInteraction,
+} = require("discord.js");
 const { colour } = require("../../config.json");
 
 module.exports = {
   name: "Ban",
+  permissionsRequire: [PermissionFlagsBits.BanMembers],
+  botPermissions: [PermissionFlagsBits.BanMembers],
+  /**
+   *
+   * @param {ChatInputCommandInteraction} interaction
+   * @param {Client} client
+   * @returns
+   */
   execute: async (interaction, client, id) => {
     const member = (await interaction.guild.members.fetch()).get(id);
     const errorEmbed = new EmbedBuilder();
     const errorArray = [];
 
-    if (!interaction.member.permissions.has("BanMembers"))
-      errorArray.push("You do not have the required permission");
-    if (!member)
-      return interaction.reply({
+    if (!member) {
+      interaction.reply({
         embeds: [
           errorEmbed
             .setDescription("The member is no longer a part of this server")
-            .setColor("#ff0000"),
+            .setColor(colour.error),
         ],
         ephemeral: true,
       });
+      return;
+    }
+
     if (!member.moderatable)
       errorArray.push("The Member is not moderatable by this bot.");
-    if (errorArray.length)
-      return interaction.reply({
+    if (errorArray.length) {
+      interaction.reply({
         embeds: [
-          errorEmbed.setDescription(errorArray.join("\n")).setColor("#ff0000"),
+          errorEmbed
+            .setDescription(errorArray.join("\n"))
+            .setColor(colour.error),
         ],
         ephemeral: true,
       });
+      return;
+    }
 
     const bEmbed = new EmbedBuilder()
       .setTitle("__BAN NOTICE__")
       .setDescription(
-        `Dear User,\nI am sorry to say this but you are officially been banned in ${interaction.guild.name}. Your account is created not long ago. Because of this & for some other reason the moderator found your account suspicious. As a result you have been **BANNED**.`
+        `Dear ${member},\nThis is to notify you that have been banned in ${interaction.guild.name}.`
       )
       .setColor(colour.main)
-      .setFooter({ text: "BANNED" })
+      .setFooter({
+        text: interaction.guild.name,
+        iconURL: interaction.guild.iconURL(),
+      })
       .setTimestamp();
 
-    if (!member.bot) {
+    if (!member.user.bot) {
       await member.send({
         content: `${member}`,
         embeds: [bEmbed],
@@ -46,17 +67,22 @@ module.exports = {
     }
 
     try {
-      member.ban({
+      await member.ban({
         deleteMessageSeconds: 60 * 60 * 24 * 7,
         reason: `Banned by ${interaction.user.tag} & Member Logging System.`,
       });
-      await interaction.reply({
+      interaction.reply({
         content: `Successfully Banned the user`,
         ephemeral: true,
       });
     } catch (error) {
       interaction.reply({
-        content: `Error: ${error}`,
+        embeds: [
+          new EmbedBuilder()
+            .setTitle("ERROR Occured")
+            .setDescription(`An error occoured while executing the command.\n`)
+            .setColor(colour.error),
+        ],
         ephemeral: true,
       });
     }

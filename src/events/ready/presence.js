@@ -1,4 +1,4 @@
-const { ActivityType, Client } = require("discord.js");
+const { ActivityType, Client, Guild } = require("discord.js");
 
 module.exports = {
   name: "ready",
@@ -14,11 +14,11 @@ module.exports = {
         type: ActivityType.Listening,
       },
       {
-        name: `over ${client.guilds.cache.size} servers.`,
+        name: `Over ${client.guilds.cache.size} servers.`,
         type: ActivityType.Watching,
       },
       {
-        name: "Call of Duty: Mobile",
+        name: `With ${(await getMemberCount(client)).count} Users.`,
         type: ActivityType.Playing,
       },
       {
@@ -26,12 +26,24 @@ module.exports = {
         type: ActivityType.Listening,
       },
     ];
+    let i = 0;
 
     setInterval(() => {
-      let random = Math.floor(Math.random() * activities.length);
-      client.user.setActivity(activities[random]);
-    }, 5 * 60 * 1000);
+      client.user.setActivity(activities[i]);
+      i++;
+      if (i >= activities.length) i = 0;
+    }, 1 * 60 * 60 * 1000);
 
     client.user.setStatus("online");
   },
 };
+
+async function getMemberCount(client) {
+  let memberCount = 0;
+
+  client.guilds.cache.forEach((guild) => {
+    memberCount += guild.memberCount;
+  });
+
+  return { count: memberCount };
+}

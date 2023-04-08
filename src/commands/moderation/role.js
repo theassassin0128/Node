@@ -78,6 +78,8 @@ module.exports = {
             )
         )
     ),
+  permissions: [PermissionFlagsBits.ManageRoles],
+  botPermissions: [PermissionFlagsBits.ManageRoles],
   /**
    *
    * @param {ChatInputCommandInteraction} interaction
@@ -98,83 +100,84 @@ module.exports = {
 
     if (role.position >= bot.roles.highest.position) {
       interaction.reply({
-        content: `This role's position is higher than mine.`,
+        content: `I am not allowed to manage this role | ${role}`,
         ephemeral: true,
       });
+      return;
     }
 
-    let allowed =
-      fetchedUser.id == guild.ownerId ||
-      fetchedUser.roles.highest.position > role.position;
-
-    if (allowed) {
-      switch (subcommand) {
-        case "give":
-          {
-            await target.roles.add(role);
-            interaction.reply({
-              content: `${role} | Role given to ${target}.`,
-              ephemeral: true,
-            });
-          }
-          break;
-        case "remove":
-          {
-            await target.roles.remove(role);
-            interaction.reply({
-              content: `${role} | Role removed from ${target}.`,
-              ephemeral: true,
-            });
-          }
-          break;
-        case "multiple":
-          {
-            const allMembers = await guild.members.fetch();
-            allMembers.forEach((member) => {
-              switch (type) {
-                case "all":
-                  memberArray.push(member);
-                  break;
-                case "humans":
-                  if (!member.user.bot) memberArray.push(member);
-                  break;
-                case "bots":
-                  if (member.user.bot) memberArray.push(member);
-                  break;
-              }
-            });
-            switch (action) {
-              case "give":
-                {
-                  memberArray.forEach((member) => {
-                    member.roles.add(role);
-                  });
-                  interaction.reply({
-                    content: `${role} | Given the role to selected members.`,
-                    ephemeral: true,
-                  });
-                }
-                break;
-              case "remove":
-                {
-                  memberArray.forEach((member) => {
-                    member.roles.remove(role);
-                  });
-                  interaction.reply({
-                    content: `${role} | Removed the role from selected members.`,
-                    ephemeral: true,
-                  });
-                }
-                break;
-            }
-          }
-          break;
-      }
-    } else {
+    if (
+      !fetchedUser.id == guild.ownerId &&
+      fetchedUser.roles.highest.position < role.position
+    ) {
       interaction.reply({
-        content: `${role} | You are not allowed to manage this role.`,
+        content: `You are not allowed to manage this role | ${role}`,
         ephemeral: true,
       });
+      return;
+    }
+
+    switch (subcommand) {
+      case "give":
+        {
+          await target.roles.add(role);
+          interaction.reply({
+            content: `${role} | Role given to ${target}.`,
+            ephemeral: true,
+          });
+        }
+        break;
+      case "remove":
+        {
+          await target.roles.remove(role);
+          interaction.reply({
+            content: `${role} | Role removed from ${target}.`,
+            ephemeral: true,
+          });
+        }
+        break;
+      case "multiple":
+        {
+          const allMembers = await guild.members.fetch();
+          allMembers.forEach((member) => {
+            switch (type) {
+              case "all":
+                memberArray.push(member);
+                break;
+              case "humans":
+                if (!member.user.bot) memberArray.push(member);
+                break;
+              case "bots":
+                if (member.user.bot) memberArray.push(member);
+                break;
+            }
+          });
+          switch (action) {
+            case "give":
+              {
+                memberArray.forEach((member) => {
+                  member.roles.add(role);
+                });
+                interaction.reply({
+                  content: `${role} | Given the role to selected members.`,
+                  ephemeral: true,
+                });
+              }
+              break;
+            case "remove":
+              {
+                memberArray.forEach((member) => {
+                  member.roles.remove(role);
+                });
+                interaction.reply({
+                  content: `${role} | Removed the role from selected members.`,
+                  ephemeral: true,
+                });
+              }
+              break;
+          }
+        }
+        break;
     }
   },
 };

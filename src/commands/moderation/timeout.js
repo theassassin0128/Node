@@ -33,6 +33,16 @@ module.exports = {
         .setDescription("Reason for this timeout")
         .setMaxLength(512)
     ),
+  //devOnly: false,
+  //testOnly: false,
+  permissions: [PermissionFlagsBits.ModerateMembers],
+  botPermissions: [PermissionFlagsBits.ModerateMembers],
+  /**
+   *
+   * @param {Client} interaction
+   * @param {ChatInputCommandInteraction} client
+   * @returns
+   */
   execute: async (interaction, client) => {
     const { options, guild, member, user } = interaction;
 
@@ -49,7 +59,7 @@ module.exports = {
     if (!target)
       return interaction.reply({
         embeds: [
-          errorEmbed.setDescription("Member has most likely left the guild."),
+          errorEmbed.setDescription("Member has most likely left the server."),
         ],
         ephemeral: true,
       });
@@ -63,11 +73,13 @@ module.exports = {
     if (member.roles.highest.position < target.roles.highest.position)
       errorsArray.push("Selected target has a higher role position than you.");
 
-    if (errorsArray.length)
-      return interaction.reply({
+    if (errorsArray.length) {
+      interaction.reply({
         embeds: [errorEmbed.setDescription(errorsArray.join("\n"))],
         ephemeral: true,
       });
+      return;
+    }
 
     try {
       await target.timeout(ms(duration), reason);
@@ -80,7 +92,7 @@ module.exports = {
         ],
         ephemeral: true,
       });
-      console.error(err);
+      return;
     }
 
     const newInfractionObject = {
@@ -107,7 +119,7 @@ module.exports = {
 
     const sEmbed = new EmbedBuilder()
       .setAuthor({ name: "Timeout Issues", iconURL: guild.iconURL() })
-      .setColor(colour.main)
+      .setColor(colour.success)
       .setDescription(
         [
           `${target} was issued a timeout for **${ms(ms(duration), {
