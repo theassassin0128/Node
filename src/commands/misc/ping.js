@@ -1,14 +1,26 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { version } = require(`${process.cwd()}/package.json`);
+const {
+  SlashCommandBuilder,
+  EmbedBuilder,
+  ChatInputCommandInteraction,
+  Client,
+} = require("discord.js");
 const { colour } = require("../../config.json");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ping")
     .setDescription("Replies with API & WS ping."),
+  /**
+   *
+   * @param {ChatInputCommandInteraction} interaction
+   * @param {Client} client
+   */
   execute: async (interaction, client) => {
-    let webLatency = new Date() - interaction.createdAt;
-    let apiLatency = client.ws.ping;
+    await interaction.deferReply();
+    const reply = await interaction.fetchReply();
+    const apiPing = reply.createdTimestamp - interaction.createdTimestamp;
+    const webPing = client.ws.ping;
+
     let emLatency = {
       Green: "🟢",
       Yellow: "🟡",
@@ -22,26 +34,26 @@ module.exports = {
         {
           name: "📡 Websocket Latency",
           value: `\`${
-            webLatency <= 200
+            webPing <= 200
               ? emLatency.Green
-              : webLatency <= 400
+              : webPing <= 400
               ? emLatency.Yellow
               : emLatency.Red
-          }\` \`${webLatency}\`ms`,
+          }\` \`${webPing}\`ms`,
         },
         {
           name: "🛰 API Latency",
           value: `\`${
-            apiLatency <= 200
+            apiPing <= 200
               ? emLatency.Green
-              : apiLatency <= 400
+              : apiPing <= 400
               ? emLatency.Yellow
               : emLatency.Red
-          }\` \`${apiLatency}\`ms`,
+          }\` \`${apiPing}\`ms`,
         }
       );
 
-    interaction.reply({
+    interaction.editReply({
       embeds: [latancy],
     });
   },

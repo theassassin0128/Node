@@ -78,8 +78,8 @@ module.exports = {
             )
         )
     ),
-  permissions: [PermissionFlagsBits.ManageRoles],
-  botPermissions: [PermissionFlagsBits.ManageRoles],
+  permissions: ["ManageRoles"],
+  botPermissions: ["ManageRoles"],
   /**
    *
    * @param {ChatInputCommandInteraction} interaction

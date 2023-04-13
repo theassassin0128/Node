@@ -50,7 +50,7 @@ module.exports = {
     const kEmbed = new EmbedBuilder()
       .setTitle("__KICK NOTICE__")
       .setDescription(
-        `Dear ${member},\nThis is to notify you that have been kicked out of ${interaction.guild.name}.`
+        `${member},\nThis is to notify you that have been kicked out of ${interaction.guild.name}.`
       )
       .setColor(colour.main)
       .setFooter({

@@ -84,6 +84,8 @@ module.exports = {
     .addSubcommand((option) =>
       option.setName("preview").setDescription("Sends a preview.")
     ),
+  permissions: ["ManageGuild"],
+  botPermissions: ["ManageGuild"],
   /**
    *
    * @param {ChatInputCommandInteraction} interaction

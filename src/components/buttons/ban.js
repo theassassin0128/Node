@@ -50,7 +50,7 @@ module.exports = {
     const bEmbed = new EmbedBuilder()
       .setTitle("__BAN NOTICE__")
       .setDescription(
-        `Dear ${member},\nThis is to notify you that have been banned in ${interaction.guild.name}.`
+        `${member},\nThis is to notify you that have been banned from ${interaction.guild.name}.`
       )
       .setColor(colour.main)
       .setFooter({

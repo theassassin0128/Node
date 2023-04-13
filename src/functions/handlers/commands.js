@@ -27,7 +27,6 @@ async function loadCommands(client) {
       if (command.testOnly) devCommandsArray.push(command.data.toJSON());
       else commandsArray.push(command.data.toJSON());
     } catch (error) {
-      console.error(error);
       commands.push({
         Command: file.split("/").pop().slice(0, -3),
         Status: "❌️",

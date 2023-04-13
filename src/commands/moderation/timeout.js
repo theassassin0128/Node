@@ -35,8 +35,8 @@ module.exports = {
     ),
   //devOnly: false,
   //testOnly: false,
-  permissions: [PermissionFlagsBits.ModerateMembers],
-  botPermissions: [PermissionFlagsBits.ModerateMembers],
+  permissions: ["ModerateMembers"],
+  botPermissions: ["ModerateMembers"],
   /**
    *
    * @param {Client} interaction

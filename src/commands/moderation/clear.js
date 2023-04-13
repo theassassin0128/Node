@@ -25,8 +25,8 @@ module.exports = {
         .setDescription("The member to delete messages.")
         .setRequired(false)
     ),
-  permissionsRequired: [PermissionFlagsBits.ManageMessages],
-  botPermissions: [PermissionFlagsBits.ManageMessages],
+  permissionsRequired: ["ManageMessages"],
+  botPermissions: ["ManageMessages"],
   /**
    *
    * @param {ChatInputCommandInteraction} interaction

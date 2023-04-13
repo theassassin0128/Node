@@ -1,4 +1,8 @@
-const { ChatInputCommandInteraction, Client } = require("discord.js");
+const {
+  ChatInputCommandInteraction,
+  Client,
+  PermissionFlagsBits,
+} = require("discord.js");
 const { devs } = require("../../config.json");
 const testServer = process.env["GUILD_TEST"];
 
@@ -48,7 +52,7 @@ module.exports = {
         for (const permission of command.permissionsRequired) {
           if (!interaction.member.permissions.has(permission)) {
             interaction.reply({
-              content: `You do not have enough permissions to use this command.`,
+              content: `You need \`${permission}\` permission to use this command.`,
               ephemeral: true,
             });
             return;
@@ -61,7 +65,7 @@ module.exports = {
         for (const permission of command.botPermissions) {
           if (!bot.permissions.has(permission)) {
             interaction.reply({
-              content: `I do not have enough permissions to execute this command.`,
+              content: `I need \`${permission}\` permission to execute this command.`,
               ephemeral: true,
             });
             return;

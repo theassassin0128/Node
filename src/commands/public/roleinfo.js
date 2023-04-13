@@ -58,9 +58,11 @@ module.exports = {
         {
           name: "EXTRA",
           value: [
+            `\`\`\`js\n`,
             `Mentionable : ${role.mentionable}`,
             `Separated : ${role.hoist}`,
             `Integration : ${role.managed}`,
+            `\n\`\`\``,
           ].join("\n"),
         }
       );
