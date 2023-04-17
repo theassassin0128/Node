@@ -26,15 +26,15 @@ module.exports = {
         type: ActivityType.Listening,
       },
     ];
+    client.user.setStatus("online");
+
     let i = 0;
 
     setInterval(() => {
       client.user.setActivity(activities[i]);
       i++;
       if (i >= activities.length) i = 0;
-    }, 10 * 60 * 1000);
-
-    client.user.setStatus("online");
+    }, 10 * 1000);
   },
 };
 
