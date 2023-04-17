@@ -32,7 +32,7 @@ module.exports = {
       client.user.setActivity(activities[i]);
       i++;
       if (i >= activities.length) i = 0;
-    }, 1 * 60 * 60 * 1000);
+    }, 10 * 60 * 1000);
 
     client.user.setStatus("online");
   },

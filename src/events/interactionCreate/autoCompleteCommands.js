@@ -15,7 +15,7 @@ module.exports = {
    * @returns
    */
   async execute(interaction, client) {
-    if (!interaction.isChatInputCommand()) return;
+    if (!interaction.isAutocomplete()) return;
 
     const command = await client.commands.get(interaction.commandName);
 
@@ -73,7 +73,7 @@ module.exports = {
     }
 
     try {
-      await command.execute(interaction, client);
+      await command.autocomplete(interaction, client);
     } catch (error) {
       interaction.reply({
         content: `An error occured.\n${error}`,
