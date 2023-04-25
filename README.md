@@ -39,27 +39,21 @@
 
 ## Customization
 
-1. If you want you can change the embed message `colours`, `devs` or some links such as `github` or `discord server invite link`.
-1. To change these parametars head to `src/config.json`.
-1. Change however you like.
+1. You can change embed message `colour`.
+1. Add or Remove ids of `devs`.
+1. Change links of `github`, `discord server`, `images`.
 
 > **Note** : use hex colour code for the colours. (example: #FF0000 means "RED")
 
 ## Commands
 
-| Name       | description                                                            |
-| ---------- | ---------------------------------------------------------------------- |
-| botinfo    | Replies with bot's stats in an embed message                           |
-| clear      | Detele a specific amount of messages.                                  |
-| emit       | It can be used to emit an event.                                       |
-| invite     | Returns a link button with embeded invite-link.                        |
-| reload     | Can be used to reload certain files without restarting the application |
-| role       | Able to manage (give/remove) role of single/multiple users             |
-| roleinfo   | Similar to botinfo replies with information of a server role           |
-| roles      | Replies with an embed message with full list of roles (UpTo 150)       |
-| serverinfo | Same as roleinfo replies with info about a discord server              |
-| timeout    | Can be used to timeout a single user for a specific period of time     |
-| userinfo   | Same as serverinfo replies with information of a discord user          |
-| member-log | Commands to setup/delete/toggle member logging system                  |
+| Name       | description                                                      |
+| ---------- | ---------------------------------------------------------------- |
+| botinfo    | Replies with bot's stats in an embed message                     |
+| invite     | Returns a link button with embeded invite-link.                  |
+| roleinfo   | Similar to botinfo replies with information of a server role     |
+| roles      | Replies with an embed message with full list of roles (UpTo 150) |
+| serverinfo | Same as roleinfo replies with info about a discord server        |
+| memberinfo | Same as serverinfo replies with information of a discord user    |
 
-Written above are some commands of the bot.
+Written above are some public commands of the bot.
