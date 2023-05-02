@@ -7,7 +7,7 @@
 
 ## Road Map
 
-> **Warning**. _This is a work in progress project. Feel free to contribute._
+> **DROPPED**. _This project is no longer in development and dropped. There won't be any new releases._
 
 - [x] **Basic Bot**
 - [ ] **Moderation Bot**
