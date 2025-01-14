@@ -19,14 +19,14 @@ module.exports = {
           {
             name: "guildMemberRemove",
             value: "m2",
-          }
-        )
+          },
+        ),
     )
     .addUserOption((option) =>
       option
         .setName("user")
         .setDescription("Select a user to emit an event.")
-        .setRequired(false)
+        .setRequired(false),
     ),
   execute: async (interaction, client) => {
     const user = interaction.options.getUser("user");

@@ -8,7 +8,7 @@ const {
   ChatInputCommandInteraction,
   OAuth2Scopes,
 } = require("discord.js");
-const { owner } = require("../../config.json");
+const { owner } = require("../../config");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("invite")

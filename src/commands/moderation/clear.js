@@ -17,13 +17,13 @@ module.exports = {
         .setDescription("Number of messages to delete.")
         .setMaxValue(100)
         .setMinValue(1)
-        .setRequired(true)
+        .setRequired(true),
     )
     .addUserOption((option) =>
       option
         .setName("target")
         .setDescription("The member to delete messages.")
-        .setRequired(false)
+        .setRequired(false),
     ),
   permissionsRequired: ["ManageMessages"],
   botPermissions: ["ManageMessages"],

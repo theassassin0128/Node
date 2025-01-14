@@ -3,7 +3,7 @@ const {
   Client,
   PermissionFlagsBits,
 } = require("discord.js");
-const { devs } = require("../../config.json");
+const { devs } = require("../../config");
 const testServer = process.env["GUILD_TEST"];
 
 module.exports = {

@@ -17,34 +17,28 @@ module.exports = {
         .setName("give")
         .setDescription("Gives a role to a user.")
         .addRoleOption((option) =>
-          option
-            .setName("role")
-            .setDescription("The role to give.")
-            .setRequired(true)
+          option.setName("role").setDescription("The role to give.").setRequired(true),
         )
         .addUserOption((option) =>
           option
             .setName("target")
             .setDescription("The user to give the role.")
-            .setRequired(true)
-        )
+            .setRequired(true),
+        ),
     )
     .addSubcommand((option) =>
       option
         .setName("remove")
         .setDescription("Removes a role from a user.")
         .addRoleOption((option) =>
-          option
-            .setName("role")
-            .setDescription("The role to remove.")
-            .setRequired(true)
+          option.setName("role").setDescription("The role to remove.").setRequired(true),
         )
         .addUserOption((option) =>
           option
             .setName("target")
             .setDescription("The user to remove the role.")
-            .setRequired(true)
-        )
+            .setRequired(true),
+        ),
     )
     .addSubcommand((option) =>
       option
@@ -57,14 +51,11 @@ module.exports = {
             .setRequired(true)
             .addChoices(
               { name: "Give", value: "give" },
-              { name: "Remove", value: "remove" }
-            )
+              { name: "Remove", value: "remove" },
+            ),
         )
         .addRoleOption((option) =>
-          option
-            .setName("role")
-            .setDescription("The role to gives.")
-            .setRequired(true)
+          option.setName("role").setDescription("The role to gives.").setRequired(true),
         )
         .addStringOption((option) =>
           option
@@ -74,9 +65,9 @@ module.exports = {
             .addChoices(
               { name: "All Members", value: "all" },
               { name: "Humans", value: "humans" },
-              { name: "Bots", value: "bots" }
-            )
-        )
+              { name: "Bots", value: "bots" },
+            ),
+        ),
     ),
   permissions: ["ManageRoles"],
   botPermissions: ["ManageRoles"],

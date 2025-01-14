@@ -4,7 +4,7 @@ const {
   ChatInputCommandInteraction,
   Client,
 } = require("discord.js");
-const { colour } = require("../../config.json");
+const { colour } = require("../../config");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -28,30 +28,30 @@ module.exports = {
     };
 
     let latancy = new EmbedBuilder()
-      .setColor(colour.main)
-      .setTitle(`Latency And API Ping`)
-      .addFields(
-        {
-          name: "📡 Websocket Latency",
-          value: `\`${
-            webPing <= 200
-              ? emLatency.Green
-              : webPing <= 400
-              ? emLatency.Yellow
-              : emLatency.Red
-          }\` \`${webPing}\`ms`,
-        },
-        {
-          name: "🛰 API Latency",
-          value: `\`${
-            apiPing <= 200
-              ? emLatency.Green
-              : apiPing <= 400
-              ? emLatency.Yellow
-              : emLatency.Red
-          }\` \`${apiPing}\`ms`,
-        }
-      );
+			.setColor(colour.main)
+			.setTitle(`Latency And API Ping`)
+			.addFields(
+				{
+					name: "📡 Websocket Latency",
+					value: `\`${
+						webPing <= 200
+							? emLatency.Green
+							: webPing <= 400
+							? emLatency.Yellow
+							: emLatency.Red
+					}\` \`${webPing}\`ms`,
+				},
+				{
+					name: "🛰 API Latency",
+					value: `\`${
+						apiPing <= 200
+							? emLatency.Green
+							: apiPing <= 400
+							? emLatency.Yellow
+							: emLatency.Red
+					}\` \`${apiPing}\`ms`,
+				},
+			);
 
     interaction.editReply({
       embeds: [latancy],

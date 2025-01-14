@@ -5,7 +5,7 @@ const {
   ChatInputCommandInteraction,
 } = require("discord.js");
 const moment = require("moment");
-const { colour } = require("../../config.json");
+const { colour } = require("../../config");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -24,37 +24,37 @@ module.exports = {
     let Channels = await guild.channels.fetch();
 
     let server = new EmbedBuilder()
-      .setTitle(`${interaction.guild.name}`)
-      .addFields(
-        {
-          name: "🆔 ID",
-          value: `${guild.id}`,
-        },
-        {
-          name: "📅 Created On",
-          value: `${moment(guild.createdAt).format(
-            "dddd, MMMM Do YYYY, h:mm:ss A"
-          )}\n - ${moment(guild.createdAt, "YYYYMMDD").fromNow()}`,
-        },
-        {
-          name: "👑 Owned by",
-          value: `${owner} (${owner.id})`,
-        },
-        {
-          name: `👥 Members [${guild.memberCount}]`,
-          value: "More information will be added in future Updates.",
-        },
-        {
-          name: `💬 Channels [${Channels.size}]`,
-          value: "More information will be added in the future updates.",
-        },
-        {
-          name: `🔐 Roles [${Roles.size}]`,
-          value: "Use `/roles` to get a list of roles",
-        }
-      )
-      .setColor(colour.main)
-      .setThumbnail(guild.iconURL({ size: 4096 }));
+			.setTitle(`${interaction.guild.name}`)
+			.addFields(
+				{
+					name: "🆔 ID",
+					value: `${guild.id}`,
+				},
+				{
+					name: "📅 Created On",
+					value: `${moment(guild.createdAt).format(
+						"dddd, MMMM Do YYYY, h:mm:ss A",
+					)}\n - ${moment(guild.createdAt, "YYYYMMDD").fromNow()}`,
+				},
+				{
+					name: "👑 Owned by",
+					value: `${owner} (${owner.id})`,
+				},
+				{
+					name: `👥 Members [${guild.memberCount}]`,
+					value: "More information will be added in future Updates.",
+				},
+				{
+					name: `💬 Channels [${Channels.size}]`,
+					value: "More information will be added in the future updates.",
+				},
+				{
+					name: `🔐 Roles [${Roles.size}]`,
+					value: "Use `/roles` to get a list of roles",
+				},
+			)
+			.setColor(colour.main)
+			.setThumbnail(guild.iconURL({ size: 4096 }));
 
     interaction.reply({
       embeds: [server],

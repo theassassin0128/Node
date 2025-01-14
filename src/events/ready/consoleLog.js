@@ -10,10 +10,7 @@ module.exports = {
    * @param {Client} client
    */
   execute: async (client) => {
-    console.log(
-      "\n\x1b[36m%s\x1b[0m",
-      `Ready! Logged in as ${client.user.tag}`
-    );
+    console.log("\n\x1b[36m%s\x1b[0m", `Ready! Logged in as ${client.user.tag}`);
 
     if (!DATABASE_URL) return;
     try {
