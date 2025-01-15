@@ -27,9 +27,9 @@
 - [ ] **Advanced Bot**
 - [ ] **Documentation**
 - [ ] **Moderation Bot**
-- [x] **Music Bot** _(basic version)_
+- [ ] **Music Bot** _(basic version)_
 - [ ] **Web-based Dashboard**
-- [x] **Website** _(simple)_
+- [ ] **Website** _(simple)_
 
 ## 💡 Features
 
@@ -37,10 +37,8 @@
 2. **Moderation Tools**
 3. **Music Streaming**
 4. **Server Management**
-5. **Custom Commands** 
-6. **Web Dashboard** 
-Above all need some time to fix.
-
+5. **Custom Commands**
+6. **Web Dashboard**
 
 ## Get Started ( Old Guide )
 

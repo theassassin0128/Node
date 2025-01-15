@@ -1,32 +1,6 @@
 const { PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
-	image_links: {
-		glitch:
-			"https://cdn.pixabay.com/photo/2013/07/12/17/47/test-pattern-152459_960_720.png",
-	},
-
-	cache_size: {
-		guilds: 100,
-		users: 10000,
-		members: 10000,
-	},
-
-	icons: {
-		youtube: "https://i.imgur.com/xzVHhFY.png",
-		spotify: "https://i.imgur.com/qvdqtsc.png",
-		soundcloud: "https://i.imgur.com/MVnJ7mj.png",
-		applemusic: "https://i.imgur.com/Wi0oyYm.png",
-		deezer: "https://i.imgur.com/xyZ43FG.png",
-		jiosaavn: "https://i.imgur.com/N9Nt80h.png",
-	},
-
-	// For embeds colors. Can be used anywhere
-	colors: require("./colors.json"),
-	emojis: require("./emojis"),
-	categories: require("./categories"),
-	plugins: require("./plugins"),
-
 	// For all secrets and tokens
 	secrets: {
 		// Discord bot secrets
@@ -87,22 +61,25 @@ module.exports = {
 
 			// Set true to enable & false to disable
 			enabled: {
-				prefix: true, // Enables Prefix command
-				slash: true, // Enables Slash command
-				context: true, // Enables Context command
-				buttons: true, // Enables Buttons command
-				modals: true, // Enables Modals command
+				prefix: true, // Enables Prefix commands
+				slash: true, // Enables Slash commands
+				context: true, // Enables Context menu commands
+				buttons: true, // Enables Buttons
+				modals: true, // Enables Modals
 			},
 		},
 
-		// Table settings to use with "table" package
+		// settings and configuration to use with "table" package
 		table: {
 			// Set true to enable & false to disable
-			sync: true,
-			event: false,
-			command: false,
+			enabled: {
+				sync: true,
+				event: true,
+				command: true,
+			},
 
-			// Table border styles. Change it as you like
+			// Table border styles. Change it as you like.
+			// For more info: https://www.npmjs.com/package/table
 			border: {
 				topBody: `─`,
 				topJoin: `┬`,
@@ -123,24 +100,138 @@ module.exports = {
 		},
 	},
 
-	color: {
-		main: "90B63E",
-		failed: "FF0000",
-		error: "E3C647",
-		success: "2EFF00",
-		standby: "000000",
-		log: {
-			msg: "2EFF00",
-			mod: "FF0000",
-			svr: "00FF00",
-		},
-	},
-
-	// For all links
+	// Links to use anywhere
 	links: {
 		website: "https://theassassin0128.github.io/hopeless-bot",
 		invite: "https://discord.com/oauth2/authorize?client_id=1030698369435320350",
 		server: "https://discord.gg/E6H9VvBdTk",
 		github: "https://github.com/theassassin0128/Node#readme",
+	},
+
+	image_links: {
+		glitch:
+			"https://cdn.pixabay.com/photo/2013/07/12/17/47/test-pattern-152459_960_720.png",
+	},
+
+	cache_size: {
+		guilds: 100,
+		users: 10000,
+		members: 10000,
+	},
+
+	icons: {
+		youtube: "https://i.imgur.com/xzVHhFY.png",
+		spotify: "https://i.imgur.com/qvdqtsc.png",
+		soundcloud: "https://i.imgur.com/MVnJ7mj.png",
+		applemusic: "https://i.imgur.com/Wi0oyYm.png",
+		deezer: "https://i.imgur.com/xyZ43FG.png",
+		jiosaavn: "https://i.imgur.com/N9Nt80h.png",
+	},
+
+	// For embeds colors. Can be used anywhere
+	colors: require("./colors.json"),
+	emojis: require("./emojis.js"),
+	categories: require("./categories.js"),
+
+	// Config for all plugins
+	auto_moderation: {
+		enabled: true,
+	},
+
+	dashboard: {
+		enabled: true,
+		base_url: "",
+		failure_url: "",
+		port: "3000",
+	},
+
+	economy: {
+		enabled: true,
+		currency: "💵",
+		daily_coins: 25,
+		min_beg_amount: 10,
+		max_beg_amount: 250,
+	},
+
+	music: {
+		enabled: true,
+		idle_time: 180000,
+		max_search_results: 10,
+		default_source: "ytm",
+		sources: ["ytmsearch", "ytm", "ytsearch", "yt", "spotifysearch", "spotify"],
+		lavalink_nodes: [
+			// locally hosted node
+			{
+				authorization: "youshallnotpass",
+				host: "localhost",
+				port: 6969,
+				id: "Local Node",
+				requestSignalTimeoutMS: 10000,
+				closeOnError: true,
+				enablePingOnStatsCheck: true,
+				retryDelay: 10e3,
+				secure: false,
+				retryAmount: 5,
+			},
+			// nodes from https://lavalinks-list.vercel.app/non-ssl
+			{
+				authorization: "youshallnotpass",
+				host: "node.lewdhutao.my.eu.org",
+				port: 80,
+				id: "LewdHuTao - Lavalink",
+				requestSignalTimeoutMS: 10000,
+				closeOnError: true,
+				enablePingOnStatsCheck: true,
+				retryDelay: 10e3,
+				secure: false,
+				retryAmount: 5,
+			},
+		],
+	},
+
+	giveaways: {
+		enabled: true,
+		reaction: "🎁",
+	},
+
+	image: {
+		enabled: true,
+		base_api: "https://strangeapi.fun/api",
+	},
+
+	moderation: {
+		enabled: true,
+		colors: {
+			timeout: "#102027",
+			umtimeout: "#4B636E",
+			kick: "#FF7961",
+			softban: "#AF4448",
+			ban: "#D32F2F",
+			unban: "#00C853",
+			vmute: "#102027",
+			vunmute: "#4B636E",
+			deafen: "#102027",
+			undeafen: "#4B636E",
+			disconnect: "random",
+			move: "#ffcda2",
+		},
+	},
+
+	rank: {
+		enabled: true,
+		xp_cool_down: 10,
+		default_level_up_message: "{tag}, You just advanced to **Level {level}**",
+	},
+
+	suggestion: {
+		enabled: true,
+		emoji: {
+			up_vote: "⬆️",
+			down_vote: "⬇️",
+		},
+	},
+
+	ticket: {
+		enabled: true,
 	},
 };
