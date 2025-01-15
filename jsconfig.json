@@ -8,23 +8,14 @@
 			"@root/*": ["./*"],
 			"@src/*": ["./src/*"],
 			"@lib/*": ["./src/lib/*"],
-			"@config/*": [
-				"src/data/config/*"
-			],
 			"@structures/*": ["./src/structures/*"],
 			"@handlers/*": ["./src/handlers/*"],
 			"@commands/*": ["./src/commands/*"],
 			"@assets/*": ["./src/assets/*"],
 			"@events/*": ["./src/events/*"],
-			"@utils/*": [
-				"./src/utils/*"
-			],
-			"@db/*": [
-				"src/db/*"
-			],
-			"@data": [
-				"./src/data/*"
-			]
+			"@utils/*": ["./src/utils/*"],
+			"@db/*": ["src/db/*"],
+			"@data": ["./src/data/*"]
 		}
 	},
 	"exclude": ["node_modules"]
