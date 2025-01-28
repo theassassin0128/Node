@@ -5,11 +5,12 @@ const {
   SlashCommandBuilder,
   EmbedBuilder,
 } = require("discord.js");
-const infractions = require("../../models/infractions.js");
+// const infractions = require("../../models/infractions.js");
 const ms = require("ms");
 const { colour } = require("../../config.js");
 
 module.exports = {
+	disabled: true,
 	data: new SlashCommandBuilder()
 		.setName("timeout")
 		.setDescription("Restrict a members ability to communicate.")

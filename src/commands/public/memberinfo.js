@@ -1,13 +1,13 @@
 const {
-  EmbedBuilder,
-  SlashCommandBuilder,
-  Client,
-  ChatInputCommandInteraction,
-  AttachmentBuilder,
+	EmbedBuilder,
+	SlashCommandBuilder,
+	Client,
+	ChatInputCommandInteraction,
+	AttachmentBuilder,
 } = require("discord.js");
-const { colour } = require("../../config");
 const { profileImage } = require("discord-arts");
 
+/** @type {import("@types/command").CommandStructure} */
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("memberinfo")
@@ -18,12 +18,7 @@ module.exports = {
 				.setName("member")
 				.setDescription("View a member's information. Leave empty to view your own."),
 		),
-	/**
-	 *
-	 * @param {ChatInputCommandInteraction} interaction
-	 * @param {Client} client
-	 */
-	execute: async (interaction, client) => {
+	execute: async (client, interaction) => {
 		await interaction.deferReply();
 
 		const member = interaction.options.getMember("member") || interaction.member;
@@ -63,7 +58,7 @@ module.exports = {
 					name: `${member.user.tag} | General Information`,
 					iconURL: member.displayAvatarURL(),
 				})
-				.setColor(member.displayHexColor || colour.main)
+				.setColor(member.displayHexColor || client.config.colors.Main)
 				.setDescription(
 					`On <t:${joinTime}:D> ${member.user.username} joind as the **${addSuffix(
 						joinedPosition,

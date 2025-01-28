@@ -1,0 +1,166 @@
+{
+	"db": {
+		"connected": "{{db}} database connected successfully",
+		"disconnected": "{{db}} database disconnected",
+		"error": "Error connecting to {{db}} database"
+	},
+
+	"helpers": {
+		"vanity": {
+			"welcome": "Welcome to {{name}} project",
+			"node": "Running on nodejs version {{v}}",
+			"version": "Package version {{v}}",
+			"message": "Coded by {{author}}"
+		},
+
+		"loadEvents": {
+			"loaded": "Loaded {{count}} events from {{dir}}",
+			"error": "Error loading events",
+			"eStart": "[AntiCrash] | [Event Loader Error Logs] | [Start] : ===============",
+			"eEnd": "[AntiCrash] | [Event Loader Error Logs] | [End] : ==============="
+		},
+
+		"loadCommands": {
+			"loaded": "Loaded {{count}} commands from {{dir}}",
+			"error": "Error loading events",
+			"eStart": "[AntiCrash] | [Command Loader Error Logs] | [Start] : ===============",
+			"eEnd": "[AntiCrash] | [Command Loader Error Logs] | [End] : ==============="
+		}
+	},
+
+	"utils": {
+		"fetchCommands": {
+			"error": "Error occurred while fetching application commands. \n Error: {{err}}"
+		},
+		"syncCommands": {
+			"warning": "Syncing application commands (This may take a while)",
+			"finished": "All application commands are in sync",
+			"added": "ADDED",
+			"addMessage": "Detected a new command",
+			"deleted": "DELETED",
+			"deleteMessage": "Either disabled or the CMD file is removed",
+			"modified": "MODIFIED",
+			"modifyMessageData": "Found changes in command data",
+			"modifyMessageGlobal": "Changed the command to be global or guild only"
+		}
+	},
+
+	"bot": {
+		"description": "A _Multipurpose_ Discord App for your every need with **Premium Services**. For more info head to {{website}}"
+	},
+
+	"errors": {
+		"type": {
+			"string": "Value of {{param}} must be a string",
+			"object": "Value of {{param}} must be an object",
+			"array": "Value of {{param}} must be an array",
+			"number": "Value of {{param}} must be a number",
+			"boolean": "Value of {{param}} must be a boolean",
+			"other": "Value of {{param}} must be a {{type}}"
+		},
+
+		"missing": {
+			"param": "Couldn't find {{param}} parameter",
+			"property": "Couldn't find {{property}} property"
+		},
+
+		"validation": {
+			"eventName": "Event name is either missing or incorrect",
+			"commandData": "Command or Context Menu data is missing",
+			"function": "Command execute function is missing",
+			"permission": "{{p}} is not a valid permission"
+		}
+	},
+
+	"embeds": {
+		"default": {
+			"footer": "Powered by {{u}} | Copyright ©{{y}}"
+		},
+
+		"prefix_mention": {
+			"title": "Did you just mention me?",
+			"description": "I am **{{username}}**, a discord bot developed by **{{owner}}** to manage & moderate discord servers. For more information or help use **`/help`**."
+		}
+	},
+
+	"events": {
+		"clientReady": {
+			"consoleLog": "{{tag}} is online"
+		},
+		"slashCommands": {
+			"notFound": "This command isn't available.",
+			"disabled": "This command is **disabled** by the bot owner or developers.",
+			"devOnly": "This command is only **accessible** to the bot owner & developers.",
+			"guildOnly": "This command can only be used in a _Discord Server_.",
+			"cooldown": "**Chill!** Command in on cooldown. wait for __**{{t}}** seconds__ to use it again.",
+			"botPermission": "I need {{p}} to execute this command.",
+			"userPermission": "You must have {{p}} to use this command.",
+			"voiceChannelOnly": "You must have to be in a **Voice Channel** to use this command.",
+			"missingVCPermission": "I am not able to **join** your voice channel or **speak** in there.",
+			"error": "An error occurred while trying to execute the command."
+		},
+		"contextMenu": {
+			"notFound": "This context menu isn't available.",
+			"disabled": "This context menu is **disabled** by the bot owner or developers.",
+			"devOnly": "This context menu is only **accessible** to the bot owner & developers.",
+			"guildOnly": "This context menu can only be used in a _Discord Server_.",
+			"cooldown": "**Chill!** Command in on cooldown. wait for __**{{t}}** seconds__ to use it again.",
+			"botPermission": "I need {{p}} to execute this context menu.",
+			"userPermission": "You must have {{p}} to use this context menu.",
+			"error": "An error occurred while trying to execute the context menu."
+		}
+	},
+
+	"commands": {
+		"ping": {
+			"description": "🏓 Pong! Replies with bot's response time.",
+			"reply": {
+				"content": "⏱️ Hold on a moment..."
+			}
+		},
+
+		"invite": {
+			"description": "returns a link button with bots invite url.",
+			"reply": {
+				"content": "**Invite me by clicking the button.**",
+				"disabled": "**Sorry. Invites has been disabled by the owner.**"
+			}
+		},
+
+		"botinfo": {
+			"description": "📖 View bot's information.",
+			"reply": {}
+		},
+
+		"reload": {
+			"owner": "Sorry, You are not the owner of this application. So, you can't use this command",
+			"reply": "Reloaded {{t}} files."
+		},
+
+		"serverinfo": {
+			"description": "📖 View the server information.",
+			"reply": {
+				"embed": {}
+			}
+		},
+
+		"roles": {
+			"description": "Get the role list of a server.",
+			"reply": {}
+		},
+
+		"roleinfo": {
+			"description": "📖 View any role's information.",
+			"reply": {}
+		},
+
+		"memberinfo": {
+			"description": "📖 View your or any member's information."
+		},
+
+		"emit": {
+			"description": "Emit an Event",
+			"reply": "Emitted the selected {{event}} successfully."
+		}
+	}
+}

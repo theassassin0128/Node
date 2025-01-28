@@ -16,7 +16,6 @@ const warningMsg =
 This script will delete every global slash & context menu command of your discord bot.
 Do you want to continue? (y/n): `);
 
-console.clear();
 rl.question(warningMsg, async function (name) {
   try {
     if (name.toLowerCase() === "y") {

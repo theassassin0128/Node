@@ -7,6 +7,7 @@ const {
 const { colour } = require("../../config");
 
 module.exports = {
+	disabled: true,
 	data: new SlashCommandBuilder()
 		.setName("roles")
 		.setDescription("Returns embed(s) with server roles.")

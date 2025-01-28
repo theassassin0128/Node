@@ -1,4 +1,8 @@
 const { Client, Collection } = require("discord.js");
+const { Functions } = require("./Functions.js");
+const { LavalinkPlayer } = require("./LavalinkPlayer.js");
+const { DB } = require("@db/DB.js");
+const { Logger } = require("./Logger.js");
 
 class DiscordClient extends Client {
 	/**
@@ -12,29 +16,26 @@ class DiscordClient extends Client {
 		this.config = require("@src/config.js");
 		this.pkg = require("@root/package.json");
 
+		// Initialize the database
+		this.db = new DB(this);
+
 		// Initialize global functions and utilities
 		this.wait = require("timers/promises").setTimeout;
+		this.utils = require("@utils/index.js");
 		this.helpers = require("@helpers/index.js");
+		this.logger = new Logger(this);
+		this.functions = new Functions(this);
 
 		// Initialize client collections with types
-		/** @type {Collection<string, import("@structures/event.d.ts").EventStructure>} */
+		/** @type {Collection<string, import("@types/event.js").EventStructure>} */
 		this.events = new Collection();
 
-		/** @type {Collection<string, import("@structures/command.d.ts").PrefixCommandStructure>} */
+		/** @type {Collection<string, import("@types/command.js").CommandStructure>} */
 		this.commands = new Collection();
-
-		/** @type {Collection<string, string>} */
-		this.aliases = new Collection();
-
-		/** @type {Collection<string, import("@structures/command.d.ts").SlashCommandStructure>} */
-		this.slashCommands = new Collection();
-
-		/** @type {Collection<string, import("@structures/context.d.ts").ContextMenuStructure>} */
-		this.contexts = new Collection();
 
 		// Initialize Music Manager if enabled
 		if (this.config.plugins.music.enabled) {
-			this.lavalink = new LavalinkPlayer(this);
+		  this.lavalink = new LavalinkPlayer(this);
 		}
 	}
 
@@ -44,27 +45,19 @@ class DiscordClient extends Client {
 	async start() {
 		console.clear();
 
-		// Load the anticrash system
-		this.helpers.antiCrash(this);
-
-		// Load locales
-		this.helpers.loadLocales(this);
-
-		// Log the vanity
-		this.helpers.logVanity(this);
-
-		// Load event modules
-		await this.helpers.loadEvents(this, "src/events");
-
-		// Load command modules
-		await this.helpers.loadCommands(this, "src/commands");
+		// Load the helpers modules
+		this.helpers.antiCrash(this); // Load antiCrash system
+		this.helpers.loadLocales(this); // Load locales
+		this.helpers.logVanity(this); // Log the vanity
+		await this.helpers.loadEvents(this, "src/events"); // Load event modules
+		await this.helpers.loadCommands(this, "src/commands"); // Load command modules
 
 		// Connect to the database
-		await this.helpers.connectdb(this);
+		await this.db.init();
 
 		// Log into the client
-		await this.login(this.config.bot_token);
+		await this.login(this.config.secrets.discord.token);
 	}
-}
+};
 
 module.exports = { DiscordClient };

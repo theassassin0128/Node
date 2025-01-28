@@ -5,9 +5,10 @@ const {
   ChatInputCommandInteraction,
 } = require("discord.js");
 const { colour } = require("../../config");
-const moment = require("moment");
+// const moment = require("moment");
 
 module.exports = {
+	disabled: true,
 	data: new SlashCommandBuilder()
 		.setName("roleinfo")
 		.setDescription("Replies an embed containing role information")

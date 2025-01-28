@@ -4,10 +4,11 @@ const {
   Client,
   ChatInputCommandInteraction,
 } = require("discord.js");
-const moment = require("moment");
+// const moment = require("moment");
 const { colour } = require("../../config");
 
 module.exports = {
+	disabled: true,
   data: new SlashCommandBuilder()
     .setName("serverinfo")
     .setDescription("Replies with server information.")

@@ -8,6 +8,7 @@ const {
 const { colour } = require("../../config");
 
 module.exports = {
+	disabled: true,
 	data: new SlashCommandBuilder()
 		.setName("unban")
 		.setDescription("Unban a member from the server.")

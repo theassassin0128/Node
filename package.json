@@ -1,6 +1,6 @@
 {
 	"name": "node",
-	"version": "2.0.3",
+	"version": "3.0.0-dev",
 	"description": "A multipurpose discord bot.",
 	"main": "src/index.js",
 	"engines": {
@@ -32,6 +32,7 @@
 	"devDependencies": {
 		"axios": "^1.7.7",
 		"express": "^4.21.0",
+		"mongodb": "^6.12.0",
 		"nodemon": "^3.1.4"
 	},
 	"dependencies": {
@@ -67,14 +68,14 @@
 	"_moduleAliases": {
 		"@root": ".",
 		"@src": "src/",
+		"@db": "src/db/",
 		"@lib": "src/lib/",
-		"@config": "src/config/",
-		"@structures": "src/structures/",
-		"@handlers": "src/handlers/",
-		"@helpers": "src/helpers/",
-		"@schemas": "src/schemas/",
-		"@commands": "src/commands/",
+		"@types": "src/types/",
+		"@utils": "src/utils/",
 		"@assets": "src/assets/",
-		"@events": "src/events/"
+		"@events": "src/events/",
+		"@helpers": "src/helpers/",
+		"@handlers": "src/handlers/",
+		"@commands": "src/commands/"
 	}
 }
