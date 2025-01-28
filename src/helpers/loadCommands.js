@@ -4,11 +4,10 @@ const { Permissions } = require("@src/validations/permissions.js");
 const { t } = require("i18next");
 const { Logger } = require("@lib/Logger.js");
 const logger = new Logger();
-const { DiscordClient } = require("@lib/DiscordClient.js");
 
 /**
  * A function to load command modules
- * @param {DiscordClient} client - The Discord client
+ * @param {import("@lib/DiscordClient.js").DiscordClient} client - The Discord client
  * @param {string} dir - The directory to load commands from
  * @returns {Promise<void>}
  * @example await loadCommands(client, "src/commands");

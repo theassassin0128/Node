@@ -4,11 +4,10 @@ const { t } = require("i18next");
 const { EventNames } = require("@src/validations/events.js");
 const { Logger } = require("@lib/Logger.js");
 const logger = new Logger();
-const { DiscordClient } = require("@lib/DiscordClient.js");
 
 /**
  * A function to load event files
- * @param {DiscordClient} client - The Discord client
+ * @param {import("@lib/DiscordClient.js").DiscordClient} client - The Discord client
  * @param {string} dir - The directory to load events from
  * @returns {Promise<void>}
  * @example await loadEvents(client, "src/events");

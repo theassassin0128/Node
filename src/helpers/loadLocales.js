@@ -2,11 +2,10 @@ const fs = require("fs");
 const path = require("path");
 const i18next = require("i18next");
 const resources = require("@src/locales/index.js");
-const { DiscordClient } = require("@lib/DiscordClient.js");
 
 /**
  * A function to get default locale for global use
- * @param {DiscordClient} client - The Discord client
+ * @param {import("@lib/DiscordClient.js").DiscordClient} client - The Discord client
  * @returns {string} - The default locale
  * @example getDefaultLocale(client);
  */
@@ -33,7 +32,7 @@ function getDefaultLocale(client) {
 
 /**
  * A function to load locales
- * @param {DiscordClient} client - The Discord client
+ * @param {import("@lib/DiscordClient.js").DiscordClient} client - The Discord client
  * @returns {void}
  * @example loadLocales(client);
  */

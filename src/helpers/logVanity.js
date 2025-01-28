@@ -4,7 +4,7 @@ const { t } = require("i18next");
 
 /**
  * A function to log get vanity
- * @param {DiscordClient} client - The Discord client
+ * @param {import("@lib/DiscordClient").DiscordClient} client - The Discord client
  * @returns {void}
  * @example logVanity(client);
  */
