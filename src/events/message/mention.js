@@ -18,8 +18,8 @@ module.exports = {
 			.setTitle(t("embeds:prefix_mention.title"))
 			.setDescription(
 				t("embeds:prefix_mention.description", {
-					username: client.user.username,
-					owner: `<@${client.config.bot.ownerId}>`,
+					username: `**${client.user.username}**`,
+					owner: `**<@${client.config.bot.ownerId}>**`,
 				}),
 			)
 			.setThumbnail(client.user.displayAvatarURL())

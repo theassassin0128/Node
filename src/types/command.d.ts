@@ -1,5 +1,6 @@
 // typings for commands
 import {
+	AutocompleteInteraction,
 	ChatInputCommandInteraction,
 	ContextMenuCommandBuilder,
 	MessageContextMenuCommandInteraction,
@@ -47,7 +48,11 @@ export interface CommandStructure {
 	execute: (
 		client: DiscordClient,
 		interaction: ChatInputCommandInteraction,
-	) => Promise<any>;
+	) => Promise<void>;
+	autocomplete: (
+		client: DiscordClient,
+		interaction: AutocompleteInteraction,
+	) => promise<void>;
 }
 
 // ContextMenuStructure to use in context menu creation
@@ -65,5 +70,5 @@ export interface ContextMenuStructure {
 	execute: (
 		client: DiscordClient,
 		interaction: MessageContextMenuCommandInteraction | UserContextMenuCommandInteraction,
-	) => promise<any>;
+	) => promise<void>;
 }

@@ -6,7 +6,7 @@
  */
 function checkForChange(OldCommand, NewCommand) {
 	const oldCommand = OldCommand.data;
-	const newCommand = NewCommand.data;
+	const newCommand = NewCommand.data.toJSON();
 
 	if (oldCommand.nameLocalizations || newCommand.name_localizations) {
 		if (

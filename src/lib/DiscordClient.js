@@ -1,6 +1,6 @@
 const { Client, Collection } = require("discord.js");
 const { Functions } = require("./Functions.js");
-// const { LavalinkPlayer } = require("./LavalinkPlayer.js");
+const { LavalinkPlayer } = require("./LavalinkPlayer.js");
 const { DB } = require("@db/DB.js");
 const { Logger } = require("./Logger.js");
 
@@ -35,7 +35,7 @@ class DiscordClient extends Client {
 
 		// Initialize Music Manager if enabled
 		if (this.config.plugins.music.enabled) {
-			// this.lavalink = new LavalinkPlayer(this);
+			this.lavalink = new LavalinkPlayer(this);
 		}
 	}
 

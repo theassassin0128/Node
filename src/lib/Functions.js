@@ -145,6 +145,33 @@ class Functions {
 		const word = ` permission${p.length > 1 ? "s" : ""}`;
 		return `${p.map((perm) => `__**${perm}**__`).join(", ")}${word}`;
 	}
+
+	/**
+	 * A function to transform a requester into a standardized requester object
+	 * @param {any} requester The requester to transform.
+	 * Can be a string, a user, or an object with the keys `id`, `username`, and `avatarURL`.
+	 * @returns {import("@types/index").Requester} The transformed requester object.
+	 */
+	requesterTransformer(requester) {
+		if (
+			typeof requester === "object" &&
+			"avatar" in requester &&
+			Object.keys(requester).length === 3
+		) {
+			return requester;
+		}
+
+		if (typeof requester === "object" && "displayAvatarURL" in requester) {
+			return {
+				id: requester.id,
+				username: requester.username,
+				avatarURL: requester.displayAvatarURL({ extension: "png" }),
+				discriminator: requester.discriminator,
+			};
+		}
+
+		return { id: requester.toString(), username: "unknown" };
+	}
 }
 
 module.exports = { Functions };

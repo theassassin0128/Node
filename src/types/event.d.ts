@@ -1,7 +1,7 @@
 import { DiscordClient } from "@lib/DiscordClient";
 
 // discordjs event names
-export type DiscordEventNames =
+export type DiscordEvents =
 	| "applicationCommandPermissionsUpdate"
 	| "autoModerationActionExecution"
 	| "autoModerationRuleCreate"
@@ -83,32 +83,48 @@ export type DiscordEventNames =
 	| "webhookUpdate";
 
 // lavalink-client event names
-export type LavalinkEventNames =
-	| "playerCreate"
-	| "playerDestroy"
-	| "playerDisconnect"
-	| "playerMove"
-	| "playerSocketClosed"
+export type LavalinkEvents =
 	| "trackStart"
+	| "trackEnd"
 	| "trackStuck"
 	| "trackError"
-	| "trackEnd"
 	| "queueEnd"
+	| "playerCreate"
+	| "playerMove"
+	| "playerDisconnect"
+	| "playerSocketClosed"
+	| "playerDestroy"
 	| "playerUpdate"
-	| "create"
-	| "error"
-	| "raw"
-	| "disconnect"
-	| "connect"
-	| "reconnecting"
+	| "playerMuteChange"
+	| "playerDeafChange"
+	| "playerSuppressChange"
+	| "playerQueueEmptyStart"
+	| "playerQueueEmptyEnd"
+	| "playerQueueEmptyCancel"
+	| "playerVoiceJoin"
+	| "playerVoiceLeave"
+	| "SegmentsLoaded"
+	| "SegmentSkipped"
+	| "ChapterStarted"
+	| "ChaptersLoaded"
+	| "debug"
+	| "LyricsLine"
+	| "LyricsFound"
+	| "LyricsNotFound"
 	| "create"
 	| "destroy"
+	| "connect"
+	| "reconnecting"
+	| "reconnectinprogress"
+	| "disconnect"
 	| "error"
+	| "raw"
 	| "resumed";
+
 
 // event module structure
 export interface EventStructure {
-	name: DiscordEventNames | LavalinkEventNames;
+	name: DiscordEvents | LavalinkEvents;
 	once?: boolean;
 	rest?: boolean;
 	ws?: boolean;

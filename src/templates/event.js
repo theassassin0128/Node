@@ -1,10 +1,10 @@
-/** @type {import("@structures/event.d.ts").EventStructure} */
+/** @type {import("@types/event").EventStructure} */
 module.exports = {
-  name: "",
-  once: false,
-  rest: false,
-  ws: false,
-  player: false,
-  node: false,
-  execute: async (client, ...args) => {},
+	name: "",
+	once: false,
+	rest: false,
+	ws: false,
+	player: false,
+	node: false,
+	execute: async (client, ...args) => {},
 };

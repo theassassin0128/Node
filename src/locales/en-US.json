@@ -79,7 +79,7 @@
 
 		"prefix_mention": {
 			"title": "Did you just mention me?",
-			"description": "I am **{{username}}**, a discord bot developed by **{{owner}}** to manage & moderate discord servers. For more information or help use **`/help`**."
+			"description": "I am {{username}}, a discord bot developed by {{owner}} to manage & moderate discord servers. For more information or help use **`/help`**."
 		}
 	},
 
@@ -112,6 +112,8 @@
 	},
 
 	"commands": {
+		"default": {},
+
 		"ping": {
 			"description": "🏓 Pong! Replies with bot's response time.",
 			"reply": {
@@ -161,6 +163,32 @@
 		"emit": {
 			"description": "Emit an Event",
 			"reply": "Emitted the selected {{event}} successfully."
+		},
+
+		"play": {
+			"description": "▶  play a song or track from available sources",
+			"joinVc": "😑 Join the {{vc}} voice channel to use the command.",
+			"loadFailed": "❌ Failed to load the requested track.",
+			"emptyQueue": "❗ No results found for the query.",
+			"track": "✅ Added {{title}} by {{author}} to the queue at {{position}}",
+			"playlist": "✅ Added {{size}} tracks from the {{title}} to the queue."
+		},
+
+		"player": {
+			"description": "💿 Player controls for music playback",
+			"noPlayer": "There is no active music player in this server.",
+
+			"pause": {
+				"description": "⏸ pause the music player.",
+				"reply": "Paused the music player.",
+				"alreadyPaused": "The player is already paused. Use the resume button or `/player resume` to start the music again."
+			},
+
+			"resume": {
+				"description": "▶  resume the music player",
+				"reply": "Started playing music again.",
+				"alreadyPlaying": "The player is already resumed and playing. Use the pause button or `/player pause` to pause the music again."
+			}
 		}
 	}
 }

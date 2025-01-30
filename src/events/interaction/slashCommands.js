@@ -1,4 +1,6 @@
 const { ChatInputCommandInteraction, EmbedBuilder, MessageFlags } = require("discord.js");
+const { Logger } = require("@lib/Logger.js");
+const logger = new Logger();
 const { t } = require("i18next");
 const cooldownCache = new Map();
 
@@ -106,7 +108,7 @@ module.exports = {
 				});
 			}
 
-			throw error;
+			logger.error(error);
 		} finally {
 			if (command.cooldown > 0) setCooldown(command, user.id);
 		}

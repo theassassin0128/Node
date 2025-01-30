@@ -8,11 +8,12 @@ module.exports = {
 	cooldown: 0,
 	premium: false,
 	guildOnly: false,
-	testOnly: true,
+	testOnly: false,
 	devOnly: false,
 	disabled: false,
 	voiceChannelOnly: false,
 	botPermissions: [],
 	userPermissions: [],
 	execute: async (client, interaction) => {},
+	autocomplete: async (client, interaction) => {},
 };

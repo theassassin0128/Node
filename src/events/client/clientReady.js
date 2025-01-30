@@ -16,7 +16,7 @@ module.exports = {
 		);
 
 		// Initialize the Lavalink client
-		// client.lavalink.init(client.user);
+		client.lavalink.init(client.user);
 
 		// Synchronizing the application commands
 		client.utils.syncCommands(client);

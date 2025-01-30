@@ -21,7 +21,7 @@ module.exports = {
 		enabled: true,
 		idleTime: 180, // Idle time in seconds before disconnecting
 		maxSearchResults: 10, // Maximum search results to display
-		defaultSource: "ytm", // Default music source
+		defaultSource: "yt", // Default music source
 		sources: ["ytmsearch", "ytm", "ytsearch", "yt", "spotifysearch", "spotify"], // Available music sources
 		// Lavalink nodes for the music system
 		lavalinkNodes: [
@@ -30,7 +30,7 @@ module.exports = {
 				authorization: "youshallnotpass",
 				host: "localhost",
 				port: 6969,
-				id: "Local Node",
+				identifier: "Local Node",
 				requestSignalTimeoutMS: 10000,
 				closeOnError: true,
 				enablePingOnStatsCheck: true,
