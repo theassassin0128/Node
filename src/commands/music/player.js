@@ -72,7 +72,7 @@ module.exports = {
 						}
 					} catch (error) {}
 
-					return interaction.followUp({
+					interaction.followUp({
 						content: t("commands:player.pause.reply"),
 						flags: MessageFlags.Ephemeral,
 					});
@@ -102,7 +102,7 @@ module.exports = {
 						}
 					} catch (error) {}
 
-					return interaction.followUp({
+					interaction.followUp({
 						content: t("commands:player.resume.reply"),
 						flags: MessageFlags.Ephemeral,
 					});
