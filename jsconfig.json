@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "ES6",
+		"resolveJsonModule": true,
+		"baseUrl": "./",
+		"paths": {
+			"@root/*": ["./*"],
+			"@src/*": ["./src/*"],
+			"@db/*": ["./src/db/*"],
+			"@lib/*": ["./src/lib/*"],
+			"@types/*": ["./src/types/*"],
+			"@utils/*": ["./src/utils/*"],
+			"@events/*": ["./src/events/*"],
+			"@assets/*": ["./src/assets/*"],
+			"@helpers/*": ["./src/helpers/*"],
+			"@handlers/*": ["./src/handlers/*"],
+			"@commands/*": ["./src/commands/*"]
+		}
+	},
+	"exclude": ["node_modules"]
+}

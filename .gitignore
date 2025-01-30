@@ -1,3 +1,15 @@
-.env
+# To ignore packages
 node_modules
-data.js
+
+# Auto created & updated on npm install
+package-lock.json
+
+# All secrets are stored here
+.env
+
+# Log files
+logs
+**/logs/**
+
+# Extra files
+collected

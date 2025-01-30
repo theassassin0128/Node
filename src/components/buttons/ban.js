@@ -4,7 +4,7 @@ const {
   Client,
   ChatInputCommandInteraction,
 } = require("discord.js");
-const { colour } = require("../../config.json");
+const { colour } = require("../../config");
 
 module.exports = {
   name: "Ban",
@@ -37,27 +37,23 @@ module.exports = {
       errorArray.push("The Member is not moderatable by this bot.");
     if (errorArray.length) {
       interaction.reply({
-        embeds: [
-          errorEmbed
-            .setDescription(errorArray.join("\n"))
-            .setColor(colour.error),
-        ],
-        ephemeral: true,
-      });
+				embeds: [errorEmbed.setDescription(errorArray.join("\n")).setColor(colour.error)],
+				ephemeral: true,
+			});
       return;
     }
 
     const bEmbed = new EmbedBuilder()
-      .setTitle("__BAN NOTICE__")
-      .setDescription(
-        `${member},\nThis is to notify you that have been banned from ${interaction.guild.name}.`
-      )
-      .setColor(colour.main)
-      .setFooter({
-        text: interaction.guild.name,
-        iconURL: interaction.guild.iconURL(),
-      })
-      .setTimestamp();
+			.setTitle("__BAN NOTICE__")
+			.setDescription(
+				`${member},\nThis is to notify you that have been banned from ${interaction.guild.name}.`,
+			)
+			.setColor(colour.main)
+			.setFooter({
+				text: interaction.guild.name,
+				iconURL: interaction.guild.iconURL(),
+			})
+			.setTimestamp();
 
     if (!member.user.bot) {
       await member.send({
