@@ -92,10 +92,9 @@ async function loadEvents(client, dir) {
 		console.log(colors.yellow(t("helpers:loadEvents.eEnd")));
 	}
 
-	logger.info(
+	logger.success(
 		t("helpers:loadEvents.loaded", {
 			count: colors.yellow(client.events.size),
-			dir: colors.green(dir),
 		}),
 	);
 }

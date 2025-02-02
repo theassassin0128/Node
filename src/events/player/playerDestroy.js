@@ -22,7 +22,7 @@ module.exports = {
 			if (!message) return;
 
 			if (message.editable) {
-				await message.edit({ components: [] });
+				return await message.edit({ components: [] });
 			}
 		} catch (error) {}
 	},

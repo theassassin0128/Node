@@ -1,5 +1,5 @@
-const { LavalinkNode } = require("lavalink-client");
 const colors = require("colors");
+const { t } = require("i18next");
 const { Logger } = require("@lib/Logger.js");
 const logger = new Logger();
 
@@ -8,10 +8,9 @@ module.exports = {
 	name: "connect",
 	node: true,
 	/**
-	 * @param {LavalinkNode} node
+	 * @param {import("lavalink-client").LavalinkNode} node
 	 */
 	execute: async (client, node) => {
-		// Event: When a node is successfully created and connected
-		logger.info(`${colors.red(node.id)} was connected`);
+		logger.success(t("events:node.connect", { id: colors.magenta(node.id) }));
 	},
 };

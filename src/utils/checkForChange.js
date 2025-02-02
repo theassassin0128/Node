@@ -95,7 +95,7 @@ function checkForChange(OldCommand, NewCommand) {
  */
 function checkForChangesInOptions(oldOptions, newOptions) {
 	for (const newOption of newOptions) {
-		const oldOption = oldOptions.find((option) => option.name === newOption.name);
+		const oldOption = oldOptions?.find((option) => option.name === newOption.name);
 
 		if (!oldOption) return true;
 

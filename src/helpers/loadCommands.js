@@ -102,10 +102,9 @@ async function loadCommands(client, dir) {
 		console.log(colors.yellow(t("helpers:loadCommands.eEnd")));
 	}
 
-	logger.info(
+	logger.success(
 		t("helpers:loadCommands.loaded", {
 			count: colors.yellow(client.commands.size),
-			dir: colors.green(dir),
 		}),
 	);
 }

@@ -26,6 +26,8 @@ export type DurationToMillis = (duration: string) => number;
 export type ParsePermissions = (permissions: PermissionResolvable[]) => string;
 
 export type Color =
+	| "strip"
+	| "stripColors"
 	| "black"
 	| "red"
 	| "green"
@@ -43,6 +45,20 @@ export type Color =
 	| "bgBlue"
 	| "bgMagenta"
 	| "bgCyan"
-	| "bgWhite";
+	| "bgWhite"
+	| "reset"
+	| "bold"
+	| "dim"
+	| "italic"
+	| "underline"
+	| "inverse"
+	| "hidden"
+	| "strikethrough"
+	| "rainbow"
+	| "zebra"
+	| "america"
+	| "trap"
+	| "random"
+	| "zalgo";
 
 export type GetTableBorder = (color: Color) => object;

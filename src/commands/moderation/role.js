@@ -69,7 +69,7 @@ module.exports = {
 	//		),
 	//),
 	testOnly: false,
-	disabled: true,
+	disabled: false,
 	userPermissions: ["ManageRoles"],
 	botPermissions: ["ManageRoles"],
 	execute: async (client, interaction) => {

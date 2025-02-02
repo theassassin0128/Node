@@ -1,4 +1,4 @@
-const { connect } = require("mongoose");
+const mongoose = require("mongoose");
 const colors = require("colors");
 const { t } = require("i18next");
 const { Logger } = require("@lib/Logger.js");
@@ -8,10 +8,15 @@ class DB {
 	/**
 	 * Typing for the MongoDB client
 	 * @param {import("@lib/DiscordClient.js").DiscordClient} client
-	 * @returns {void}
 	 */
 	constructor(client) {
+		// to use inside this class
 		this.client = client;
+
+		// For easy access and usability
+		this.models = {
+			logger: require("./models/logger.js"),
+		};
 	}
 
 	/**
@@ -20,10 +25,12 @@ class DB {
 	 */
 	async init() {
 		try {
-			await connect(this.client.config.mongoUri);
-			logger.info(t("db:connected", { db: colors.magenta("Mongodb") }));
+			await mongoose.connect(this.client.config.mongodbUri);
+			logger.success(t("db:connected", { db: colors.magenta("Mongodb") }));
 		} catch (error) {
-			logger.info(t("db:error", { db: colors.magenta("Mongodb") }));
+			logger.error(
+				t("db:error", { db: colors.magenta("Mongodb"), err: colors.red(error) }),
+			);
 		}
 	}
 }

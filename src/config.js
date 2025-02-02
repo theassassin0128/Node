@@ -1,44 +1,28 @@
-const { PermissionFlagsBits } = require("discord.js");
-
 module.exports = {
-	// For all secrets and tokens
-	secrets: {
-		// Discord bot secrets
-		discord: {
-			id: process.env.DISCORD_CLIENT_ID, // Discord client ID
-			token: process.env.DISCORD_CLIENT_TOKEN, // Discord bot token
-			secret: process.env.DISCORD_CLIENT_SECRET, // Discord client secret
-		},
-
-		// Spotify secrets
-		spotify: {
-			id: process.env.SPOTIFY_CLIENT_ID, // Spotify client ID
-			secret: process.env.SPOTIFY_CLIENT_SECRET, // Spotify client secret
-		},
-
-		// Myanimelist secrets
-		myanimelist: {
-			id: process.env.MAL_CLIENT_ID, // Myanimelist client ID
-			secret: process.env.MAL_CLIENT_SECRET, // Myanimelist client secret
-		},
-	},
-
 	// Basic settings
 	defaultLocale: process.env.DEFAULT_LOCALE, // Default locale for the bot
 	timeFormat: process.env.TIME_FORMAT, // Time format for the bot to use
 
 	// Bot settings
 	bot: {
+		allowedInvite: true, // Whether to allow invite command or not
 		status: "online", // Bot status example: online, idle, dnd, invisible
-		allowedInvite: false, // Whether to allow invite command or not
-		devs: ["720186844540567583"], // Bot developers. Add discord user IDs
-		prefix: process.env.DEFAULT_PREFIX, // Default prefix for the bot
+		id: process.env.DISCORD_CLIENT_ID, // Discord client ID
 		ownerId: process.env.OWNER_ID, // Bot owner ID
 		guildId: process.env.SERVER_ID, // Bot guild ID
+		devs: ["720186844540567583"], // Bot developers. Add discord user IDs
+		token: process.env.DISCORD_CLIENT_TOKEN, // Discord bot token
+		secret: process.env.DISCORD_CLIENT_SECRET, // Discord client secret
 	},
 
-	// Mongodb config
-	mongoUri: process.env.MONGO_URI, // Mongodb URI. Get it from mongodb.com
+	// DataBase secrect
+	mongodbUri: process.env.MONGO_URI, // Mongodb URI. Get it from mongodb.com
+
+	// Spotify secrets
+	spotify: {
+		id: process.env.SPOTIFY_CLIENT_ID, // Spotify client ID
+		secret: process.env.SPOTIFY_CLIENT_SECRET, // Spotify client secret
+	},
 
 	// Command settings
 	command: {

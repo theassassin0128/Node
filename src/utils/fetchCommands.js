@@ -1,4 +1,5 @@
 const colors = require("colors");
+const { t } = require("i18next");
 const { Logger } = require("@lib/Logger.js");
 const logger = new Logger();
 
@@ -32,18 +33,15 @@ async function fetchCommands(client) {
 			ApplicationCommands.push({ data: command, global: false });
 		});
 	} catch (error) {
-		console.log(
-			colors.yellow("[AntiCrash] | [Fetch Error Logs] | [Start]  : ==============="),
-		);
+		console.log(colors.yellow(t("utils:fetchCommands.eStart")));
 		console.log(t("utils:fetchCommands.error", { err: colors.red(error) }));
-		console.log(
-			colors.yellow("[AntiCrash] | [Fetch Error Logs] | [End] : ==============="),
-		);
+		console.log(colors.yellow(t("utils:fetchCommands.eEnd")));
 	}
 
 	logger.info(
-		colors.magenta("fetched") +
-			` ${colors.yellow(ApplicationCommands.length)} application commands`,
+		t("utils:fetchCommands.success", {
+			count: colors.yellow(ApplicationCommands.length),
+		}),
 	);
 
 	return ApplicationCommands;

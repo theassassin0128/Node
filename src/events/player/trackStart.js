@@ -181,7 +181,7 @@ function createCollector(client, message, player, track, embed) {
 				break;
 			case "loop": {
 				await interaction.deferUpdate();
-				switch (player.loop) {
+				switch (player.repeatMode) {
 					case "off": {
 						player.setRepeatMode("track");
 						await editMessage(`Looping by ${interaction.user.tag}`);

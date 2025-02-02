@@ -22,7 +22,7 @@ module.exports = {
 
 			if (!message) return;
 
-			return message.delete();
+			return await message.delete();
 		} catch (error) {}
 	},
 };

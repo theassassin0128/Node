@@ -27,16 +27,30 @@ module.exports = {
 		lavalinkNodes: [
 			// locally hosted node
 			{
+				id: "Local Node",
 				authorization: "youshallnotpass",
 				host: "localhost",
 				port: 6969,
-				identifier: "Local Node",
+				secure: false,
 				requestSignalTimeoutMS: 10000,
 				closeOnError: true,
 				enablePingOnStatsCheck: true,
 				retryDelay: 10e3,
+				retryAmount: 3,
+			},
+
+			// from lavanodes
+			{
+				id: "Koi Node V4",
+				authorization: "prplmoe.me",
+				host: "lavav4.prplmoe.me",
+				port: 1118,
 				secure: false,
-				retryAmount: 5,
+				requestSignalTimeoutMS: 10000,
+				closeOnError: true,
+				enablePingOnStatsCheck: true,
+				retryDelay: 10e3,
+				retryAmount: 3,
 			},
 		],
 	},

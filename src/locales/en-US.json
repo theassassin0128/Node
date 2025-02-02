@@ -1,8 +1,8 @@
 {
 	"db": {
-		"connected": "{{db}} database connected successfully",
+		"connected": "{{db}} database connected",
 		"disconnected": "{{db}} database disconnected",
-		"error": "Error connecting to {{db}} database"
+		"error": "Error connecting to {{db}} database. \n Error: {{err}}"
 	},
 
 	"helpers": {
@@ -14,15 +14,15 @@
 		},
 
 		"loadEvents": {
-			"loaded": "Loaded {{count}} events from {{dir}}",
+			"loaded": "Loaded {{count}} events",
 			"error": "Error loading events",
 			"eStart": "[AntiCrash] | [Event Loader Error Logs] | [Start] : ===============",
 			"eEnd": "[AntiCrash] | [Event Loader Error Logs] | [End] : ==============="
 		},
 
 		"loadCommands": {
-			"loaded": "Loaded {{count}} commands from {{dir}}",
-			"error": "Error loading events",
+			"loaded": "Loaded {{count}} commands",
+			"error": "Error loading commands",
 			"eStart": "[AntiCrash] | [Command Loader Error Logs] | [Start] : ===============",
 			"eEnd": "[AntiCrash] | [Command Loader Error Logs] | [End] : ==============="
 		}
@@ -30,18 +30,25 @@
 
 	"utils": {
 		"fetchCommands": {
-			"error": "Error occurred while fetching application commands. \n Error: {{err}}"
+			"success": "fetched {{count}} application commands",
+			"error": "Error occurred while fetching application commands. \n Error: {{err}}",
+			"eStart": "[AntiCrash] | [Fetch Error Logs] | [Start]  : ===============",
+			"eEnd": "[AntiCrash] | [Fetch Error Logs] | [End] : ==============="
 		},
+
 		"syncCommands": {
 			"warning": "Syncing application commands (This may take a while)",
-			"finished": "All application commands are in sync",
-			"added": "ADDED",
+			"success": "All application commands are in sync",
+			"add": "ADDED",
 			"addMessage": "Detected a new command",
-			"deleted": "DELETED",
-			"deleteMessage": "Either disabled or the CMD file is removed",
-			"modified": "MODIFIED",
+			"delete": "DELETED",
+			"deleteMessage": "Either disabled or the command file is removed",
+			"modify": "MODIFIED",
 			"modifyMessageData": "Found changes in command data",
-			"modifyMessageGlobal": "Changed the command to be global or guild only"
+			"modifyMessageGlobal": "Changed the command to be global or guild only",
+			"error": "An error occurred while trying to synchronize Application Commands.",
+			"eStart": "[AntiCrash] | [Synchronization Error Logs] | [Start] : ===============",
+			"eEnd": "[AntiCrash] | [Synchronization Error Logs] | [End] : ==============="
 		}
 	},
 
@@ -85,29 +92,37 @@
 
 	"events": {
 		"clientReady": {
-			"consoleLog": "{{tag}} is online"
+			"consoleLog": "Ready! Logged in as {{tag}}"
 		},
+
 		"slashCommands": {
-			"notFound": "This command isn't available.",
-			"disabled": "This command is **disabled** by the bot owner or developers.",
-			"devOnly": "This command is only **accessible** to the bot owner & developers.",
-			"guildOnly": "This command can only be used in a _Discord Server_.",
-			"cooldown": "**Chill!** Command in on cooldown. wait for __**{{t}}** seconds__ to use it again.",
-			"botPermission": "I need {{p}} to execute this command.",
-			"userPermission": "You must have {{p}} to use this command.",
-			"voiceChannelOnly": "You must have to be in a **Voice Channel** to use this command.",
+			"notFound": "This command is not available at the moment.",
+			"disabled": "This command was **disabled** by the developers.",
+			"devOnly": "This command is only **accessible** to the developers.",
+			"guildOnly": "This command cannot be used outside of a _Discord Server_.",
+			"cooldown": "**Chill!** Command in on cooldown. wait for __**{{t}}** seconds__ before using it again.",
+			"botPermission": "I am missing {{p}} as such cannot execute this command.",
+			"userPermission": "You are missing {{p}} as such cannot use this command.",
+			"voiceChannelOnly": "Join a **Voice Channel** before using this command.",
 			"missingVCPermission": "I am not able to **join** your voice channel or **speak** in there.",
 			"error": "An error occurred while trying to execute the command."
 		},
+
 		"contextMenu": {
-			"notFound": "This context menu isn't available.",
-			"disabled": "This context menu is **disabled** by the bot owner or developers.",
-			"devOnly": "This context menu is only **accessible** to the bot owner & developers.",
-			"guildOnly": "This context menu can only be used in a _Discord Server_.",
-			"cooldown": "**Chill!** Command in on cooldown. wait for __**{{t}}** seconds__ to use it again.",
-			"botPermission": "I need {{p}} to execute this context menu.",
-			"userPermission": "You must have {{p}} to use this context menu.",
+			"notFound": "This context menu is not available at the moment.",
+			"disabled": "This context was **disabled** by the developers.",
+			"devOnly": "This context is only **accessible** to the developers.",
+			"guildOnly": "This context cannot be used outside of a _Discord Server_.",
+			"cooldown": "**Chill!** context in on cooldown. wait for __**{{t}}** seconds__ to use it again.",
+			"botPermission": "I am missing {{p}} as such cannot execute this context.",
+			"userPermission": "You are missing {{p}} as such cannot use this context.",
 			"error": "An error occurred while trying to execute the context menu."
+		},
+
+		"node": {
+			"connect": "{{id}} was connected",
+			"disconnect": "{{id}} was disconnected",
+			"error": "Unable to connect to {{id}}"
 		}
 	},
 
@@ -116,22 +131,27 @@
 
 		"ping": {
 			"description": "🏓 Pong! Replies with bot's response time.",
-			"reply": {
-				"content": "⏱️ Hold on a moment..."
-			}
+			"reply": "⏱️ Hold on a moment..."
 		},
 
 		"invite": {
 			"description": "returns a link button with bots invite url.",
-			"reply": {
-				"content": "**Invite me by clicking the button.**",
-				"disabled": "**Sorry. Invites has been disabled by the owner.**"
-			}
+			"disabled": "Sorry. Invites has been disabled by the owner.",
+			"reply": "Invite me by clicking the button."
 		},
 
 		"botinfo": {
 			"description": "📖 View bot's information.",
 			"reply": {}
+		},
+
+		"logger": {
+			"noChannel": "⚠ In order to create a loggin system, a text based channel must be provided.",
+			"created": "✅ Successfully created the logging system.",
+			"updated": "✅ Successfully updated the logger data.",
+			"noLogger": "❌ Sorry there is no logging system.",
+			"destroy": "✅ Successfully deleted the logging system.",
+			"description": "Below are given the stats for all logging systems."
 		},
 
 		"reload": {

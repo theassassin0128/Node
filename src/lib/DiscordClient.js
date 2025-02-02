@@ -23,7 +23,7 @@ class DiscordClient extends Client {
 		this.wait = require("timers/promises").setTimeout;
 		this.utils = require("@utils/index.js");
 		this.helpers = require("@helpers/index.js");
-		this.logger = new Logger(this);
+		this.logger = new Logger();
 		this.functions = new Functions(this);
 
 		// Initialize client collections with types
@@ -56,7 +56,7 @@ class DiscordClient extends Client {
 		await this.db.init();
 
 		// Log into the client
-		await this.login(this.config.secrets.discord.token);
+		await this.login(this.config.bot.token);
 	}
 };
 

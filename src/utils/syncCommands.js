@@ -6,7 +6,7 @@ const { t } = require("i18next");
 const { Logger } = require("@lib/Logger.js");
 const logger = new Logger();
 
-/** 
+/**
  * A function to synchronize Application Commands
  * @param {import("@lib/DiscordClient.js").DiscordClient} client
  * @returns {Promise<void>}
@@ -14,7 +14,8 @@ const logger = new Logger();
 module.exports = async (client) => {
 	const { config } = client;
 	const guildId = config.bot.guildId;
-	const errors = new Array();
+	/** @type {Error[]}*/
+	const errors = [];
 
 	/** @type {import("@types/command").CommandStructure[]} */
 	const newCommands = [];
@@ -41,19 +42,17 @@ module.exports = async (client) => {
 
 	logger.warn(t("utils:syncCommands.warning"));
 
-	// This section is for the first time when the bot is started
-	// or when the bot's commands are removed discord side
+	// This section is for the very first time when the bot is started
+	// or when the bot's commands are removed from discord side
 	if (oldCommands.length <= 0) {
 		const guildCommands = [];
 		const globalCommands = [];
 
 		client.commands.forEach((command) => {
-			const { data, testOnly, disabled } = command;
-
-			if (disabled) return;
+			const { data, testOnly } = command;
 
 			tableData.push([
-				colors.green(t("utils:syncCommands.added")),
+				colors.green(t("utils:syncCommands.add")),
 				colors.magenta(data.name),
 				colors.yellow(t("utils:syncCommands.addMessage")),
 			]);
@@ -70,7 +69,7 @@ module.exports = async (client) => {
 			await client.application.commands.set(globalCommands);
 		}
 
-		return logger.info(colors.green(t("utils:syncCommands.finished")));
+		return logger.success(colors.green(t("utils:syncCommands.success")));
 	}
 
 	const commandsToAdd = newCommands.filter(
@@ -78,15 +77,15 @@ module.exports = async (client) => {
 	);
 
 	for (const command of commandsToAdd) {
-		const { data, testOnly } = command;
-
-		tableData.push([
-			colors.green(t("utils:syncCommands.added")),
-			colors.magenta(data.name),
-			colors.yellow(t("utils:syncCommands.addMessage")),
-		]);
-
 		try {
+			const { data, testOnly } = command;
+
+			tableData.push([
+				colors.green(t("utils:syncCommands.add")),
+				colors.magenta(data.name),
+				colors.yellow(t("utils:syncCommands.addMessage")),
+			]);
+
 			if (testOnly || !config.command.global) {
 				await client.application.commands.create(data.toJSON(), guildId);
 			} else {
@@ -102,13 +101,13 @@ module.exports = async (client) => {
 	);
 
 	for (const command of commandsToDelete) {
-		tableData.push([
-			colors.red(t("utils:syncCommands.deleted")),
-			colors.magenta(command.data.name),
-			colors.yellow(t("utils:syncCommands.deleteMessage")),
-		]);
-
 		try {
+			tableData.push([
+				colors.red(t("utils:syncCommands.delete")),
+				colors.magenta(command.data.name),
+				colors.yellow(t("utils:syncCommands.deleteMessage")),
+			]);
+
 			await command.data.delete();
 		} catch (error) {
 			errors.push(error);
@@ -120,17 +119,17 @@ module.exports = async (client) => {
 	);
 
 	for (const newCommand of commandsToModify) {
-		const oldCommand = oldCommands.find((c) => c.data.name === newCommand.data.name);
-		const { data, testOnly } = newCommand;
-
 		try {
+			const oldCommand = oldCommands.find((c) => c.data.name === newCommand.data.name);
+			const { data, testOnly } = newCommand;
+
 			if (config.command.global) {
 				if (
 					(oldCommand.global && (testOnly ?? false)) ||
 					(!oldCommand.global && (!testOnly ?? false))
 				) {
 					tableData.push([
-						colors.yellow(t("utils:syncCommands.modified")),
+						colors.yellow(t("utils:syncCommands.modify")),
 						colors.magenta(data.name),
 						colors.yellow(t("utils:syncCommands.modifyMessageGlobal")),
 					]);
@@ -149,7 +148,7 @@ module.exports = async (client) => {
 
 			if (checkForChange(oldCommand, newCommand)) {
 				tableData.push([
-					colors.yellow(t("utils:syncCommands.modified")),
+					colors.yellow(t("utils:syncCommands.modify")),
 					colors.magenta(data.name),
 					colors.yellow(t("utils:syncCommands.modifyMessageData")),
 				]);
@@ -168,24 +167,16 @@ module.exports = async (client) => {
 	}
 
 	if (errors.length > 0) {
-		console.log(
-			colors.yellow(
-				"[AntiCrash] | [Synchronization Error Logs] | [Start] : ===============",
-			),
-		);
+		console.log(colors.yellow(t("utils:syncCommands.eStart")));
 		errors.forEach((error) => {
 			console.log(colors.red(error));
 		});
-		console.log(
-			colors.yellow(
-				"[AntiCrash] | [Synchronization Error Logs] | [End] : ===============",
-			),
-		);
+		console.log(colors.yellow(t("utils:syncCommands.eEnd")));
 	}
 
 	if (client.config.table.enabled.sync && tableData.length > 1) {
 		console.log(table(tableData, tableConfig));
 	}
 
-	logger.info(colors.green(t("utils:syncCommands.finished")));
+	logger.success(t("utils:syncCommands.success"));
 };

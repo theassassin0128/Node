@@ -1,9 +1,4 @@
-const {
-	SlashCommandBuilder,
-	EmbedBuilder,
-	MessageFlags,
-	InteractionContextType,
-} = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { t } = require("i18next");
 
 /** @type {import("@types/command").CommandStructure} */
@@ -23,9 +18,7 @@ module.exports = {
 	usage: "",
 	disabled: false,
 	async execute(client, interaction) {
-		await interaction.deferReply({
-			flags: MessageFlags.Ephemeral,
-		});
+		await interaction.deferReply();
 
 		const reply = await interaction.fetchReply();
 		const response = reply.createdTimestamp - interaction.createdTimestamp;
@@ -70,7 +63,6 @@ module.exports = {
 
 		interaction.followUp({
 			embeds: [embed],
-			flags: MessageFlags.Ephemeral,
 		});
 	},
 };

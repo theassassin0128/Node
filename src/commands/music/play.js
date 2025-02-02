@@ -11,14 +11,14 @@ const { t } = require("i18next");
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("play")
-		.setDescription("▶  play a song from available sources")
+		.setDescription("▶ Play songs or tracks from available sources")
 		.setDefaultMemberPermissions(PermissionFlagsBits.SendMessages)
 		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall)
 		.setContexts(InteractionContextType.Guild)
 		.addStringOption((option) =>
 			option
 				.setName("query")
-				.setDescription("Song name to search or url to play directly")
+				.setDescription("Song name to search on youtube or url to play directly")
 				.setRequired(true)
 				.setAutocomplete(true),
 		)
@@ -135,6 +135,7 @@ module.exports = {
 				source,
 			);
 
+			/** @type {import("discord.js").ApplicationCommandChoicesData[]} */
 			const songs = [];
 
 			if (res.loadType === "search") {
@@ -147,9 +148,7 @@ module.exports = {
 				});
 			}
 
-			return await interaction.respond(songs).catch(() => {
-				null;
-			});
+			return await interaction.respond(songs);
 		} catch (error) {
 			null;
 		}

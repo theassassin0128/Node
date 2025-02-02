@@ -26,20 +26,12 @@ module.exports = {
 	usage: "",
 	disabled: false,
 	async execute(client, interaction) {
-		await interaction.deferReply({
-			flags: MessageFlags.Ephemeral,
-		});
-
 		if (
-			client.config.allowedInvite === false &&
+			!client.config.bot.allowedInvite &&
 			!client.config.bot.devs.includes(interaction.user.id)
 		) {
-			return interaction.followUp({
-				embeds: [
-					new EmbedBuilder()
-						.setTitle(t("commands:invite.reply.disabled"))
-						.setColor(colors.Wrong),
-				],
+			return interaction.reply({
+				content: t("commands:invite.disabled"),
 				flags: MessageFlags.Ephemeral,
 			});
 		}
@@ -54,10 +46,9 @@ module.exports = {
 			.setURL(inviteLink)
 			.setEmoji("✉️");
 
-		const actionRow = new ActionRowBuilder().addComponents(inviteButton);
-		interaction.followUp({
-			content: t("commands:invite.reply.content"),
-			components: [actionRow],
+		interaction.reply({
+			content: t("commands:invite.reply"),
+			components: [new ActionRowBuilder().addComponents(inviteButton)],
 			flags: MessageFlags.Ephemeral,
 		});
 	},

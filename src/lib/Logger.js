@@ -82,7 +82,7 @@ class Logger {
 			) +
 			" ".repeat(20 - (this.origin.length > 20 ? 20 : this.origin.length)) +
 			`] ` +
-			`[${colors.yellow("WARN")}] ` +
+			`[${colors.yellow("WARNING")}] ` +
 			`${colors.yellow(content)}`;
 
 		console.log(output);
@@ -133,7 +133,7 @@ class Logger {
 
 	/**
 	 * For logging success type messages to test if the code is working as expected
-	 * @param {string} content - defaults to green but can be modified with colors
+	 * @param {string} content - Can be modified with colors
 	 * @return {void}
 	 */
 	success(content) {
@@ -147,15 +147,16 @@ class Logger {
 			" ".repeat(20 - (this.origin.length > 20 ? 20 : this.origin.length)) +
 			`] ` +
 			`[${colors.green("SUCCESS")}] ` +
-			colors.green(content);
+			content;
 
 		console.log(output);
 	}
 
 	/**
 	 * @typedef {Object} options - type and color of the message
+	 * @property {string} emoji
 	 * @property {string} type - type of the message defaults to "CUSTOM"
-	 * @property {import("@types/functions").Color} color - color of the message defaults to "green"
+	 * @property {import("@types/functions").Color} color - color of the message defaults to "magenta"
 	 */
 
 	/**
@@ -164,23 +165,23 @@ class Logger {
 	 * @param {options} options - type and color of the message
 	 * @return {void}
 	 */
-	custom(content, { type = "CUSTOM", color = "magenta" }) {
+	custom(content, options) {
+		if (!options || typeof options !== "object") options = {};
+
 		const output =
 			this.dt() +
 			" |" +
-			`  💥  [` +
+			`  ${options.emoji ?? "💥"}  [` +
 			colors.yellow(
 				`${this.origin.length > 20 ? this.origin.substring(0, 17) + "..." : this.origin}`,
 			) +
 			" ".repeat(20 - (this.origin.length > 20 ? 20 : this.origin.length)) +
 			`] ` +
-			`[${colors[color](type)}] ` +
+			`[${colors[options.color ?? "magenta"](options.type ?? "CUSTOM")}] ` +
 			content;
 
 		console.log(output);
 	}
 }
-
-// logger.success(colors.cyan(`</> • ${colors.yellow(i)} Events has been loaded.`));
 
 module.exports = { Logger };

@@ -49,4 +49,4 @@ client.start().catch((error) => {
 });
 
 // Exporting the client for other use
-module.exports = client;
+module.exports = { client };

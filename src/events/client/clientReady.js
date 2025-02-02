@@ -9,7 +9,7 @@ module.exports = {
 	once: true,
 	execute: async (client) => {
 		// Log that the bot is online
-		logger.info(
+		logger.success(
 			t("events:clientReady.consoleLog", {
 				tag: colors.green(client.user.tag),
 			}),
