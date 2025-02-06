@@ -1,12 +1,12 @@
 const { Client, Collection } = require("discord.js");
-const { Functions } = require("./Functions.js");
+const { Utils } = require("./Utils.js");
 const { LavalinkPlayer } = require("./LavalinkPlayer.js");
 const { DB } = require("@db/DB.js");
 const { Logger } = require("./Logger.js");
 
 class DiscordClient extends Client {
 	/**
-	 * Typing for discord.js ClientOptions
+	 * Types for discord.js ClientOptions
 	 * @param {import("discord.js").ClientOptions} options - The options for the client
 	 */
 	constructor(options) {
@@ -21,10 +21,10 @@ class DiscordClient extends Client {
 
 		// Initialize global functions and utilities
 		this.wait = require("timers/promises").setTimeout;
-		this.utils = require("@utils/index.js");
 		this.helpers = require("@helpers/index.js");
+		this.handlers = require("@handlers/index.js");
 		this.logger = new Logger();
-		this.functions = new Functions(this);
+		this.utils = new Utils(this);
 
 		// Initialize client collections with types
 		/** @type {Collection<string, import("@types/event.js").EventStructure>} */
@@ -34,20 +34,19 @@ class DiscordClient extends Client {
 		this.commands = new Collection();
 
 		// Initialize Music Manager if enabled
-		if (this.config.plugins.music.enabled) {
-			this.lavalink = new LavalinkPlayer(this);
-		}
+		if (this.config.plugins.music.enabled) this.lavalink = new LavalinkPlayer(this);
 	}
 
-	/** a function to start everything
+	/**
+	 * A function to start everything
 	 * @returns {Promise<void>}
 	 */
 	async start() {
 		console.clear();
 
-		// Load the helpers modules
+		// Load the helper modules
 		this.helpers.antiCrash(this); // Load antiCrash system
-		this.helpers.loadLocales(this); // Load locales
+		this.helpers.loadLocales(); // Load locales
 		this.helpers.logVanity(this); // Log the vanity
 		await this.helpers.loadEvents(this, "src/events"); // Load event modules
 		await this.helpers.loadCommands(this, "src/commands"); // Load command modules
@@ -58,6 +57,6 @@ class DiscordClient extends Client {
 		// Log into the client
 		await this.login(this.config.bot.token);
 	}
-};
+}
 
 module.exports = { DiscordClient };

@@ -1,4 +1,4 @@
-const colors = require("colors");
+const chalk = require("chalk");
 const { table } = require("table");
 const { t } = require("i18next");
 
@@ -9,7 +9,7 @@ const { t } = require("i18next");
  * @example logVanity(client);
  */
 function logVanity(client) {
-	// ansi colors with escape
+	// ansi chalk with escape
 	let esc = "\u001b[0m";
 	let red = "\u001b[31m";
 	let blue = "\u001b[36m";
@@ -34,15 +34,13 @@ function logVanity(client) {
 		.replace(/w/g, white)
 		.replace(/e/g, esc);
 
-	/**
-	 * @type {import("table").TableUserConfig}
-	 */
+	/** @type {import("table").TableUserConfig} */
 	const config = {
 		columnDefault: {
 			alignment: "center",
 			width: 62,
 		},
-		border: client.functions.getTableBorder("green"),
+		border: client.utils.getTableBorder("green"),
 		drawHorizontalLine: (lineIndex, rowCount) => {
 			return lineIndex === 0 || lineIndex === rowCount;
 		},
@@ -51,22 +49,22 @@ function logVanity(client) {
 		[""],
 		[
 			t("helpers:vanity.welcome", {
-				name: colors.green(client.pkg.name),
+				name: chalk.green(client.pkg.name),
 			}),
 		],
 		[
 			t("helpers:vanity.node", {
-				v: colors.green(process.version),
+				v: chalk.green(process.version),
 			}),
 		],
 		[
 			t("helpers:vanity.version", {
-				v: colors.yellow(client.pkg.version),
+				v: chalk.yellow(client.pkg.version),
 			}),
 		],
 		[
 			t("helpers:vanity.message", {
-				author: colors.cyan(client.pkg.author.name),
+				author: chalk.cyan(client.pkg.author.name),
 			}),
 		],
 		[""],

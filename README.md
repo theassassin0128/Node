@@ -1,4 +1,4 @@
-# ‼️No Frequent Updates For Next Few Months‼️
+# 🚀 Node - Multipurpose Discord Bot
 
 ![Node](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=175&section=header&text=NODE&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient)
 
@@ -13,7 +13,7 @@
 [![Dependency Review][dependency-review]][dependency-review-url]
 [![CodeFactor][code-factor]][code-factor-url]
 
-## Introduction
+## 🌟 Introduction
 
 [![Invite Node](./public/assets/profile.png)](https://discord.com/oauth2/authorize?client_id=1030698369435320350)
 
@@ -24,59 +24,61 @@
 ## 📊 Road Map
 
 - [x] **Basic Bot**
+- [x] **Website** _(basic)_
+- [x] **Music Bot** _(basic)_
+- [x] **Moderation** _(basic)_
+- [ ] **Dashboard**
 - [ ] **Advanced Bot**
 - [ ] **Documentation**
-- [ ] **Moderation Bot**
-- [ ] **Music Bot** _(basic version)_
-- [ ] **Web-based Dashboard**
-- [ ] **Website** _(simple)_
 
 ## 💡 Features
 
-1. **Advanced Logger**
-2. **Moderation Tools**
-3. **Music Streaming**
-4. **Server Management**
-5. **Custom Commands**
-6. **Web Dashboard**
+- **Advanced Logger**
+- **Moderation Tools**
+- **Music Streaming**
+- **Server Management**
+- **High Customization**
+- **Multi-Language Support**
+- **Predefined Types**
+- **Event & Permission Validation**
+- **Templates for Events, Commands & Contexts**
 
-## Get Started ( Old Guide )
+## 🚀 Get Started
 
 1. Copy `.env.example` to `.env` and fill in the values as detailed below.
-1. Create a [MongoDB](https://www.mongodb.com/) database and fill in `DATABASE_URL`.
-1. Create a Discord application at https://discord.com/developers/applications.
-1. Go to the Bot tab and click "Add Bot"
-   - Click "Reset Token" and fill in `DISCORD_TOKEN`
+2. Create a [MongoDB](https://www.mongodb.com/) database and fill in `MONGO_URI`.
+3. Create a Discord application at https://discord.com/developers/applications.
+4. Go to the Bot tab and click "Add Bot"
+   - Click "Reset Token" and fill in `DISCORD_CLIENT_TOKEN`
    - Disable "Public Bot" unless you want your bot to be visible to everyone
    - Enable "Server Members Intent", "Presence Intent" and "Message Content Intent" under "Privileged Gateway Intents"
-1. Go to the OAuth2 tab (General), copy your "Client ID", and fill in `BOT_ID`.
-1. Install dependencies and run the bot
-   ```
+5. Go to the OAuth2 tab (General), copy your "Client ID", and fill in `DISCORD_CLIENT_ID`.
+6. Install dependencies and run the bot
+   ```bash
    npm install
    npm start
    ```
-1. Now go to URL generator tab, in scopes select "bot", "application.commands" scroll down select "Administrator" permission copy the url and invite the bot to your server.
-1. Start using the bot. Use `/ping` or `/botinfo` commands.
+7. Now go to the URL generator tab, in scopes select "bot", "application.commands" scroll down select "Administrator" permission, copy the URL, open the URL and invite the bot to your server.
+8. Start using the bot. Use `/ping` or `/botinfo` commands.
 
+## 📜 Commands
 
+| Name       | Description                                                    |
+| ---------- | -------------------------------------------------------------- |
+| botinfo    | Replies with bot's stats                                       |
+| invite     | Returns a link button with embedded invite-link.               |
+| roleinfo   | Similar to botinfo, replies with information of a server role  |
+| roles      | Replies with an embed message with a full list of server roles |
+| serverinfo | Same as roleinfo, replies with info about a Discord server     |
+| memberinfo | Same as serverinfo, replies with information of a Discord user |
 
-## Commands ( Old Ones | Might not work )
-| Name       | description                                                      |
-| ---------- | ---------------------------------------------------------------- |
-| botinfo    | Replies with bot's stats in an embed message                     |
-| invite     | Returns a link button with embeded invite-link.                  |
-| roleinfo   | Similar to botinfo replies with information of a server role     |
-| roles      | Replies with an embed message with full list of roles (UpTo 150) |
-| serverinfo | Same as roleinfo replies with info about a discord server        |
-| memberinfo | Same as serverinfo replies with information of a discord user    |
+These are some public commands of the bot.
 
-Written above are some public commands of the bot.
-
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please check the [issues page](https://github.com/theassassin0128/Node/issues) for open issues and feature requests.
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 

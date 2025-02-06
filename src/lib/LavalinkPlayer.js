@@ -28,7 +28,7 @@ class LavalinkPlayer extends LavalinkManager {
 				applyVolumeAsFilter: false,
 				clientBasedPositionUpdateInterval: 50,
 				defaultSearchPlatform: client.config.plugins.music.defaultSource,
-				requesterTransformer: client.functions.requesterTransformer,
+				requesterTransformer: client.utils.requesterTransformer,
 				onDisconnect: {
 					autoReconnect: true,
 					destroyPlayer: false,

@@ -1,16 +1,14 @@
 const {
-  SlashCommandBuilder,
-  PermissionFlagsBits,
-  EmbedBuilder,
-  ChannelType,
-  ChatInputCommandInteraction,
-  Client,
+	SlashCommandBuilder,
+	PermissionFlagsBits,
+	EmbedBuilder,
+	ChannelType,
+	ChatInputCommandInteraction,
+	Client,
 } = require("discord.js");
-const memberLog = require("../../models/memberLog.js");
-const { colour } = require("../../config.js");
-const moment = require("moment");
 
 module.exports = {
+	disabled: true,
 	data: new SlashCommandBuilder()
 		.setName("member-log")
 		.setDescription("Member Logging System.")

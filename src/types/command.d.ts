@@ -3,10 +3,9 @@ import {
 	AutocompleteInteraction,
 	ChatInputCommandInteraction,
 	ContextMenuCommandBuilder,
-	MessageContextMenuCommandInteraction,
 	PermissionResolvable,
 	SlashCommandBuilder,
-	UserContextMenuCommandInteraction,
+	ContextMenuCommandInteraction,
 } from "discord.js";
 
 import { DiscordClient } from "@lib/DiscordClient.js";
@@ -49,7 +48,7 @@ export interface CommandStructure {
 		client: DiscordClient,
 		interaction: ChatInputCommandInteraction,
 	) => Promise<void>;
-	autocomplete: (
+	autocomplete?: (
 		client: DiscordClient,
 		interaction: AutocompleteInteraction,
 	) => promise<void>;
@@ -63,12 +62,12 @@ export interface ContextMenuStructure {
 	premium?: boolean;
 	guildOnly?: boolean;
 	testOnly?: boolean;
-	devOnly: ?boolean;
+	devOnly?: boolean;
 	disabled?: boolean;
 	botPermissions?: PermissionResolvable[];
 	userPermissions?: PermissionResolvable[];
 	execute: (
 		client: DiscordClient,
-		interaction: MessageContextMenuCommandInteraction | UserContextMenuCommandInteraction,
+		interaction: ContextMenuCommandInteraction,
 	) => promise<void>;
 }

@@ -13,47 +13,36 @@
 			"message": "Coded by {{author}}"
 		},
 
-		"loadEvents": {
-			"loaded": "Loaded {{count}} events",
-			"error": "Error loading events",
-			"eStart": "[AntiCrash] | [Event Loader Error Logs] | [Start] : ===============",
-			"eEnd": "[AntiCrash] | [Event Loader Error Logs] | [End] : ==============="
-		},
-
-		"loadCommands": {
-			"loaded": "Loaded {{count}} commands",
-			"error": "Error loading commands",
-			"eStart": "[AntiCrash] | [Command Loader Error Logs] | [Start] : ===============",
-			"eEnd": "[AntiCrash] | [Command Loader Error Logs] | [End] : ==============="
-		}
-	},
-
-	"utils": {
-		"fetchCommands": {
-			"success": "fetched {{count}} application commands",
-			"error": "Error occurred while fetching application commands. \n Error: {{err}}",
-			"eStart": "[AntiCrash] | [Fetch Error Logs] | [Start]  : ===============",
-			"eEnd": "[AntiCrash] | [Fetch Error Logs] | [End] : ==============="
-		},
+		"loadEvents": "Loaded {{count}} events successfully",
+		"loadCommands": "Loaded {{count}} commands successfully",
+		"fetchCommands": "fetched {{count}} application commands",
 
 		"syncCommands": {
 			"warning": "Syncing application commands (This may take a while)",
 			"success": "All application commands are in sync",
 			"add": "ADDED",
-			"addMessage": "Detected a new command",
+			"addMessage": "Found a new command or enabled and old one",
 			"delete": "DELETED",
-			"deleteMessage": "Either disabled or the command file is removed",
+			"deleteMessage": "Command is disabled or the file was removed",
 			"modify": "MODIFIED",
 			"modifyMessageData": "Found changes in command data",
-			"modifyMessageGlobal": "Changed the command to be global or guild only",
-			"error": "An error occurred while trying to synchronize Application Commands.",
-			"eStart": "[AntiCrash] | [Synchronization Error Logs] | [Start] : ===============",
-			"eEnd": "[AntiCrash] | [Synchronization Error Logs] | [End] : ==============="
+			"modifyMessageGlobal": "Changed it to be global or guild only"
 		}
 	},
 
-	"bot": {
-		"description": "A _Multipurpose_ Discord App for your every need with **Premium Services**. For more info head to {{website}}"
+	"handlers": {
+		"slashCommands": {
+			"notFound": "This command is not available at the moment.",
+			"disabled": "This command was **disabled** by the developers.",
+			"devOnly": "This command is only **accessible** to the developers.",
+			"guildOnly": "This command cannot be used outside of a _Discord Server_.",
+			"cooldown": "**Chill!** Command in on cooldown. wait for __**{{t}}** seconds__ before using it again.",
+			"botPermission": "I am missing {{p}} as such cannot execute this command.",
+			"userPermission": "You are missing {{p}} as such cannot use this command.",
+			"voiceChannelOnly": "Join a **Voice Channel** before using this command.",
+			"missingVCPermission": "I am not able to **join** your voice channel or **speak** in there.",
+			"error": "An error occurred while trying to execute the command."
+		}
 	},
 
 	"errors": {
@@ -67,16 +56,20 @@
 		},
 
 		"missing": {
-			"param": "Couldn't find {{param}} parameter",
-			"property": "Couldn't find {{property}} property"
+			"param": "{{param}} parameter is missing",
+			"property": "{{property}} property is missing"
 		},
 
 		"validation": {
-			"eventName": "Event name is either missing or incorrect",
-			"commandData": "Command or Context Menu data is missing",
-			"function": "Command execute function is missing",
-			"permission": "{{p}} is not a valid permission"
+			"eventName": "Event name is invalid or missing",
+			"commandData": "Command data is missing",
+			"function": "Execute function is missing",
+			"permission": "{{p}} is not a valid {{t}} permission"
 		}
+	},
+
+	"bot": {
+		"description": "A _Multipurpose_ Discord App for your every need with **Premium Services**. For more info head to {{website}}"
 	},
 
 	"embeds": {
@@ -92,7 +85,7 @@
 
 	"events": {
 		"clientReady": {
-			"consoleLog": "Ready! Logged in as {{tag}}"
+			"consoleLog": "{{tag}} is online"
 		},
 
 		"slashCommands": {

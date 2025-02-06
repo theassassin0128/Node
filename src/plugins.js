@@ -1,9 +1,11 @@
+const { env } = require("./env.js");
+
 module.exports = {
 	// Dashboard settings
 	dashboard: {
 		enabled: true,
-		baseUrl: "", // Base URL for the dashboard
-		failureUrl: "", // URL to redirect on failure
+		baseUrl: "/", // Base URL for the dashboard
+		failureUrl: "/error", // URL to redirect on failure
 		port: "3000", // Port for the dashboard
 	},
 
@@ -24,35 +26,7 @@ module.exports = {
 		defaultSource: "yt", // Default music source
 		sources: ["ytmsearch", "ytm", "ytsearch", "yt", "spotifysearch", "spotify"], // Available music sources
 		// Lavalink nodes for the music system
-		lavalinkNodes: [
-			// locally hosted node
-			{
-				id: "Local Node",
-				authorization: "youshallnotpass",
-				host: "localhost",
-				port: 6969,
-				secure: false,
-				requestSignalTimeoutMS: 10000,
-				closeOnError: true,
-				enablePingOnStatsCheck: true,
-				retryDelay: 10e3,
-				retryAmount: 3,
-			},
-
-			// from lavanodes
-			{
-				id: "Koi Node V4",
-				authorization: "prplmoe.me",
-				host: "lavav4.prplmoe.me",
-				port: 1118,
-				secure: false,
-				requestSignalTimeoutMS: 10000,
-				closeOnError: true,
-				enablePingOnStatsCheck: true,
-				retryDelay: 10e3,
-				retryAmount: 3,
-			},
-		],
+		lavalinkNodes: env.LAVALINK_NODES,
 	},
 
 	// Settings for the giveaway system

@@ -1,9 +1,8 @@
-const colors = require("colors");
+const chalk = require("chalk");
 const { table } = require("table");
-const { Permissions } = require("@src/validations/permissions.js");
 const { t } = require("i18next");
-const { Logger } = require("@lib/Logger.js");
-const logger = new Logger();
+const loadFiles = require("./loadFiles");
+const { Permissions } = require("@src/validations/permissions.js");
 
 /**
  * A function to load command modules
@@ -14,97 +13,89 @@ const logger = new Logger();
  */
 async function loadCommands(client, dir) {
 	if (typeof client !== "object") {
-		throw new TypeError(t("errors:missing.param", { param: colors.yellow("client") }));
-	}
-	if (typeof dir !== "string") {
-		throw new TypeError(t("errors:type.string"), { param: colors.yellow("dir") });
+		throw new TypeError(t("errors:missing.param", { param: chalk.yellow("client") }));
 	}
 
-	const tableData = [[colors.cyan("Index"), colors.cyan("File"), colors.cyan("Status")]];
-	/**
-	 * @type {import("table").TableUserConfig}
-	 */
+	if (typeof dir !== "string") {
+		throw new TypeError(t("errors:type.string"), { param: chalk.yellow("dir") });
+	}
+
+	const tableData = [[chalk.cyan("Index"), chalk.cyan("File"), chalk.cyan("Status")]];
+	/** @type {import("table").TableUserConfig} */
 	const tableConfig = {
 		columnDefault: {
 			alignment: "center",
-			width: 25,
+			width: 30,
 		},
 		columns: [{ width: 5 }, {}, { width: 6 }],
-		border: client.functions.getTableBorder("blue"),
+		border: client.utils.getTableBorder("blue"),
 		drawHorizontalLine: (lineIndex, rowCount) => {
 			return lineIndex === 0 || lineIndex === 1 || lineIndex === rowCount;
 		},
 	};
 
-	/**
-	 * @type {Array<{file: string, error: Error}>}
-	 */
-	const errors = [];
-	const files = await client.utils.loadFiles(dir, [".js"]);
+	let i = 0;
 	client.commands.clear();
 
-	let i = 0;
-	for (const file of files) {
+	(await loadFiles(dir, [".js"])).forEach((file) => {
 		const filename = file.split(/[\\/]/g).pop();
 
 		try {
-			/** @type {import("@types/command.d.ts").CommandStructure} */
+			/** @type {import("@types/command.js").CommandStructure} */
 			const command = require(file);
 
-			if (command.disabled) continue;
+			if (command.disabled) return;
 
 			if (command?.category !== "none") {
-				if (client.config.categories[command.category]?.enabled === false) continue;
+				if (client.config.categories[command.category]?.enabled === false) return;
 			}
 
 			if (command?.botPermissions?.length > 0) {
-				for (let p of command.botPermissions) {
+				command.botPermissions.forEach((p) => {
 					if (!Permissions.includes(p)) {
-						throw new Error(t("errors:validation.permission", { p: colors.yellow(p) }));
+						throw `${t("errors:validation.permission", {
+							p: chalk.yellow(p),
+							t: "user",
+						})} - ${chalk.yellow(filename)}`;
 					}
-				}
+				});
 			}
 
 			if (command?.userPermissions?.length > 0) {
-				for (let p of command.userPermissions) {
+				command.userPermissions.forEach((p) => {
 					if (!Permissions.includes(p)) {
-						throw new Error(t("errors:validation.permission", { p: colors.yellow(p) }));
+						throw `${t("errors:validation.permission", {
+							p: chalk.yellow(p),
+							t: "bot",
+						})} - ${chalk.yellow(filename)}`;
 					}
-				}
+				});
 			}
 
 			if (!command.data) {
-				throw new Error(t("errors:validation.commandData"));
+				throw `${t("errors:validation.commandData")} - ${chalk.yellow(filename)}`;
 			}
 
 			if (!command.execute) {
-				throw new Error(t("errors:validation.function"));
+				throw `${t("errors:validation.function")} - ${chalk.yellow(filename)}`;
 			}
 
 			client.commands.set(command.data.name, command);
 
 			i++;
-			tableData.push([`${colors.magenta(i)}`, colors.green(filename), "» 🌱 «"]);
+			tableData.push([`${chalk.magenta(i)}`, chalk.green(filename), "» 🌱 «"]);
 		} catch (error) {
 			i++;
-			tableData.push([`${colors.magenta(i)}`, colors.red(filename), "» 🔴 «"]);
-			errors.push({ file: file, error: error });
+			tableData.push([`${chalk.magenta(i)}`, chalk.red(filename), "» 🔴 «"]);
+			client.logger.error(error);
 		}
-	}
+	});
 
-	if (client.config.table.enabled.command) console.log(table(tableData, tableConfig));
+	if (client.config.table.command) console.log(table(tableData, tableConfig));
 
-	if (errors.length > 0) {
-		console.log(colors.yellow(t("helpers:loadCommands.eStart")));
-		errors.forEach((e) => {
-			console.log(colors.green(e.file), "\n", colors.red(e.error), "\n");
-		});
-		console.log(colors.yellow(t("helpers:loadCommands.eEnd")));
-	}
-
-	logger.success(
-		t("helpers:loadCommands.loaded", {
-			count: colors.yellow(client.commands.size),
+	client.logger.success(
+		t("helpers:loadCommands", {
+			count: chalk.yellow(client.commands.size),
 		}),
 	);
 }

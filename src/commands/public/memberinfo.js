@@ -58,7 +58,7 @@ module.exports = {
 					name: `${member.user.tag} | General Information`,
 					iconURL: member.displayAvatarURL(),
 				})
-				.setColor(member.displayHexColor || client.config.colors.Main)
+				.setColor(member.displayHexColor || client.utils.getRandomColor())
 				.setDescription(
 					`On <t:${joinTime}:D> ${member.user.username} joind as the **${addSuffix(
 						joinedPosition,
@@ -118,34 +118,34 @@ module.exports = {
 };
 
 function addSuffix(number) {
-  if (number % 100 >= 11 && number % 100 <= 13) return number + "th";
-  switch (number % 10) {
-    case 1:
-      return number + "st";
-    case 2:
-      return number + "nd";
-    case 3:
-      return number + "rd";
-  }
-  return number + "th";
+	if (number % 100 >= 11 && number % 100 <= 13) return number + "th";
+	switch (number % 10) {
+		case 1:
+			return number + "st";
+		case 2:
+			return number + "nd";
+		case 3:
+			return number + "rd";
+	}
+	return number + "th";
 }
 
 function addBadges(badgeNames) {
-  if (!badgeNames.length) return [":x:"];
-  const badgeMap = {
-    ActiveDeveloper: "<:activedeveloper:1086251077873184778>",
-    BugHunterLevel1: "<:discordbughunter1:1086251067685208075>",
-    BugHunterLevel2: "<:discordbughunter2:1086251061729296465>",
-    PremiumEarlySupporter: "<:discordearlysupporter:1086251057170087956>",
-    Partner: "<:discordpartner:1086251046264901652>",
-    Staff: "<:discordstaff:1086251041785380886>",
-    HypeSquadOnlineHouse1: "<:hypesquadbravery:1086251034109820988>", // bravery
-    HypeSquadOnlineHouse2: "<:hypesquadbrilliance:1086251031991701504>", // brilliance
-    HypeSquadOnlineHouse3: "<:hypesquadbalance:1086251037817585705>", // balance
-    Hypesquad: "<:hypesquadevents:1086251028334268489>",
-    CertifiedModerator: "<:discordmod:1086251054804504666>",
-    VerifiedDeveloper: "<:discordbotdev:1086251071665606686>",
-  };
+	if (!badgeNames.length) return [":x:"];
+	const badgeMap = {
+		ActiveDeveloper: "<:activedeveloper:1086251077873184778>",
+		BugHunterLevel1: "<:discordbughunter1:1086251067685208075>",
+		BugHunterLevel2: "<:discordbughunter2:1086251061729296465>",
+		PremiumEarlySupporter: "<:discordearlysupporter:1086251057170087956>",
+		Partner: "<:discordpartner:1086251046264901652>",
+		Staff: "<:discordstaff:1086251041785380886>",
+		HypeSquadOnlineHouse1: "<:hypesquadbravery:1086251034109820988>", // bravery
+		HypeSquadOnlineHouse2: "<:hypesquadbrilliance:1086251031991701504>", // brilliance
+		HypeSquadOnlineHouse3: "<:hypesquadbalance:1086251037817585705>", // balance
+		Hypesquad: "<:hypesquadevents:1086251028334268489>",
+		CertifiedModerator: "<:discordmod:1086251054804504666>",
+		VerifiedDeveloper: "<:discordbotdev:1086251071665606686>",
+	};
 
-  return badgeNames.map((badgeName) => badgeMap[badgeName] || "❔");
+	return badgeNames.map((badgeName) => badgeMap[badgeName] || "❔");
 }

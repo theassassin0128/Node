@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const i18next = require("i18next");
+const config = require("@src/config");
 const resources = require("@src/locales/index.js");
 
 /**
@@ -9,21 +10,24 @@ const resources = require("@src/locales/index.js");
  * @returns {string} - The default locale
  * @example getDefaultLocale(client);
  */
-function getDefaultLocale(client) {
-	let { defaultLocale } = client.config;
+function getDefaultLocale() {
+	let { defaultLocale } = config;
 	if (typeof defaultLocale !== "string") {
-		defaultLocale = "en-US";
-		return defaultLocale;
-	}
-
-	const localeFolders = fs.readdirSync(path.join(process.cwd(), "src", "locales"));
-	if (!Array.isArray(localeFolders)) {
-		throw new Error(
-			"Couldn't load locales. Please make sure locale files exist within src folder.",
+		throw new TypeError(
+			"Please provide a valid language. For supported languages check docs.",
 		);
 	}
 
-	if (defaultLocale.length <= 0 || !localeFolders.includes(defaultLocale)) {
+	const localeFiles = fs.readdirSync(path.join(process.cwd(), "src", "locales"));
+	if (!Array.isArray(localeFiles)) {
+		throw new Error(
+			"Couldn't load locales. Make sure locale files exist within src folder.",
+		);
+	}
+
+	if (!defaultLocale || !localeFiles.includes(defaultLocale + ".json")) {
+		console.log(localeFiles);
+		console.log("Here");
 		defaultLocale = "en-US";
 	}
 
@@ -36,9 +40,9 @@ function getDefaultLocale(client) {
  * @returns {void}
  * @example loadLocales(client);
  */
-function loadLocales(client) {
+function loadLocales() {
 	i18next.init({
-		fallbackLng: getDefaultLocale(client),
+		fallbackLng: getDefaultLocale(),
 		defaultNS: "",
 		interpolation: {
 			escapeValue: false,

@@ -24,7 +24,7 @@ module.exports = {
 			.setAuthor({
 				name: "Now Playing",
 				iconURL:
-					client.config.icons[track.info.sourceName] ??
+					client.config.media.icons[track.info.sourceName] ??
 					client.user?.displayAvatarURL({ extension: "png" }),
 			})
 			.setColor(client.config.colors.Main)

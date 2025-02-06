@@ -1,7 +1,5 @@
-const colors = require("colors");
+const chalk = require("chalk");
 const { t } = require("i18next");
-const { Logger } = require("@lib/Logger.js");
-const logger = new Logger();
 
 /** @type {import("@types/event").EventStructure} */
 module.exports = {
@@ -9,9 +7,9 @@ module.exports = {
 	once: true,
 	execute: async (client) => {
 		// Log that the bot is online
-		logger.success(
+		client.logger.info(
 			t("events:clientReady.consoleLog", {
-				tag: colors.green(client.user.tag),
+				tag: chalk.green(client.user.tag),
 			}),
 		);
 
@@ -19,6 +17,6 @@ module.exports = {
 		client.lavalink.init(client.user);
 
 		// Synchronizing the application commands
-		client.utils.syncCommands(client);
+		client.helpers.syncCommands(client);
 	},
 };

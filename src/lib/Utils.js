@@ -1,11 +1,9 @@
-const colors = require("colors");
-const { glob } = require("glob");
-const path = require("path");
+const chalk = require("chalk");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 
-class Functions {
+class Utils {
 	/**
-	 * Typing the client for use in functions
+	 * Typing the client for use in util functions
 	 * @param {import("@lib/DiscordClient.js").DiscordClient} client
 	 */
 	constructor(client) {
@@ -20,7 +18,7 @@ class Functions {
 	getTableBorder(color) {
 		const border = {};
 		Object.keys(this.client.config.table.border).forEach((key) => {
-			border[key] = colors[color](this.client.config.table.border[key]);
+			border[key] = chalk[color](this.client.config.table.border[key]);
 		});
 		return border;
 	}
@@ -172,11 +170,22 @@ class Functions {
 
 		return { id: requester.toString(), username: "unknown" };
 	}
+
+	/**
+	 * A function to get a users badge emojis
+	 * @param {string[]} badges - user or member badge names
+	 * This return an array of emojis for the provided badge names
+	 * @returns {string[]}
+	 */
+	getBadges(badges) {
+		if (!badges.length) return ["x"];
+		return badges.map((badge) => this.client.config.emojis.custom[badge] || badge);
+	}
 }
 
-module.exports = { Functions };
+module.exports = { Utils };
 
-class Utils {
+class Test {
 	/** A function to send error to a discord channel
 	 * @type {import("@types/functions").SendError}
 	 * @example client.functions.sendError(error, type, data);
@@ -215,11 +224,11 @@ class Utils {
 			})
 			.catch((error) => {
 				console.log(
-					colors.yellow("[AntiCrash] | [Send_Error_Logs] | [Start] : ==============="),
+					chalk.yellow("[AntiCrash] | [Send_Error_Logs] | [Start] : ==============="),
 				);
-				console.log(colors.red(error));
+				console.log(chalk.red(error));
 				console.log(
-					colors.yellow("[AntiCrash] | [Send_Error_Logs] | [End] : ==============="),
+					chalk.yellow("[AntiCrash] | [Send_Error_Logs] | [End] : ==============="),
 				);
 			});
 	}

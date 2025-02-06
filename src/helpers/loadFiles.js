@@ -1,6 +1,6 @@
 const { glob } = require("glob");
 const { join, extname, resolve } = require("path");
-const colors = require("colors");
+const chalk = require("chalk");
 const { t } = require("i18next");
 
 /**
@@ -17,10 +17,10 @@ const { t } = require("i18next");
 async function loadFiles(path, ext) {
 	// Validate parameters
 	if (typeof path !== "string") {
-		throw new TypeError(t("errors:type.string", { param: colors.yellow("path") }));
+		throw new TypeError(t("errors:type.string", { param: chalk.yellow("path") }));
 	}
 	if (!Array.isArray(ext)) {
-		throw new TypeError(t("errors:type.array", { param: colors.yellow("ext") }));
+		throw new TypeError(t("errors:type.array", { param: chalk.yellow("ext") }));
 	}
 
 	// Helper function to delete cached files

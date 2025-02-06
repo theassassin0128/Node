@@ -1,9 +1,8 @@
-const colors = require("colors");
+const chalk = require("chalk");
 const { table } = require("table");
 const { t } = require("i18next");
+const loadFiles = require("./loadFiles.js");
 const { EventNames } = require("@src/validations/events.js");
-const { Logger } = require("@lib/Logger.js");
-const logger = new Logger();
 
 /**
  * A function to load event files
@@ -14,49 +13,43 @@ const logger = new Logger();
  */
 async function loadEvents(client, dir) {
 	if (typeof client !== "object") {
-		throw new TypeError(t("errors:missing.param", { param: colors.yellow("client") }));
+		throw new TypeError(t("errors:missing.param", { param: chalk.yellow("client") }));
 	}
 
 	if (typeof dir !== "string") {
-		throw new TypeError(t("errors:type.string", { param: colors.yellow("dir") }));
+		throw new TypeError(t("errors:type.string", { param: chalk.yellow("dir") }));
 	}
 
-	const tableData = [[colors.cyan("Index"), colors.cyan("File"), colors.cyan("Status")]];
-
-	/**
-	 * @type {import("table").TableUserConfig}
-	 */
+	const tableData = [[chalk.cyan("Index"), chalk.cyan("File"), chalk.cyan("Status")]];
+	/** @type {import("table").TableUserConfig} */
 	const tableConfig = {
 		columnDefault: {
 			alignment: "center",
-			width: 25,
+			width: 30,
 		},
 		columns: [{ width: 5 }, {}, { width: 6 }],
-		border: client.functions.getTableBorder("yellow"),
+		border: client.utils.getTableBorder("yellow"),
 		drawHorizontalLine: (lineIndex, rowCount) => {
 			return lineIndex === 0 || lineIndex === 1 || lineIndex === rowCount;
 		},
 	};
 
-	/**
-	 * @type {Array<{file: string, error: Error}>}
-	 */
-	const errors = [];
-	const files = await client.utils.loadFiles(dir, [".js"]);
+	let i = 0;
 	client.events.clear();
 
-	let i = 0;
-	for (const file of files) {
+	(await loadFiles(dir, [".js"])).forEach((file) => {
 		const filename = file.split(/[\\/]/g).pop();
 
 		try {
-			/**
-			 * @type {import("@types/event.js").EventStructure}
-			 */
+			/** @type {import("@types/event.js").EventStructure} */
 			const event = require(file);
 
 			if (!EventNames.includes(event.name) || !event.name) {
-				throw new Error(t("errors:validation.eventName"));
+				throw `${t("errors:validation.eventName")} - ${chalk.yellow(filename)}`;
+			}
+
+			if (!event.execute) {
+				throw `${t("errors:validation.function")} - ${chalk.yellow(filename)}`;
 			}
 
 			client.events.set(filename, event);
@@ -74,27 +67,19 @@ async function loadEvents(client, dir) {
 			target[event.once ? "once" : "on"](event.name, execute);
 
 			i++;
-			tableData.push([`${colors.magenta(i)}`, colors.green(filename), "» 🌱 «"]);
+			tableData.push([`${chalk.magenta(i)}`, chalk.green(filename), "» 🌱 «"]);
 		} catch (error) {
 			i++;
-			tableData.push([`${colors.magenta(i)}`, colors.red(filename), "» 🔴 «"]);
-			errors.push({ file: file, error: error });
+			tableData.push([`${chalk.magenta(i)}`, chalk.red(filename), "» 🔴 «"]);
+			client.logger.error(error);
 		}
-	}
+	});
 
-	if (client.config.table.enabled.event) console.log(table(tableData, tableConfig));
+	if (client.config.table.event) console.log(table(tableData, tableConfig));
 
-	if (errors.length > 0) {
-		console.log(colors.yellow(t("helpers:loadEvents.eStart")));
-		errors.forEach((e) => {
-			console.log(colors.green(e.file), "\n", colors.red(e.error), "\n");
-		});
-		console.log(colors.yellow(t("helpers:loadEvents.eEnd")));
-	}
-
-	logger.success(
-		t("helpers:loadEvents.loaded", {
-			count: colors.yellow(client.events.size),
+	client.logger.success(
+		t("helpers:loadEvents", {
+			count: chalk.yellow(client.events.size),
 		}),
 	);
 }

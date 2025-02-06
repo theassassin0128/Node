@@ -1,7 +1,5 @@
-const colors = require("colors");
+const chalk = require("chalk");
 const { t } = require("i18next");
-const { Logger } = require("@lib/Logger.js");
-const logger = new Logger();
 
 /** @type {import("@types/event").EventStructure} */
 module.exports = {
@@ -11,6 +9,6 @@ module.exports = {
 	 * @param {import("lavalink-client").LavalinkNode} node
 	 */
 	execute: async (client, node) => {
-		logger.success(t("events:node.connect", { id: colors.magenta(node.id) }));
+		client.logger.info(t("events:node.connect", { id: chalk.magenta(node.id) }));
 	},
 };
