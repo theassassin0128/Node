@@ -96,8 +96,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 [support-server]: https://discord.gg/E6H9VvBdTk
 [license-shield]: https://img.shields.io/github/license/theassassin0128/Node
 [license-url]: https://github.com/theassassin0128/Node/blob/master/LICENSE
-[codeql]: https://github.com/theassassin0128/Node/workflows/CodeQL/badge.svg
-[codeql-url]: https://github.com/theassassin0128/Node/actions?query=workflow%3ACodeQL
+[codeql]: https://github.com/theassassin0128/Node/actions/workflows/codeql.yml/badge.svg
+[codeql-url]: https://github.com/theassassin0128/Node/actions/workflows/codeql.yml
 [dependency-review]: https://github.com/theassassin0128/Node/workflows/Dependency%20Review/badge.svg
 [dependency-review-url]: https://github.com/theassassin0128/Node/actions?query=workflow%3A%22Dependency+Review%22
 [code-factor]: https://img.shields.io/codefactor/grade/github/theassassin0128/node?logo=codefactor&logoColor=%23F44A6A
