@@ -1,7 +1,7 @@
 const { Client, Collection } = require("discord.js");
 const { Utils } = require("./Utils.js");
 const { LavalinkPlayer } = require("./LavalinkPlayer.js");
-const { DB } = require("@db/DB.js");
+// const { DB } = require("@db/DB.js");
 const { Logger } = require("./Logger.js");
 
 class DiscordClient extends Client {
@@ -17,12 +17,12 @@ class DiscordClient extends Client {
 		this.pkg = require("@root/package.json");
 
 		// Initialize the database
-		this.db = new DB(this);
+		this.db = require("@src/database");
 
 		// Initialize global functions and utilities
 		this.wait = require("timers/promises").setTimeout;
-		this.helpers = require("@helpers/index.js");
-		this.handlers = require("@handlers/index.js");
+		this.helpers = require("@src/helpers");
+		this.handlers = require("@src/handlers");
 		this.logger = new Logger();
 		this.utils = new Utils(this);
 
@@ -52,7 +52,7 @@ class DiscordClient extends Client {
 		await this.helpers.loadCommands(this, "src/commands"); // Load command modules
 
 		// Connect to the database
-		await this.db.init();
+		await this.db.connect(this);
 
 		// Log into the client
 		await this.login(this.config.bot.token);

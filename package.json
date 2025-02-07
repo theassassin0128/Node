@@ -70,14 +70,7 @@
 	"_moduleAliases": {
 		"@root": ".",
 		"@src": "src/",
-		"@db": "src/db/",
 		"@lib": "src/lib/",
-		"@types": "src/types/",
-		"@utils": "src/utils/",
-		"@assets": "src/assets/",
-		"@events": "src/events/",
-		"@helpers": "src/helpers/",
-		"@handlers": "src/handlers/",
-		"@commands": "src/commands/"
+		"@types": "src/types/"
 	}
 }

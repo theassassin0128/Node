@@ -49,7 +49,7 @@ function logVanity(client) {
 		[""],
 		[
 			t("helpers:vanity.welcome", {
-				name: chalk.green(client.pkg.name),
+				name: "Node Project",
 			}),
 		],
 		[

@@ -13,8 +13,10 @@ module.exports = {
 			}),
 		);
 
-		// Initialize the Lavalink client
-		client.lavalink.init(client.user);
+		if (client.config.plugins.music.enabled) {
+			// Initialize the Lavalink client
+			client.lavalink.init(client.user);
+		}
 
 		// Synchronizing the application commands
 		client.helpers.syncCommands(client);

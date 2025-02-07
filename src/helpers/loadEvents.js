@@ -44,6 +44,10 @@ async function loadEvents(client, dir) {
 			/** @type {import("@types/event.js").EventStructure} */
 			const event = require(file);
 
+			if (event.player || event.node) {
+				if (!client.config.plugins.music.enabled) return;
+			}
+
 			if (!EventNames.includes(event.name) || !event.name) {
 				throw `${t("errors:validation.eventName")} - ${chalk.yellow(filename)}`;
 			}

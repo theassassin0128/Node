@@ -1,13 +1,12 @@
 {
 	"db": {
 		"connected": "{{db}} database connected",
-		"disconnected": "{{db}} database disconnected",
-		"error": "Error connecting to {{db}} database. \n Error: {{err}}"
+		"disconnected": "{{db}} database disconnected"
 	},
 
 	"helpers": {
 		"vanity": {
-			"welcome": "Welcome to {{name}} project",
+			"welcome": "Welcome to {{name}}",
 			"node": "Running on nodejs version {{v}}",
 			"version": "Package version {{v}}",
 			"message": "Coded by {{author}}"
@@ -15,7 +14,7 @@
 
 		"loadEvents": "Loaded {{count}} events successfully",
 		"loadCommands": "Loaded {{count}} commands successfully",
-		"fetchCommands": "fetched {{count}} application commands",
+		"fetchCommands": "Fetched {{count}} application commands",
 
 		"syncCommands": {
 			"warning": "Syncing application commands (This may take a while)",
