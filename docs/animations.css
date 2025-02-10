@@ -1,3 +1,4 @@
+/* Animation Keyframes */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -29,6 +30,7 @@
   }
 }
 
+/* Animation Classes */
 .animated-header {
   animation: fadeIn 2s ease-in-out;
 }

@@ -1,3 +1,4 @@
+/* Global Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -10,6 +11,7 @@ body {
   margin: auto;
 }
 
+/* Header Styles */
 header {
   background: #333;
   color: #fff;
@@ -49,6 +51,7 @@ header nav {
   margin-top: 10px;
 }
 
+/* Section Styles */
 #about,
 #badges,
 #contact,
@@ -85,6 +88,7 @@ header nav {
   margin: 0 20px;
 }
 
+/* Animation Keyframes */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -94,6 +98,7 @@ header nav {
   }
 }
 
+/* Social Links Styles */
 .social-links {
   display: flex;
   justify-content: center;
@@ -105,10 +110,12 @@ header nav {
   list-style: none;
 }
 
+/* Footer Styles */
 footer {
   text-align: right;
 }
 
+/* Responsive Styles */
 @media (max-width: 1080px) {
   .container {
     width: 95%;
