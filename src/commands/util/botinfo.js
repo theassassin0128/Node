@@ -17,9 +17,8 @@ module.exports = {
 		.setDescription("📖 View bot's information."),
 	category: "utility",
 	cooldown: 60,
+	global: true,
 	premium: false,
-	guildOnly: false,
-	testOnly: false,
 	devOnly: true,
 	voiceChannelOnly: false,
 	botPermissions: ["SendMessages", "ReadMessageHistory", "SendMessagesInThreads"],
@@ -99,22 +98,22 @@ module.exports = {
 		const githubButton = new ButtonBuilder()
 			.setLabel("GitHub")
 			.setStyle(ButtonStyle.Link)
-			.setURL(client.config.links.github);
+			.setURL(client.config.media.links.github);
 
 		const discordButton = new ButtonBuilder()
 			.setLabel("Support")
 			.setStyle(ButtonStyle.Link)
-			.setURL(client.config.links.server);
+			.setURL(client.config.media.links.server);
 
 		const inviteButton = new ButtonBuilder()
 			.setLabel("Invite Me")
 			.setStyle(ButtonStyle.Link)
-			.setURL(client.config.links.invite);
+			.setURL(client.config.media.links.invite);
 
 		const websiteButton = new ButtonBuilder()
 			.setLabel("Website")
 			.setStyle(ButtonStyle.Link)
-			.setURL(client.config.links.website);
+			.setURL(client.config.media.links.website);
 
 		const actionRow = new ActionRowBuilder()
 			.addComponents(githubButton)

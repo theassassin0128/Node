@@ -6,25 +6,28 @@ module.exports = {
 
 	// Bot settings
 	bot: {
-		global: true, // Wheither to make the commands global or not
-		allowedInvite: true, // Whether to allow invite command or not
-		status: "online", // Bot status example: online, idle, dnd, invisible
-		id: env.DISCORD_CLIENT_ID, // Discord client ID
-		ownerId: env.OWNER_ID, // Bot owner ID
-		guildId: env.GUILD_ID, // Bot guild ID
-		devs: env.DEV_IDS, // Bot developers ids.
-		token: env.DISCORD_CLIENT_TOKEN, // Discord bot token
-		secret: env.DISCORD_CLIENT_SECRET, // Discord client secret
+		// Discord client ID
+		id: env.DISCORD_CLIENT_ID,
+		// Discord bot token
+		token: env.DISCORD_CLIENT_TOKEN,
+		// Discord client secret
+		secret: env.DISCORD_CLIENT_SECRET,
+		// Bot owner ID
+		ownerId: env.OWNER_ID,
+		// Bot guild ID
+		guildId: env.GUILD_ID,
+		// Bot developers ids.
+		devs: env.DEV_IDS,
+		// Wheither to make the commands global or not
+		global: true,
+		// Whether to allow invite command or not
+		allowedInvite: true,
+		// Default cooldown ammount in secconds
+		defaultCooldown: 3,
 	},
 
 	// DataBase secrect
 	mongodbUri: env.MONGO_URI, // Mongodb URI. Get it from mongodb.com
-
-	// Spotify secrets
-	spotify: {
-		id: env.SPOTIFY_CLIENT_ID, // Spotify client ID
-		secret: env.SPOTIFY_CLIENT_SECRET, // Spotify client secret
-	},
 
 	// settings and configuration to use with "table" package
 	table: {

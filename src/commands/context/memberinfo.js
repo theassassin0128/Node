@@ -6,6 +6,7 @@ const {
 	AttachmentBuilder,
 	ApplicationIntegrationType,
 } = require("discord.js");
+const { t } = require("i18next");
 const { profileImage } = require("discord-arts");
 
 /** @type {import("@types/command").ContextMenuStructure} */
@@ -16,15 +17,15 @@ module.exports = {
 		.setContexts(InteractionContextType.Guild)
 		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall),
 	category: "information",
-	cooldown: 20,
+	cooldown: 180,
 	premium: false,
 	guildOnly: true,
-	testOnly: false,
 	devOnly: false,
+	global: true,
 	disabled: false,
 	botPermissions: ["SendMessages"],
 	userPermissions: ["UseApplicationCommands"],
-	execute: async (client, interaction) => {
+	execute: async (client, interaction, lng) => {
 		await interaction.deferReply();
 
 		const { targetId, guild } = interaction;
@@ -40,45 +41,45 @@ module.exports = {
 			.setDescription(`<@${member.id}>`)
 			.addFields([
 				{
-					name: "📛 username",
+					name: t("context:memberinfo.username", { lng }),
 					value: `- ${member.user.username}`,
 					inline: true,
 				},
 				{
-					name: "🆔 ID",
-					value: `- ${member.id}`,
-					inline: true,
-				},
-				{
-					name: `🎖 Roles [${member.roles.cache.size}] Shows up to 15`,
-					value: `${member.roles.cache
-						.map((r) => `<@&${r.id}>`)
-						.slice(0, 15)
-						.join(", ")}`,
-					inline: false,
-				},
-				{
-					name: "🔰 Nickname",
+					name: t("context:memberinfo.nickname", { lng }),
 					value: `- ${member.displayName}`,
 					inline: true,
 				},
 				{
-					name: "🚀 Server Boost",
-					value: member.premiumSince ? "- Yes" : "- No",
-					inline: true,
-				},
-				{
-					name: "📆 Creation Date",
-					value: `- <t:${Math.floor(
-						member.user.createdTimestamp / 1000,
-					)}:F>\n- (<t:${Math.floor(member.user.createdTimestamp / 1000)}:R>)`,
+					name: t("context:memberinfo.id", { lng }),
+					value: `- ${member.id}`,
 					inline: false,
 				},
 				{
-					name: "📆 Joined Date",
+					name: t("context:memberinfo.boost", { lng }),
+					value: member.premiumSince ? `- <t:${member.premiumSinceTimestamp}:R>` : "- No",
+					inline: false,
+				},
+				{
+					name: t("context:memberinfo.creation", { lng }),
 					value: `- <t:${Math.floor(
+						member.user.createdTimestamp / 1000,
+					)}:F>\n- <t:${Math.floor(member.user.createdTimestamp / 1000)}:R>`,
+					inline: false,
+				},
+				{
+					name: t("context:memberinfo.join", { lng }),
+					value: `- <t:${Math.floor(member.joinedTimestamp / 1000)}:F>\n- <t:${Math.floor(
 						member.joinedTimestamp / 1000,
-					)}:F>\n- (<t:${Math.floor(member.joinedTimestamp / 1000)}:R>)`,
+					)}:R>`,
+					inline: false,
+				},
+				{
+					name: t("context:memberinfo.roles", { lng, count: member.roles.cache.size }),
+					value: `${member.roles.cache
+						.map((r) => r)
+						.slice(0, 15)
+						.join(", ")}`,
 					inline: false,
 				},
 			])

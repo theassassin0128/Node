@@ -8,9 +8,7 @@ const UserSchema = new mongoose.Schema(
 		_id: String,
 		username: String,
 		discriminator: String,
-		config: {
-			locale: { type: String, default: config.defaultLocale },
-		},
+		locale: { type: String, default: config.defaultLocale },
 		coins: { type: Number, default: 0 },
 		bank: { type: Number, default: 0 },
 		reputation: {
@@ -35,6 +33,7 @@ const model = mongoose.model("user", UserSchema);
 
 /**
  * @param {import('discord.js').User} user
+ * @returns {Promise<import("@types/database.js").UserSchema>}
  */
 async function getUser(user) {
 	if (!user) {

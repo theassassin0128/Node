@@ -1,0 +1,108 @@
+{
+	"default": {},
+
+	"ping": {
+		"description": "🏓 Pong! Replies with bot's response time.",
+		"reply": "⏱️ Hold on a moment..."
+	},
+
+	"invite": {
+		"description": "returns a link button with bots invite url.",
+		"disabled": "Sorry. Invites has been disabled by the owner.",
+		"reply": "Invite me by clicking the button."
+	},
+
+	"botinfo": {
+		"description": "📖 View bot's information.",
+		"reply": {}
+	},
+
+	"logger": {
+		"noChannel": "⚠ In order to create a loggin system, a text based channel must be provided.",
+		"created": "✅ Successfully created the logging system.",
+		"updated": "✅ Successfully updated the logger data.",
+		"noLogger": "❌ Sorry there is no logging system.",
+		"destroy": "✅ Successfully deleted the logging system.",
+		"description": "Below are given the stats for all logging systems."
+	},
+
+	"reload": {
+		"owner": "Sorry, You are not the owner of this application. So, you can't use this command",
+		"reply": "Reloaded {{t}} files."
+	},
+
+	"serverinfo": {
+		"description": "📖 View the server information.",
+		"reply": {
+			"embed": {}
+		}
+	},
+
+	"roles": {
+		"description": "Get the role list of a server.",
+		"reply": {}
+	},
+
+	"roleinfo": {
+		"description": "📖 View any role's information.",
+		"reply": {}
+	},
+
+	"memberinfo": {
+		"description": "📖 View your or any member's information."
+	},
+
+	"emit": {
+		"description": "Emit an Event",
+		"reply": "Emitted the selected {{event}} successfully."
+	},
+
+	"play": {
+		"description": "▶  play a song or track from available sources",
+		"joinVc": "😑 Join the {{vc}} voice channel to use the command.",
+		"loadFailed": "❌ Failed to load the requested track.",
+		"emptyQueue": "❗ No results found for the query.",
+		"track": "✅ Added {{title}} by {{author}} to the queue at {{position}}",
+		"playlist": "✅ Added {{size}} tracks from the {{title}} to the queue."
+	},
+
+	"player": {
+		"description": "💿 Player controls for music playback",
+		"noPlayer": "There is no active music player in this server.",
+
+		"pause": {
+			"description": "⏸ pause the music player.",
+			"reply": "Paused the music player.",
+			"alreadyPaused": "The player is already paused. To resume use `/player resume`."
+		},
+
+		"resume": {
+			"description": "▶  resume the music player",
+			"reply": "Started playing music again.",
+			"alreadyPlaying": "The player is already resumed and playing. To pause use `/player pause`."
+		},
+
+		"skip": {
+			"description": "⏭ Skip the now playing track",
+			"noTrack": "There are no tracks in the queue.",
+			"reply": "Skipped the current track."
+		},
+
+		"previous": {
+			"description": "⏮ Replay the previous track",
+			"noTrack": "There are no previous tracks.",
+			"reply": "Replaying the previous track."
+		},
+
+		"stop": {
+			"description": "⏹ Stop and destroy the music player",
+			"reply": "Destroyed the music player and disconnected from the voice channel."
+		},
+
+		"volume": {
+			"description": "🔊 Set volume for the music player",
+			"validValue": "Please! provide a value between 1 to 100.",
+			"reply": "🔊 Volume set to **{{volume}}**"
+		}
+	}
+}

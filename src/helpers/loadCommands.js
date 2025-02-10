@@ -1,3 +1,4 @@
+const { Collection } = require("discord.js");
 const chalk = require("chalk");
 const { table } = require("table");
 const { t } = require("i18next");
@@ -48,6 +49,10 @@ async function loadCommands(client, dir) {
 
 			if (command?.category !== "none") {
 				if (client.config.categories[command.category]?.enabled === false) return;
+			}
+
+			if ((command.cooldown ?? client.config.bot.defaultCooldown) > 0) {
+				client.cooldowns.set(command.data.name, new Collection());
 			}
 
 			if (command?.botPermissions?.length > 0) {

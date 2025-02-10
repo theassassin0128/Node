@@ -1,0 +1,10 @@
+{
+	"default": {
+		"footer": "Desenvolvido por {{u}} | Copyright ©{{y}}"
+	},
+
+	"prefix_mention": {
+		"title": "Você acabou de me mencionar?",
+		"description": "Eu sou {{username}}, um bot do Discord desenvolvido por {{owner}} para gerenciar e moderar servidores do Discord. Para mais informações ou ajuda, use **`/help`**."
+	}
+}

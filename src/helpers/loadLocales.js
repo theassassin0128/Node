@@ -18,16 +18,15 @@ function getDefaultLocale() {
 		);
 	}
 
-	const localeFiles = fs.readdirSync(path.join(process.cwd(), "src", "locales"));
-	if (!Array.isArray(localeFiles)) {
+	const localeFolders = fs.readdirSync(path.join(process.cwd(), "src", "locales"));
+	if (!Array.isArray(localeFolders)) {
 		throw new Error(
 			"Couldn't load locales. Make sure locale files exist within src folder.",
 		);
 	}
 
-	if (!defaultLocale || !localeFiles.includes(defaultLocale + ".json")) {
-		console.log(localeFiles);
-		console.log("Here");
+	if (!defaultLocale || !localeFolders.includes(defaultLocale)) {
+		console.log(localeFolders);
 		defaultLocale = "en-US";
 	}
 

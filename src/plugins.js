@@ -23,10 +23,10 @@ module.exports = {
 		enabled: true,
 		idleTime: 180, // Idle time in seconds before disconnecting
 		maxSearchResults: 10, // Maximum search results to display
+		defaultVolume: 50,
 		defaultSource: "yt", // Default music source
 		sources: ["ytmsearch", "ytm", "ytsearch", "yt", "spotifysearch", "spotify"], // Available music sources
-		// Lavalink nodes for the music system
-		lavalinkNodes: env.LAVALINK_NODES,
+		lavalinkNodes: env.LAVALINK_NODES, // Lavalink nodes for the music system
 	},
 
 	// Settings for the giveaway system

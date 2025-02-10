@@ -36,9 +36,8 @@ export interface CommandStructure {
 	usage?: string;
 	category?: CommandCategory;
 	cooldown?: number;
+	global?: boolean;
 	premium?: boolean;
-	guildOnly?: boolean;
-	testOnly?: boolean;
 	devOnly?: boolean;
 	disabled?: boolean;
 	voiceChannelOnly?: boolean;
@@ -47,6 +46,7 @@ export interface CommandStructure {
 	execute: (
 		client: DiscordClient,
 		interaction: ChatInputCommandInteraction,
+		lng: string,
 	) => Promise<void>;
 	autocomplete?: (
 		client: DiscordClient,
@@ -59,9 +59,8 @@ export interface ContextMenuStructure {
 	data: ContextMenuCommandBuilder;
 	category?: CommandCategory;
 	cooldown?: number;
+	global?: boolean;
 	premium?: boolean;
-	guildOnly?: boolean;
-	testOnly?: boolean;
 	devOnly?: boolean;
 	disabled?: boolean;
 	botPermissions?: PermissionResolvable[];
@@ -69,5 +68,6 @@ export interface ContextMenuStructure {
 	execute: (
 		client: DiscordClient,
 		interaction: ContextMenuCommandInteraction,
+		lng: string,
 	) => promise<void>;
 }

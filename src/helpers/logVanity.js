@@ -64,7 +64,7 @@ function logVanity(client) {
 		],
 		[
 			t("helpers:vanity.message", {
-				author: chalk.cyan(client.pkg.author.name),
+				author: chalk.cyan("theassassin0128"),
 			}),
 		],
 		[""],

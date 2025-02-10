@@ -133,12 +133,12 @@ function createCollector(client, message, player, track, embed) {
 		switch (interaction.customId) {
 			case "previous":
 				{
-					if (player.previous) {
+					if (player.queue.previous) {
 						await interaction.deferUpdate();
 						player.play({
-							track: player.queue.previous,
+							track: player.queue.previous[0],
 						});
-						await editMessage(`Previous by ${interaction.user.tag}`);
+						// await editMessage(`Previous by ${interaction.user.tag}`);
 					} else {
 						await interaction.reply({
 							content: "There is no previous song.",
@@ -170,7 +170,7 @@ function createCollector(client, message, player, track, embed) {
 					if (player.queue.tracks.length > 0) {
 						await interaction.deferUpdate();
 						player.skip();
-						await editMessage(`Skipped by ${interaction.user.tag}`);
+						// await editMessage(`Skipped by ${interaction.user.tag}`);
 					} else {
 						await interaction.reply({
 							content: "There is no more song in the queue.",

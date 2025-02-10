@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require("discord.js");
 const { t } = require("i18next");
 
 /** @type {import("@types/command").CommandStructure} */
@@ -8,9 +8,8 @@ module.exports = {
 		.setDescription("🏓Pong! Replies with bot's response time."),
 	category: "utility",
 	cooldown: 5,
+	global: true,
 	premium: false,
-	guildOnly: false,
-	testOnly: false,
 	devOnly: false,
 	voiceChannelOnly: false,
 	botPermissions: ["SendMessages", "ReadMessageHistory"],
@@ -18,7 +17,7 @@ module.exports = {
 	usage: "",
 	disabled: false,
 	async execute(client, interaction) {
-		await interaction.deferReply();
+		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 		const reply = await interaction.fetchReply();
 		const response = reply.createdTimestamp - interaction.createdTimestamp;
@@ -32,7 +31,6 @@ module.exports = {
 		const { Good, Standby, Wrong } = client.config.colors;
 		const embed = new EmbedBuilder()
 			.setColor(response <= 200 ? Good : response <= 400 ? Standby : Wrong)
-			.setThumbnail(client.user.displayAvatarURL())
 			.addFields([
 				{
 					name: `📡 Gateway Ping`,

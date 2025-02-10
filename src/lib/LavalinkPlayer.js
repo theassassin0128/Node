@@ -15,26 +15,27 @@ class LavalinkPlayer extends LavalinkManager {
 	constructor(client) {
 		super({
 			nodes: client.config.plugins.music.lavalinkNodes,
-			sendToShard: (guildId, payload) =>
-				client.guilds.cache.get(guildId)?.shard?.send(payload),
+			sendToShard: (guildId, payload) => {
+				client.guilds.cache.get(guildId)?.shard?.send(payload);
+			},
 			autoSkip: true,
 			emitNewSongsOnly: true,
 			playerOptions: {
 				maxErrorsPerTime: {
-					threshold: 10_000,
+					threshold: 10000,
 					maxAmount: 3,
 				},
-				minAutoPlayMs: 10_000,
+				minAutoPlayMs: 10000,
 				applyVolumeAsFilter: false,
 				clientBasedPositionUpdateInterval: 50,
 				defaultSearchPlatform: client.config.plugins.music.defaultSource,
-				requesterTransformer: client.utils.requesterTransformer,
+				requesterTransformer: requesterTransformer,
 				onDisconnect: {
 					autoReconnect: true,
 					destroyPlayer: false,
 				},
 				onEmptyQueue: {
-					destroyAfterMs: 30_000,
+					destroyAfterMs: 180000,
 					autoPlayFunction: autoPlayFunction,
 				},
 				useUnresolvedData: true,
@@ -71,9 +72,7 @@ class LavalinkPlayer extends LavalinkManager {
 		const h = Math.floor(number / 3600000) % 24;
 		const m = Math.floor(number / 60000) % 60;
 		const s = Math.floor(number / 1000) % 60;
-		const string = `${h ? `${h}:` : ""}${m ? `${m}:` : ""}${s} `;
-
-		return string;
+		return `${h ? `${h}:` : ""}${m ? `${m}:` : ""}${s} `;
 	}
 
 	/**
@@ -129,6 +128,33 @@ class LavalinkPlayer extends LavalinkManager {
 }
 
 /**
+ * A function to transform a requester into a standardized requester object
+ * @param {any} requester The requester to transform.
+ * Can be a string, a user, or an object with the keys `id`, `username`, and `avatarURL`.
+ * @returns {import("@types/index").Requester} The transformed requester object.
+ */
+function requesterTransformer(requester) {
+	if (
+		typeof requester === "object" &&
+		"avatar" in requester &&
+		Object.keys(requester).length === 3
+	) {
+		return requester;
+	}
+
+	if (typeof requester === "object" && "displayAvatarURL" in requester) {
+		return {
+			id: requester.id,
+			username: requester.username,
+			avatarURL: requester.displayAvatarURL({ extension: "png" }),
+			discriminator: requester.discriminator,
+		};
+	}
+
+	return { id: requester.toString(), username: "unknown" };
+}
+
+/**
  * A function to add new songs to an empty queue if autoplay feature is enabled
  * @param {import("lavalink-client").Player} player The player instance.
  * @param {import("lavalink-client").Track} lastTrack The last played track.
@@ -149,7 +175,7 @@ async function autoPlayFunction(player, lastTrack) {
 				v.info.uri.split("/")?.reverse()?.[1],
 		);
 
-		if (ids.length >= 2) {
+		if (ids.length >= 1) {
 			const res = await player
 				.search(
 					{
@@ -182,10 +208,7 @@ async function autoPlayFunction(player, lastTrack) {
 		return;
 	}
 
-	if (
-		lastTrack.info.sourceName === "youtube" ||
-		lastTrack.info.sourceName === "youtubemusic"
-	) {
+	if (lastTrack.info.sourceName === ("youtube" || "youtubemusic")) {
 		const res = await player
 			.search(
 				{
