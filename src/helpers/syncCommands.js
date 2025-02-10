@@ -34,16 +34,14 @@ module.exports = async (client) => {
 		const globalCommands = [];
 
 		client.commands.forEach((command) => {
-			const { data, testOnly } = command;
-
 			tableData.push([
 				chalk.green(t("helpers:syncCommands.add")),
-				chalk.magenta(data.name),
+				chalk.magenta(command.data.name),
 				chalk.yellow(t("helpers:syncCommands.addMessage")),
 			]);
 
-			if (!testOnly && global) globalCommands.push(data.toJSON());
-			else guildCommands.push(data.toJSON());
+			if (command.global && global) globalCommands.push(command.data.toJSON());
+			else guildCommands.push(command.data.toJSON());
 		});
 
 		if (guildCommands.length > 0) {
@@ -62,16 +60,17 @@ module.exports = async (client) => {
 		.filter((command) => !oldCommands.some((c) => c.data.name === command.data.name))
 		.forEach(async (command) => {
 			try {
-				const { data, testOnly } = command;
-
 				tableData.push([
 					chalk.green(t("helpers:syncCommands.add")),
-					chalk.magenta(data.name),
+					chalk.magenta(command.data.name),
 					chalk.yellow(t("helpers:syncCommands.addMessage")),
 				]);
 
-				if (!testOnly && global) return await client.application.commands.create(data);
-				else return await client.application.commands.create(data, guildId);
+				if (command.global && global) {
+					await client.application.commands.create(command.data);
+				} else {
+					await client.application.commands.create(command.data, guildId);
+				}
 			} catch (error) {
 				client.logger.error(error);
 			}
@@ -88,7 +87,7 @@ module.exports = async (client) => {
 					chalk.yellow(t("helpers:syncCommands.deleteMessage")),
 				]);
 
-				return await command.data.delete();
+				await command.data.delete();
 			} catch (error) {
 				client.logger.error(error);
 			}
@@ -99,35 +98,36 @@ module.exports = async (client) => {
 		.filter((command) => oldCommands.some((c) => c.data.name === command.data.name))
 		.forEach(async (newCommand) => {
 			try {
-				const { data, testOnly } = newCommand;
-				const oldCommand = oldCommands.find((c) => c.data.name === data.name);
+				const oldCommand = oldCommands.find((c) => c.data.name === newCommand.data.name);
 
-				if (
-					global &&
-					((oldCommand.global && (testOnly ?? false)) ||
-						(!oldCommand.global && (!testOnly ?? false)))
-				) {
+				if (global && oldCommand.global !== (newCommand.global ?? global)) {
 					tableData.push([
 						chalk.yellow(t("helpers:syncCommands.modify")),
-						chalk.magenta(data.name),
+						chalk.magenta(newCommand.data.name),
 						chalk.yellow(t("helpers:syncCommands.modifyMessageGlobal")),
 					]);
 
 					await oldCommand.data.delete();
 
-					if (!testOnly && global) return await client.application.commands.create(data);
-					else return await client.application.commands.create(data, guildId);
+					if (newCommand.global && global) {
+						await client.application.commands.create(newCommand.data);
+					} else {
+						await client.application.commands.create(newCommand.data, guildId);
+					}
 				}
 
 				if (checkForChange(oldCommand, newCommand)) {
 					tableData.push([
 						chalk.yellow(t("helpers:syncCommands.modify")),
-						chalk.magenta(data.name),
+						chalk.magenta(newCommand.data.name),
 						chalk.yellow(t("helpers:syncCommands.modifyMessageData")),
 					]);
 
-					if (!testOnly && global) return await client.application.commands.create(data);
-					else return await client.application.commands.create(data, guildId);
+					if (newCommand.global && global) {
+						await client.application.commands.create(newCommand.data);
+					} else {
+						await client.application.commands.create(newCommand.data, guildId);
+					}
 				}
 			} catch (error) {
 				client.logger.error(error);

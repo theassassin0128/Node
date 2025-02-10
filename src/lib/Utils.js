@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const { EmbedBuilder, WebhookClient } = require("discord.js");
+const { EmbedBuilder, Collection } = require("discord.js");
 
 class Utils {
 	/**
@@ -12,8 +12,9 @@ class Utils {
 
 	/**
 	 * A function to get table border in provided color
-	 * @type {import("@types/functions.d.ts").GetTableBorder}
-	 * @example client.functions.getTableBorder(color);
+	 * @param {import("@types/index").ChalkColors} color
+	 * @returns {object}
+	 * @example client.utils.getTableBorder(color);
 	 */
 	getTableBorder(color) {
 		const border = {};
@@ -25,8 +26,9 @@ class Utils {
 
 	/**
 	 * Checks if a string contains a URL
-	 * @type {import("@types/functions").ContainsLink}
-	 * @example client.functions.containsLink(text);
+	 * @param {string} text - the text to check
+	 * @returns {boolean}
+	 * @example client.utils.containsLink(text);
 	 */
 	containsLink(text) {
 		return /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/.test(
@@ -36,8 +38,9 @@ class Utils {
 
 	/**
 	 * Checks if a string is a valid discord invite
-	 * @type {import("@types/functions").ContainsDiscordInvite}
-	 * @example client.functions.containsDiscordInvite(text);
+	 * @param {string} text - the text to check
+	 * @returns {boolean}
+	 * @example client.utils.containsDiscordInvite(text);
 	 */
 	containsDiscordInvite(text) {
 		return /(https?:\/\/)?(www.)?(discord.(gg|io|me|li|link|plus)|discorda?p?p?.com\/invite|invite.gg|dsc.gg|urlcord.cf)\/[^\s/]+?(?=\b)/.test(
@@ -47,8 +50,9 @@ class Utils {
 
 	/**
 	 * Returns a random number below a max
-	 * @type {import("@types/functions").GetRandomInt}
-	 * @example client.functions.getRandomInt(max);
+	 * @param {number} max
+	 * @returns {string}
+	 * @example client.utils.getRandomInt(max);
 	 */
 	getRandomInt(max) {
 		return Math.floor(Math.random() * max);
@@ -56,8 +60,8 @@ class Utils {
 
 	/**
 	 * Return a random color from colors.json
-	 * @type {import("@types/functions").GetRandomColor}
-	 * @example client.functions.getRandomColor();
+	 * @return {string}
+	 * @example client.utils.getRandomColor();
 	 */
 	getRandomColor() {
 		const colorsArray = Object.values(this.client.config.colors);
@@ -66,8 +70,9 @@ class Utils {
 
 	/**
 	 * Checks if a string is a valid Hex color
-	 * @type {import("@types/functions").IsHex}
-	 * @example client.functions.isHex(text);
+	 * @param {string} text
+	 * @returns {boolean}
+	 * @example client.utils.isHex(text);
 	 */
 	isHex(text) {
 		return /^#[0-9A-F]{6}$/i.test(text);
@@ -75,8 +80,9 @@ class Utils {
 
 	/**
 	 * Checks if a string is a valid color
-	 * @type {import("@types/functions").IsValidColor}
-	 * @example client.functions.isValidColor(text);
+	 * @param {string} text
+	 * @return {boolean}
+	 * @example client.utils.isValidColor(text);
 	 */
 	isValidColor(text) {
 		return this.client.config.colors.includes(text);
@@ -84,18 +90,20 @@ class Utils {
 
 	/**
 	 * Returns hour difference between two dates
-	 * @type {import("@types/functions").DiffHours}
-	 * @example client.functions.diffHours(Date2, Date1);
+	 * @param {Date} date1
+	 * @param {Date} date2
+	 * @example client.utils.diffHours(Date1, Date2);
 	 */
-	diffHours(dt2, dt1) {
-		const diff = (dt2.getTime() - dt1.getTime()) / 1000 / 60 / 60;
+	diffHours(date1, date2) {
+		const diff = (date1.getTime() - date2.getTime()) / 1000 / 60 / 60;
 		return Math.abs(Math.round(diff));
 	}
 
 	/**
 	 * Returns remaining time in days, hours, minutes and seconds
-	 * @type {import("@types/functions").Timeformat}
-	 * @example client.functions.timeFormat(timeInMillis);
+	 * @param {number} timeInMillis
+	 * @returns {string}
+	 * @example client.utils.timeFormat(timeInMillis);
 	 */
 	timeFormat(timeInMillis) {
 		const days = Math.floor(timeInMillis / 86400000);
@@ -103,17 +111,18 @@ class Utils {
 		const minutes = Math.floor(timeInMillis / 60000) % 60;
 		const seconds = Math.floor(timeInMillis / 1000) % 60;
 		return (
-			(days > 0 ? `${days} days, ` : "") +
-			(hours > 0 ? `${hours} hours, ` : "") +
-			(minutes > 0 ? `${minutes} minutes, ` : "") +
-			(seconds > 0 ? `${seconds} seconds` : "")
+			(days > 0 ? `${days} Days, ` : "") +
+			(hours > 0 ? `${hours} Hrs, ` : "") +
+			(minutes > 0 ? `${minutes} Mins, ` : "") +
+			(seconds > 0 ? `${seconds} Secs` : "")
 		);
 	}
 
 	/**
 	 * Converts duration to milliseconds
-	 * @type {import("@types/functions").DurationToMillis}
-	 * @example client.functions.durationToMillis(duration);
+	 * @param {string} duration
+	 * @returns {number}
+	 * @example client.utils.durationToMillis(duration);
 	 */
 	durationToMillis(duration) {
 		return (
@@ -125,9 +134,10 @@ class Utils {
 	}
 
 	/**
-	 * Returns time remaining until provided date
-	 * @type {import("@types/functions").GetRemainingTime}
-	 * @example client.functions.getRemainingTime(timeUntil);
+	 * Returns remaining time in millisecons until provided date
+	 * @param {Date} timeUntil
+	 * @returns {string}
+	 * @example client.utils.getRemainingTime(timeUntil);
 	 */
 	getRemainingTime(timeUntil) {
 		const seconds = Math.abs((timeUntil - new Date()) / 1000);
@@ -136,70 +146,65 @@ class Utils {
 
 	/**
 	 * Takes a single or array of permissions and returns a formatted string
-	 * @type {import("@types/functions").ParsePermissions}
-	 * @example client.functions.parsePermissions(permissions);
+	 * @param {import("discord.js").PermissionResolvable[]} p
+	 * @returns {string}
+	 * @example client.utils.parsePermissions(permissions);
 	 */
 	parsePermissions(p) {
 		const word = ` permission${p.length > 1 ? "s" : ""}`;
-		return `${p.map((perm) => `__**${perm}**__`).join(", ")}${word}`;
-	}
-
-	/**
-	 * A function to transform a requester into a standardized requester object
-	 * @param {any} requester The requester to transform.
-	 * Can be a string, a user, or an object with the keys `id`, `username`, and `avatarURL`.
-	 * @returns {import("@types/index").Requester} The transformed requester object.
-	 */
-	requesterTransformer(requester) {
-		if (
-			typeof requester === "object" &&
-			"avatar" in requester &&
-			Object.keys(requester).length === 3
-		) {
-			return requester;
-		}
-
-		if (typeof requester === "object" && "displayAvatarURL" in requester) {
-			return {
-				id: requester.id,
-				username: requester.username,
-				avatarURL: requester.displayAvatarURL({ extension: "png" }),
-				discriminator: requester.discriminator,
-			};
-		}
-
-		return { id: requester.toString(), username: "unknown" };
+		return `${p.map((perm) => `\`${perm}\``).join(", ")}${word}`;
 	}
 
 	/**
 	 * A function to get a users badge emojis
+	 * @deprecated required manual work. You have to manually set emojis for each badge
 	 * @param {string[]} badges - user or member badge names
-	 * This return an array of emojis for the provided badge names
-	 * @returns {string[]}
+	 * @returns {string[]} an array of emojis for the provided badge names
+	 * @example client.utils.getBadges(client.user.falgs.toArray())
 	 */
 	getBadges(badges) {
 		if (!badges.length) return ["x"];
 		return badges.map((badge) => this.client.config.emojis.custom[badge] || badge);
 	}
-}
 
-module.exports = { Utils };
-
-class Test {
-	/** A function to send error to a discord channel
-	 * @type {import("@types/functions").SendError}
-	 * @example client.functions.sendError(error, type, data);
+	/**
+	 * A function to set, get and delete command cooldowns
+	 * @param {import("@types/command").CommandStructure} command - the command object
+	 * @param {string} userId - the userId
+	 * @returns {number} expiration timestamp (in seconds)
 	 */
-	async sendError(error, type, data) {
+	getCooldown(command, userId) {
+		const { config, cooldowns } = this.client;
+		const timestamps = cooldowns.get(command.data.name);
+		if (!timestamps) return 0;
+
+		const now = Date.now();
+		const cooldownAmount = (command.cooldown ?? config.bot.defaultCooldown) * 1000;
+
+		if (!timestamps.has(userId)) {
+			timestamps.set(userId, now);
+			setTimeout(() => timestamps.delete(userId), cooldownAmount);
+			return 0;
+		}
+
+		const expirationTime = timestamps.get(userId) + cooldownAmount;
+		if (now < expirationTime) return Math.floor(expirationTime / 1000);
+
+		timestamps.set(userId, now);
+		return 0;
+	}
+
+	/**
+	 * A function to send errors to discord
+	 * @param {Error} error
+	 * @param {*} data
+	 * @returns {Promise<void>}
+	 */
+	async sendErrors(error, data) {
 		if (!error) return;
 		if (!this.client.database) return;
 
 		const errStack = error?.stack ? error.stack : error;
-		const webhookClient = process.env.ERROR_WEBHOOK_URL
-			? new WebhookClient({
-					url: process.env.ERROR_WEBHOOK_URL,
-			  })
-			: undefined;
 
 		const embed = new EmbedBuilder()
 			.setColor(this.client.config.colors.Wrong)
@@ -233,3 +238,5 @@ class Test {
 			});
 	}
 }
+
+module.exports = { Utils };

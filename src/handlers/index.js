@@ -1,4 +1,5 @@
 module.exports = {
-	handleContext: require("./handleContext.js"),
-	handleCommands: require("./handleCommands.js"),
+	handleContext: require("./context.js"),
+	handleCommands: require("./commands.js"),
+	handleAutocomplete: require("./autocomplete.js"),
 };

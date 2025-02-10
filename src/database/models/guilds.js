@@ -11,9 +11,7 @@ const GuildSchema = new mongoose.Schema({
 		joinedAt: Date,
 		leftAt: Date,
 	},
-	config: {
-		locale: { type: String, default: config.defaultLocale },
-	},
+	locale: { type: String, default: config.defaultLocale },
 	rank: {
 		enabled: { type: Boolean, default: false },
 		rank_message: { type: String, default: config.plugins.rank.defaultLevelUpMessage },
@@ -117,7 +115,7 @@ const model = mongoose.model("guild", GuildSchema);
 
 /**
  * @param {import('discord.js').Guild} guild
- * @return {Promise<import("@types/index.js").GuildSettings>}
+ * @return {Promise<import("@types/database.js").GuildSchema>}
  */
 async function getGuild(guild) {
 	if (!guild) {

@@ -1,0 +1,4 @@
+{
+	"connected": "{{db}} database connected",
+	"disconnected": "{{db}} database disconnected"
+}

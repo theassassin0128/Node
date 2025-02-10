@@ -1,0 +1,21 @@
+{
+	"error": "An error occurred while trying to execute the command. Try again later.",
+
+	"memberinfo": {
+		"username": "📛 Username",
+		"nickname": "🔰 Nickname",
+		"id": "🆔 User ID",
+		"boost": "🚀 Server Boost",
+		"creation": "📆 Creation Date",
+		"join": "📆 Join Date",
+		"roles": "🎖 Roles [{{count}}] Shows up to 15"
+	},
+
+	"messageinfo": {
+		"click": "Click here for the message",
+		"author": "📝 Author",
+		"id": "🆔 Message ID",
+		"creation": "📆 Creation Date",
+		"edit": "📆 Edit Date"
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"default": {
+		"footer": "Powered by {{u}} | Copyright ©{{y}}"
+	},
+
+	"prefix_mention": {
+		"title": "Did you just mention me?",
+		"description": "I am {{username}}, a discord bot developed by {{owner}} to manage & moderate discord servers. For more information or help use **`/help`**."
+	}
+}

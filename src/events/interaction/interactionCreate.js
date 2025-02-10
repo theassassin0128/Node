@@ -13,16 +13,7 @@ module.exports = {
 
 		// For handling auto complete interactions
 		if (interaction.isAutocomplete()) {
-			try {
-				const command = client.commands.get(interaction.commandName);
-
-				if (!command) return;
-				if (!command.autocomplete) return;
-
-				await command.autocomplete(client, interaction);
-			} catch (error) {
-				client.logger.error(error);
-			}
+			await client.handlers.handleAutocomplete(client, interaction);
 		}
 
 		// For handling contextmenu commands

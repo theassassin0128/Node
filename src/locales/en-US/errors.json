@@ -1,0 +1,22 @@
+{
+	"type": {
+		"string": "Value of {{param}} must be a string",
+		"object": "Value of {{param}} must be an object",
+		"array": "Value of {{param}} must be an array",
+		"number": "Value of {{param}} must be a number",
+		"boolean": "Value of {{param}} must be a boolean",
+		"other": "Value of {{param}} must be a {{type}}"
+	},
+
+	"missing": {
+		"param": "{{param}} parameter is missing",
+		"property": "{{property}} property is missing"
+	},
+
+	"validation": {
+		"eventName": "Event name is invalid or missing",
+		"commandData": "Command data is missing",
+		"function": "Execute function is missing",
+		"permission": "{{p}} is not a valid {{t}} permission"
+	}
+}

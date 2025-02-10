@@ -6,5 +6,5 @@ module.exports = {
 	ws: false,
 	player: false,
 	node: false,
-	execute: async (client, ...args) => {},
+	async execute(client, ...args) {},
 };

@@ -48,7 +48,7 @@ function checkForChange(OldCommand, NewCommand) {
 
 	if (oldCommand.nsfw !== (newCommand.nsfw ?? false)) return true;
 
-	if (OldCommand.global || (!NewCommand.testOnly ?? false)) {
+	if (OldCommand.global || NewCommand.global) {
 		if (oldCommand.contexts || newCommand.contexts) {
 			if (Array.isArray(oldCommand.contexts) && Array.isArray(newCommand.contexts)) {
 				const addedContext = newCommand.contexts.some(

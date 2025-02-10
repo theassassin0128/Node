@@ -18,6 +18,8 @@ module.exports = {
 				.setName("member")
 				.setDescription("View a member's information. Leave empty to view your own."),
 		),
+	cooldown: 60,
+	global: true,
 	execute: async (client, interaction) => {
 		await interaction.deferReply();
 

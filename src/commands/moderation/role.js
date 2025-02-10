@@ -1,8 +1,8 @@
 const {
 	SlashCommandBuilder,
 	PermissionFlagsBits,
-	ChatInputCommandInteraction,
-	Client,
+	ApplicationIntegrationType,
+	InteractionContextType,
 } = require("discord.js");
 
 /** @type {import("@types/command").CommandStructure} */
@@ -11,6 +11,8 @@ module.exports = {
 		.setName("role")
 		.setDescription("Give | Remove role(s) from server members")
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles)
+		.setContexts(InteractionContextType.Guild)
+		.setIntegrationTypes(ApplicationIntegrationType.GuildInstall)
 		.addSubcommand((option) =>
 			option
 				.setName("give")
@@ -38,40 +40,40 @@ module.exports = {
 						.setDescription("The user to remove the role.")
 						.setRequired(true),
 				),
+		)
+		.addSubcommand((option) =>
+			option
+				.setName("multiple")
+				.setDescription("Role command for multiple users.")
+				.addStringOption((option) =>
+					option
+						.setName("action")
+						.setDescription("Pick an action")
+						.setRequired(true)
+						.addChoices(
+							{ name: "Give", value: "give" },
+							{ name: "Remove", value: "remove" },
+						),
+				)
+				.addRoleOption((option) =>
+					option.setName("role").setDescription("The role to gives.").setRequired(true),
+				)
+				.addStringOption((option) =>
+					option
+						.setName("type")
+						.setDescription("Pick a type")
+						.setRequired(true)
+						.addChoices(
+							{ name: "All Members", value: "all" },
+							{ name: "Humans", value: "humans" },
+							{ name: "Bots", value: "bots" },
+						),
+				),
 		),
-	//.addSubcommand((option) =>
-	//	option
-	//		.setName("multiple")
-	//		.setDescription("Role command for multiple users.")
-	//		.addStringOption((option) =>
-	//			option
-	//				.setName("action")
-	//				.setDescription("Pick an action")
-	//				.setRequired(true)
-	//				.addChoices(
-	//					{ name: "Give", value: "give" },
-	//					{ name: "Remove", value: "remove" },
-	//				),
-	//		)
-	//		.addRoleOption((option) =>
-	//			option.setName("role").setDescription("The role to gives.").setRequired(true),
-	//		)
-	//		.addStringOption((option) =>
-	//			option
-	//				.setName("type")
-	//				.setDescription("Pick a type")
-	//				.setRequired(true)
-	//				.addChoices(
-	//					{ name: "All Members", value: "all" },
-	//					{ name: "Humans", value: "humans" },
-	//					{ name: "Bots", value: "bots" },
-	//				),
-	//		),
-	//),
-	testOnly: false,
+	global: true,
 	disabled: false,
-	userPermissions: ["ManageRoles"],
-	botPermissions: ["ManageRoles"],
+	userPermissions: ["ManageRoles", "SendMessages"],
+	botPermissions: ["ManageRoles", "SendMessages"],
 	execute: async (client, interaction) => {
 		const { options, user, guild } = interaction;
 		const role = (await guild.roles.fetch()).get(options.getRole("role").id);
@@ -105,66 +107,67 @@ module.exports = {
 		}
 
 		switch (subcommand) {
-			case "give":
-				{
-					await target.roles.add(role);
-					interaction.reply({
-						content: `${role} | Role given to ${target}.`,
-						ephemeral: true,
-					});
-				}
+			case "give": {
+				await target.roles.add(role);
+				interaction.reply({
+					content: `${role} | Role given to ${target}.`,
+					ephemeral: true,
+				});
 				break;
-			case "remove":
-				{
-					await target.roles.remove(role);
-					interaction.reply({
-						content: `${role} | Role removed from ${target}.`,
-						ephemeral: true,
-					});
-				}
+			}
+
+			case "remove": {
+				await target.roles.remove(role);
+				interaction.reply({
+					content: `${role} | Role removed from ${target}.`,
+					ephemeral: true,
+				});
 				break;
-			case "multiple":
-				{
-					const allMembers = await guild.members.fetch();
-					allMembers.forEach((member) => {
-						switch (type) {
-							case "all":
-								memberArray.push(member);
-								break;
-							case "humans":
-								if (!member.user.bot) memberArray.push(member);
-								break;
-							case "bots":
-								if (member.user.bot) memberArray.push(member);
-								break;
+			}
+
+			case "multiple": {
+				const allMembers = await guild.members.fetch();
+				allMembers.forEach((member) => {
+					switch (type) {
+						case "all": {
+							return memberArray.push(member);
 						}
-					});
-					switch (action) {
-						case "give":
-							{
-								memberArray.forEach((member) => {
-									member.roles.add(role);
-								});
-								interaction.reply({
-									content: `${role} | Given the role to selected members.`,
-									ephemeral: true,
-								});
-							}
-							break;
-						case "remove":
-							{
-								memberArray.forEach((member) => {
-									member.roles.remove(role);
-								});
-								interaction.reply({
-									content: `${role} | Removed the role from selected members.`,
-									ephemeral: true,
-								});
-							}
-							break;
+
+						case "humans": {
+							if (!member.user.bot) return memberArray.push(member);
+						}
+
+						case "bots": {
+							if (member.user.bot) return memberArray.push(member);
+						}
+					}
+				});
+
+				switch (action) {
+					case "give": {
+						memberArray.forEach((member) => {
+							member.roles.add(role);
+						});
+						interaction.reply({
+							content: `${role} | Given the role to selected members.`,
+							ephemeral: true,
+						});
+						break;
+					}
+
+					case "remove": {
+						memberArray.forEach((member) => {
+							member.roles.remove(role);
+						});
+						interaction.reply({
+							content: `${role} | Removed the role from selected members.`,
+							ephemeral: true,
+						});
+						break;
 					}
 				}
 				break;
+			}
 		}
 	},
 };

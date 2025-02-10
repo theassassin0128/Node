@@ -1,0 +1,27 @@
+{
+	"commands": {
+		"guidlOnly": "❌ Comandos de barra só funcionam em servidores.",
+		"notFound": "Este comando não está disponível no momento.",
+		"disabled": "Este comando foi **desativado** pelos desenvolvedores.",
+		"devOnly": "Este comando é **acessível** apenas para os desenvolvedores.",
+		"cooldown": "Por favor, espere, você está em cooldown. Você pode usá-lo novamente em {{t}}.",
+		"botPermission": "Eu preciso de {{p}} para executar este comando.",
+		"userPermission": "Você precisa de {{p}} para usar este comando.",
+		"voiceChannelOnly": "Entre em um **Canal de Voz** antes de usar este comando.",
+		"missingVCPermission": "Não consigo **entrar** no seu canal de voz ou **falar** nele.",
+		"error": "Ocorreu um erro ao tentar executar o comando. Tente novamente mais tarde."
+	},
+
+	"context": {
+		"guidlOnly": "❌ Comandos de barra só funcionam em servidores.",
+		"notFound": "Este comando de menu de contexto não está disponível no momento.",
+		"disabled": "Este comando de menu de contexto foi **desativado** pelos desenvolvedores.",
+		"devOnly": "Este comando de menu de contexto é **acessível** apenas para os desenvolvedores.",
+		"cooldown": "Por favor, espere, você está em cooldown. Você pode usá-lo novamente em {{t}}.",
+		"botPermission": "Eu preciso de {{p}} para executar este comando de menu de contexto.",
+		"userPermission": "Você precisa de {{p}} para usar este comando de menu de contexto.",
+		"error": "Ocorreu um erro ao tentar executar o comando de menu de contexto. Tente novamente mais tarde."
+	},
+
+	"autocomplete": {}
+}

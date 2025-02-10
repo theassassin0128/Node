@@ -1,7 +1,6 @@
 const { Client, Collection } = require("discord.js");
 const { Utils } = require("./Utils.js");
 const { LavalinkPlayer } = require("./LavalinkPlayer.js");
-// const { DB } = require("@db/DB.js");
 const { Logger } = require("./Logger.js");
 
 class DiscordClient extends Client {
@@ -32,6 +31,9 @@ class DiscordClient extends Client {
 
 		/** @type {Collection<string, import("@types/command.js").CommandStructure>} */
 		this.commands = new Collection();
+
+		/** @type {Collection<string, Collection<string, string>>} */
+		this.cooldowns = new Collection();
 
 		// Initialize Music Manager if enabled
 		if (this.config.plugins.music.enabled) this.lavalink = new LavalinkPlayer(this);

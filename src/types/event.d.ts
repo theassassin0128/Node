@@ -121,14 +121,13 @@ export type LavalinkEvents =
 	| "raw"
 	| "resumed";
 
-
 // event module structure
 export interface EventStructure {
 	name: DiscordEvents | LavalinkEvents;
 	once?: boolean;
 	rest?: boolean;
 	ws?: boolean;
-	player: boolean;
-	node: boolean;
+	player?: boolean;
+	node?: boolean;
 	execute: (client: DiscordClient, ...args: any) => Promise<any>;
 }
