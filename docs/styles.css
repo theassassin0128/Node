@@ -74,6 +74,8 @@ header nav {
 .goals ul {
   list-style: none;
   padding: 0;
+  text-align: center;
+  animation: fadeIn 2s ease-in-out;
 }
 
 .goals li {

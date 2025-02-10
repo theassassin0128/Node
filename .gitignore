@@ -13,3 +13,6 @@ logs
 
 # Extra files
 collected
+
+# VS Code files
+.vscode
