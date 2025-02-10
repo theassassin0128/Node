@@ -18,10 +18,25 @@
   }
 }
 
+@keyframes zoomIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .animated-header {
   animation: fadeIn 2s ease-in-out;
 }
 
 .animated-container {
   animation: slideIn 1.5s ease-in-out;
+}
+
+#branding h1 {
+  animation: zoomIn 1.5s ease-in-out;
 }
