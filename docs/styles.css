@@ -82,6 +82,7 @@ header nav {
 
 .center {
   text-align: center;
+  margin: 0 20px;
 }
 
 @keyframes fadeIn {
@@ -91,10 +92,6 @@ header nav {
   to {
     opacity: 1;
   }
-}
-
-.center {
-  animation: fadeIn 2s ease-in-out;
 }
 
 .social-links {
