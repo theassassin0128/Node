@@ -1,5 +1,3 @@
-<center>
-
 # 🚀 Node - Multipurpose Discord Bot
 
 [![Version][version-shield]][version-shield-link]
@@ -13,23 +11,13 @@
 [![Dependency Review][dependency-review]][dependency-review-url]
 [![CodeFactor][code-factor]][code-factor-url]
 
-</center>
-
 ## 🌟 Introduction
-
-<center>
 
 [![Invite Node](./public/assets/profile.png)](https://discord.com/oauth2/authorize?client_id=1030698369435320350)
 
-</center>
-
 **Node** is a multipurpose Discord bot, specially made for **Moderation** & **Server-Management**. It is built with [discord.js](https://github.com/discordjs/discord.js), a powerful [Node.js](https://nodejs.org) module that allows you to easily interact with the [Discord API](https://discord.com/developers/docs/intro).
 
-<center>
-
 [✉️ Invite Node](https://discord.com/oauth2/authorize?client_id=1030698369435320350) • [🆘 Support Server](https://discord.gg/E6H9VvBdTk) • [📝 Bug & Request Feature](https://github.com/theassassin0128/Node/issues)
-
-</center>
 
 ## 📊 Road Map
 
@@ -53,18 +41,14 @@
 - **Event & Permission Validation**
 - **Templates for Events, Commands & Contexts**
 
-## ❗Prerequisites❗
-
-<center>
+## ❗❗ Prerequisites
 
 Before you get started, you need to have the following:
 
-[![Node.JS](https://img.shields.io/badge/Node.js_V18%2B-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en/download/)
-[![Discord.JS](https://img.shields.io/badge/Discord.JS_V14%2B-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.js.org/)
-[![Lavalink](https://img.shields.io/badge/Lavalink_V4%2B-fa6f18?style=for-the-badge)](https://github.com/lavalink-devs/lavalink)
-[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/try/download/community)
-
-</center>
+- [![Node.JS](https://img.shields.io/badge/Node.js_V18%2B-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en/download/)
+- [![Discord.JS](https://img.shields.io/badge/Discord.JS_V14%2B-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.js.org/)
+- [![Lavalink](https://img.shields.io/badge/Lavalink_V4%2B-fa6f18?style=for-the-badge)](https://github.com/lavalink-devs/lavalink)
+- [![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/try/download/community)
 
 ## 🚀 Get Started
 
