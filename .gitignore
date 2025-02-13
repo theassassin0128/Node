@@ -16,3 +16,6 @@ collected
 
 # VS Code files
 .vscode
+
+# Lavalink Nodes
+lavalink-nodes.json

@@ -26,7 +26,7 @@ module.exports = {
 		defaultVolume: 50,
 		defaultSource: "yt", // Default music source
 		sources: ["ytmsearch", "ytm", "ytsearch", "yt", "spotifysearch", "spotify"], // Available music sources
-		lavalinkNodes: env.LAVALINK_NODES, // Lavalink nodes for the music system
+		lavalinkNodes: require("@root/lavalink-nodes.json"), // Lavalink nodes for the music system
 	},
 
 	// Settings for the giveaway system

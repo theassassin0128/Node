@@ -8,7 +8,6 @@ const UserSchema = new mongoose.Schema(
 		_id: String,
 		username: String,
 		discriminator: String,
-		locale: { type: String, default: config.defaultLocale },
 		coins: { type: Number, default: 0 },
 		bank: { type: Number, default: 0 },
 		reputation: {
