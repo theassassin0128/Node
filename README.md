@@ -53,7 +53,7 @@ Before you get started, you need to have the following:
 ## 🚀 Get Started
 
 1. First clone the [repository](https://github.com/theassassin0128/Node.git) or download a stable version from [releases](https://github.com/theassassin0128/Node/releases)
-1. Copy `example.lavalink-nodes.json` to `lavalink-nodes.json`
+1. Copy `example.lavalink-nodes.js` to `lavalink-nodes.js`
 
    - Host your own local lavalink node or provide one.
    - For help head to https://lavalink.dev

@@ -10,7 +10,7 @@ const { t } = require("i18next");
  * @returns {Promise<void>}
  */
 module.exports = async (client) => {
-	const { guildId, global } = client.config.bot;
+	const { guildId } = client.config.bot;
 	const oldCommands = await fetchCommands(client);
 	const tableData = [[chalk.cyan("Action"), chalk.cyan("Command"), chalk.cyan("Reason")]];
 
@@ -40,7 +40,7 @@ module.exports = async (client) => {
 				chalk.yellow(t("helpers:syncCommands.addMessage")),
 			]);
 
-			if (command.global && global) globalCommands.push(command.data.toJSON());
+			if (command.global) globalCommands.push(command.data.toJSON());
 			else guildCommands.push(command.data.toJSON());
 		});
 
@@ -66,7 +66,7 @@ module.exports = async (client) => {
 					chalk.yellow(t("helpers:syncCommands.addMessage")),
 				]);
 
-				if (command.global && global) {
+				if (command.global) {
 					await client.application.commands.create(command.data);
 				} else {
 					await client.application.commands.create(command.data, guildId);
@@ -100,7 +100,7 @@ module.exports = async (client) => {
 			try {
 				const oldCommand = oldCommands.find((c) => c.data.name === newCommand.data.name);
 
-				if (global && oldCommand.global !== (newCommand.global ?? global)) {
+				if (oldCommand.global !== newCommand.global) {
 					tableData.push([
 						chalk.yellow(t("helpers:syncCommands.modify")),
 						chalk.magenta(newCommand.data.name),
@@ -109,7 +109,7 @@ module.exports = async (client) => {
 
 					await oldCommand.data.delete();
 
-					if (newCommand.global && global) {
+					if (newCommand.global) {
 						await client.application.commands.create(newCommand.data);
 					} else {
 						await client.application.commands.create(newCommand.data, guildId);
@@ -123,7 +123,7 @@ module.exports = async (client) => {
 						chalk.yellow(t("helpers:syncCommands.modifyMessageData")),
 					]);
 
-					if (newCommand.global && global) {
+					if (newCommand.global) {
 						await client.application.commands.create(newCommand.data);
 					} else {
 						await client.application.commands.create(newCommand.data, guildId);

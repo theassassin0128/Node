@@ -1,6 +1,6 @@
 {
 	"name": "node",
-	"version": "3.0.0-dev",
+	"version": "3.1.0",
 	"description": "A multipurpose discord bot.",
 	"main": "src/index.js",
 	"engines": {
@@ -43,7 +43,8 @@
 		"discord.js": "^14.18.0",
 		"dotenv": "^16.4.5",
 		"glob": "^11.0.0",
-		"i18next": "^23.16.0",
+		"i18next": "^24.2.2",
+		"i18next-fs-backend": "^2.6.0",
 		"lavalink-client": "^2.4.7",
 		"luxon": "^3.5.0",
 		"module-alias": "^2.2.3",

@@ -1,4 +1,3 @@
-// typings for commands
 import {
 	AutocompleteInteraction,
 	ChatInputCommandInteraction,
@@ -7,10 +6,9 @@ import {
 	SlashCommandBuilder,
 	ContextMenuCommandInteraction,
 } from "discord.js";
-
 import { DiscordClient } from "@lib/DiscordClient.js";
 
-// CommandCategories to use in CommandStructure and ContextMenuStructure
+// CommandCategories to use in CommandStructure
 export type CommandCategory =
 	| "admin"
 	| "anime"
@@ -32,7 +30,7 @@ export type CommandCategory =
 
 // CommandStructure to use in command creation
 export interface CommandStructure {
-	data: SlashCommandBuilder;
+	data: SlashCommandBuilder | ContextMenuCommandBuilder;
 	usage?: string;
 	category?: CommandCategory;
 	cooldown?: number;
@@ -45,29 +43,11 @@ export interface CommandStructure {
 	userPermissions?: PermissionResolvable[];
 	execute: (
 		client: DiscordClient,
-		interaction: ChatInputCommandInteraction,
+		interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction,
 		lng: string,
 	) => Promise<void>;
 	autocomplete?: (
 		client: DiscordClient,
 		interaction: AutocompleteInteraction,
-	) => promise<void>;
-}
-
-// ContextMenuStructure to use in context menu creation
-export interface ContextMenuStructure {
-	data: ContextMenuCommandBuilder;
-	category?: CommandCategory;
-	cooldown?: number;
-	global?: boolean;
-	premium?: boolean;
-	devOnly?: boolean;
-	disabled?: boolean;
-	botPermissions?: PermissionResolvable[];
-	userPermissions?: PermissionResolvable[];
-	execute: (
-		client: DiscordClient,
-		interaction: ContextMenuCommandInteraction,
-		lng: string,
 	) => promise<void>;
 }

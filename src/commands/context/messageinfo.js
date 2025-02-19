@@ -7,7 +7,7 @@ const {
 } = require("discord.js");
 const { t } = require("i18next");
 
-/** @type {import("@types/command").ContextMenuStructure} */
+/** @type {import("@typings/index").CommandStructure} */
 module.exports = {
 	data: new ContextMenuCommandBuilder()
 		.setName("Message Information")
@@ -45,18 +45,20 @@ module.exports = {
 				},
 				{
 					name: t("context:messageinfo.creation", { lng }),
-					value: `- <t:${Math.floor(
-						message.createdTimestamp / 1000,
-					)}:F>\n- <t:${Math.floor(message.createdTimestamp / 1000)}:R>`,
+					value: [
+						`- <t:${Math.floor(message.createdTimestamp / 1000)}:F>`,
+						`- <t:${Math.floor(message.createdTimestamp / 1000)}:R>`,
+					].join("\n"),
 					inline: false,
 				},
 				{
 					name: t("context:messageinfo.edit", { lng }),
 					value: message.editedTimestamp
-						? `- <t:${Math.floor(message.editedTimestamp / 1000)}:F>\n- <t:${Math.floor(
-								message.editedTimestamp / 1000,
-						  )}:R>`
-						: "- Not Edited",
+						? [
+								`- <t:${Math.floor(message.editedTimestamp / 1000)}:F>`,
+								`- <t:${Math.floor(message.editedTimestamp / 1000)}:R>`,
+						  ].join("\n")
+						: `- ${t("context:messageinfo.edited", { lng })}`,
 					inline: false,
 				},
 			])

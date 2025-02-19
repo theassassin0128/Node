@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require("discord.js");
 
-/** @type {import("@types/command").CommandStructure} */
+/** @type {import("@root/src/types/command").CommandStructure} */
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("clear")
@@ -52,9 +52,11 @@ module.exports = {
 				flags: MessageFlags.Ephemeral,
 			});
 		} else {
-			const dMessages = await channel.bulkDelete(amount, true);
+			const messages = await channel.bulkDelete(amount, true);
+
+			// bulkDelete(amount, true);
 			interaction.reply({
-				content: `Deleted \`${dMessages.size}\` messages in ${channel}.`,
+				content: `Deleted \`${messages.size}\` messages in ${channel}.`,
 				flags: MessageFlags.Ephemeral,
 			});
 		}

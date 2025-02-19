@@ -2,7 +2,7 @@ const { AutocompleteInteraction } = require("discord.js");
 
 /**
  * A function to handle AutoComplete Commands
- * @param {import("@lib/DiscordClient").DiscordClient} client
+ * @param {import("@root/src/lib/DiscordClient").DiscordClient} client
  * @param {AutocompleteInteraction} interaction
  * @returns {Promise<void>}
  */

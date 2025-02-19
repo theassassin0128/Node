@@ -7,7 +7,7 @@ const {
 } = require("discord.js");
 const { t } = require("i18next");
 
-/** @type {import("@types/command").CommandStructure} */
+/** @type {import("@root/src/types/command").CommandStructure} */
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("play")
@@ -61,7 +61,7 @@ module.exports = {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 		const { user, guild, channel, options } = interaction;
-		const { defaultVolume } = client.config.plugins.music;
+		const { defaultVolume } = client.config.music;
 		const member = await guild.members.fetch(user.id);
 		const query = options.getString("query", true);
 		const source = options.getString("source");

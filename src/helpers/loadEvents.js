@@ -1,8 +1,7 @@
 const chalk = require("chalk");
-const { table } = require("table");
 const { t } = require("i18next");
 const loadFiles = require("./loadFiles.js");
-const { EventNames } = require("@src/validations/events.js");
+const { EventNames } = require("@src/validations");
 
 /**
  * A function to load event files
@@ -20,43 +19,23 @@ async function loadEvents(client, dir) {
 		throw new TypeError(t("errors:type.string", { param: chalk.yellow("dir") }));
 	}
 
-	const tableData = [[chalk.cyan("Index"), chalk.cyan("File"), chalk.cyan("Status")]];
-	/** @type {import("table").TableUserConfig} */
-	const tableConfig = {
-		columnDefault: {
-			alignment: "center",
-			width: 30,
-		},
-		columns: [{ width: 5 }, {}, { width: 6 }],
-		border: client.utils.getTableBorder("yellow"),
-		drawHorizontalLine: (lineIndex, rowCount) => {
-			return lineIndex === 0 || lineIndex === 1 || lineIndex === rowCount;
-		},
-	};
-
 	let i = 0;
-	client.events.clear();
-
-	(await loadFiles(dir, [".js"])).forEach((file) => {
-		const filename = file.split(/[\\/]/g).pop();
-
+	const eventFiles = await loadFiles(dir, [".js"]);
+	for (const file of eventFiles) {
 		try {
-			/** @type {import("@types/event.js").EventStructure} */
+			const filename = chalk.yellow(file.split(/[\\/]/g).pop());
+
+			/** @type {import("@typings/index").EventStructure} */
 			const event = require(file);
 
-			if (event.player || event.node) {
-				if (!client.config.plugins.music.enabled) return;
-			}
+			if (event.player || event.node) if (!client.lavalink) continue;
 
 			if (!EventNames.includes(event.name) || !event.name) {
-				throw `${t("errors:validation.eventName")} - ${chalk.yellow(filename)}`;
+				throw Error(`${t("errors:validation.eventName")} - ${filename}`);
 			}
 
-			if (!event.execute) {
-				throw `${t("errors:validation.function")} - ${chalk.yellow(filename)}`;
-			}
+			if (!event.execute) throw Error(`${t("errors:validation.function")} - ${filename}`);
 
-			client.events.set(filename, event);
 			const execute = (...args) => event.execute(client, ...args);
 			const target = event.rest
 				? client.rest
@@ -68,24 +47,13 @@ async function loadEvents(client, dir) {
 				? client.lavalink.nodeManager
 				: client;
 
-			target[event.once ? "once" : "on"](event.name, execute);
-
-			i++;
-			tableData.push([`${chalk.magenta(i)}`, chalk.green(filename), "» 🌱 «"]);
+			target[event.once ? "once" : "on"](event.name, execute) && i++;
 		} catch (error) {
-			i++;
-			tableData.push([`${chalk.magenta(i)}`, chalk.red(filename), "» 🔴 «"]);
 			client.logger.error(error);
 		}
-	});
+	}
 
-	if (client.config.table.event) console.log(table(tableData, tableConfig));
-
-	client.logger.success(
-		t("helpers:loadEvents", {
-			count: chalk.yellow(client.events.size),
-		}),
-	);
+	return client.logger.success(t("helpers:loadEvents", { count: chalk.yellow(i) }));
 }
 
 module.exports = loadEvents;

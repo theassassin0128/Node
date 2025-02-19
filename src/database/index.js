@@ -1,16 +1,15 @@
 const mongoose = require("mongoose");
 const chalk = require("chalk");
-const { t } = require("i18next");
 
 /**
  * A function to connect to mongodb through mongodb
- * @param {import("@lib/DiscordClient.js").DiscordClient} client
+ * @param {import("@root/src/lib/DiscordClient.js").DiscordClient} client
  * @returns {Promise<void>}
  */
 async function connect(client) {
 	try {
 		await mongoose.connect(client.config.mongodbUri);
-		client.logger.info(t("db:connected", { db: chalk.magenta("Mongodb") }));
+		client.logger.info(`${chalk.magenta("Mongodb")} database connected`);
 	} catch (error) {
 		client.logger.error(error);
 	}

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require("discord.js");
 
-/** @type {import("@types/command").CommandStructure} */
+/** @type {import("@root/src/types/command").CommandStructure} */
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("emit")
@@ -13,11 +13,19 @@ module.exports = {
 				.setChoices(
 					{
 						name: "guildMemeberAdd",
-						value: "m1",
+						value: "gma",
 					},
 					{
 						name: "guildMemberRemove",
-						value: "m2",
+						value: "gmr",
+					},
+					{
+						name: "guildBanAdd",
+						value: "gba",
+					},
+					{
+						name: "guildBanRemove",
+						value: "gbr",
 					},
 				),
 		)
@@ -43,24 +51,41 @@ module.exports = {
 		if (user) member = interaction.guild.members.cache.get(user.id);
 		const string = interaction.options.getString("event");
 		switch (string) {
-			case "m1":
-				{
-					client.emit("guildMemberAdd", member);
-					interaction.reply({
-						content: "Emitted Guild Member Add event successfully.",
-						flags: MessageFlags.Ephemeral,
-					});
-				}
+			case "gma": {
+				client.emit("guildMemberAdd", member);
+				interaction.reply({
+					content: "Emitted `Guild Member Add` event successfully.",
+					flags: MessageFlags.Ephemeral,
+				});
 				break;
-			case "m2":
-				{
-					client.emit("guildMemberRemove", member);
-					interaction.reply({
-						content: "Emitted Guild Member Remove event successfully.",
-						flags: MessageFlags.Ephemeral,
-					});
-				}
+			}
+
+			case "gmr": {
+				client.emit("guildMemberRemove", member);
+				interaction.reply({
+					content: "Emitted `Guild Member Remove` event successfully.",
+					flags: MessageFlags.Ephemeral,
+				});
 				break;
+			}
+
+			case "gba": {
+				client.emit("guildBanAdd", member);
+				interaction.reply({
+					content: "Emitted `Guild Ban Add` event successfully.",
+					flags: MessageFlags.Ephemeral,
+				});
+				break;
+			}
+
+			case "gbr": {
+				client.emit("guildBanRemove", member);
+				interaction.reply({
+					content: "Emitted `Guild Ban Remove` event successfully.",
+					flags: MessageFlags.Ephemeral,
+				});
+				break;
+			}
 		}
 	},
 };

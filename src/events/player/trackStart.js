@@ -24,7 +24,7 @@ module.exports = {
 			.setAuthor({
 				name: "Now Playing",
 				iconURL:
-					client.config.media.icons[track.info.sourceName] ??
+					client.config.icons[track.info.sourceName] ??
 					client.user?.displayAvatarURL({ extension: "png" }),
 			})
 			.setColor(client.config.colors.Main)
@@ -52,7 +52,7 @@ module.exports = {
 
 		const message = await channel.send({
 			embeds: [embed],
-			components: [client.lavalink.createButtonRow(player)],
+			components: client.utils.createPlayerButtons(player),
 		});
 
 		createCollector(client, message, player, track, embed);
@@ -82,7 +82,7 @@ module.exports = {
 
 /**
  * A function to create a message componnent collector for music buttons
- * @param {import("@lib/DiscordClient").DiscordClient} client
+ * @param {import("@root/src/lib/DiscordClient").DiscordClient} client
  * @param {Message} message
  * @param {import("lavalink-client").Player} player
  * @param {import("lavalink-client").Track} track
@@ -116,22 +116,16 @@ function createCollector(client, message, player, track, embed) {
 		//  return;
 		//}
 
-		const editMessage = async (text) => {
+		async function editMessage() {
 			if (message) {
 				await message.edit({
-					embeds: [
-						embed.setFooter({
-							text,
-							iconURL: interaction.user.avatarURL({}),
-						}),
-					],
-					components: [client.lavalink.createButtonRow(player)],
+					components: client.utils.createPlayerButtons(player),
 				});
 			}
-		};
+		}
 
 		switch (interaction.customId) {
-			case "previous":
+			case "back":
 				{
 					if (player.queue.previous) {
 						await interaction.deferUpdate();
@@ -152,12 +146,11 @@ function createCollector(client, message, player, track, embed) {
 					if (player.paused) {
 						player.resume();
 						await interaction.deferUpdate();
-						await editMessage(`Resumed by ${interaction.user.tag}`);
 					} else {
 						player.pause();
 						await interaction.deferUpdate();
-						await editMessage(`Paused by ${interaction.user.tag}`);
 					}
+					await editMessage();
 				}
 				break;
 			case "stop": {
@@ -165,12 +158,11 @@ function createCollector(client, message, player, track, embed) {
 				await interaction.deferUpdate();
 				break;
 			}
-			case "skip":
+			case "next":
 				{
 					if (player.queue.tracks.length > 0) {
 						await interaction.deferUpdate();
 						player.skip();
-						// await editMessage(`Skipped by ${interaction.user.tag}`);
 					} else {
 						await interaction.reply({
 							content: "There is no more song in the queue.",
@@ -184,17 +176,17 @@ function createCollector(client, message, player, track, embed) {
 				switch (player.repeatMode) {
 					case "off": {
 						player.setRepeatMode("track");
-						await editMessage(`Looping by ${interaction.user.tag}`);
+						await editMessage();
 						break;
 					}
 					case "track": {
 						player.setRepeatMode("queue");
-						await editMessage(`Looping Queue by ${interaction.user.tag}`);
+						await editMessage();
 						break;
 					}
 					case "queue": {
 						player.setRepeatMode("off");
-						await editMessage(`Looping Off by ${interaction.user.tag}`);
+						await editMessage();
 						break;
 					}
 				}

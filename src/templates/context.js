@@ -1,6 +1,6 @@
 const { ContextMenuCommandBuilder, ApplicationCommandType } = require("discord.js");
 
-/** @type {import("@types/command").CommandStructure} */
+/** @type {import("@types/index").CommandStructure} */
 module.exports = {
 	data: new ContextMenuCommandBuilder().setType(
 		ApplicationCommandType.User || ApplicationCommandType.Message, // either message or user
@@ -13,5 +13,5 @@ module.exports = {
 	disabled: false,
 	botPermissions: [],
 	userPermissions: [],
-	execute: async (client, interaction, lng) => {},
+	async execute(client, interaction, lng) {},
 };

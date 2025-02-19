@@ -6,6 +6,6 @@
 	"node": {
 		"connect": "The Lavalink Node {{id}} connected",
 		"disconnect": "The Lavalink Node {{id}} disconnected",
-		"error": "The Lavalink Node {{id}} errored:"
+		"error": "The Lavalink Node {{id}} errored"
 	}
 }

@@ -4,7 +4,7 @@ const { t } = require("i18next");
 
 /**
  * A function to log get vanity
- * @param {import("@lib/DiscordClient").DiscordClient} client - The Discord client
+ * @param {import("@root/src/lib/DiscordClient").DiscordClient} client - The Discord client
  * @returns {void}
  * @example logVanity(client);
  */
@@ -49,7 +49,7 @@ function logVanity(client) {
 		[""],
 		[
 			t("helpers:vanity.welcome", {
-				name: "Node Project",
+				name: chalk.green("Node Project"),
 			}),
 		],
 		[

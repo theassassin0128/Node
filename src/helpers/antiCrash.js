@@ -1,5 +1,6 @@
 const chalk = require("chalk");
 
+/** @param {import("@root/src/lib/DiscordClient").DiscordClient} client */
 module.exports = (client) => {
 	// Handle beforeExit event
 	process.on("beforeExit", (code) => {

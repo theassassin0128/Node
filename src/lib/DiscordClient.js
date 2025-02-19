@@ -1,7 +1,7 @@
 const { Client, Collection } = require("discord.js");
-const { Utils } = require("./Utils.js");
-const { LavalinkPlayer } = require("./LavalinkPlayer.js");
 const { Logger } = require("./Logger.js");
+const { LavalinkPlayer } = require("./LavalinkPlayer.js");
+const { validateSystem } = require("@src/validations");
 
 class DiscordClient extends Client {
 	/**
@@ -19,24 +19,19 @@ class DiscordClient extends Client {
 		this.db = require("@src/database");
 
 		// Initialize global functions and utilities
-		this.wait = require("timers/promises").setTimeout;
+		this.logger = new Logger();
+		this.utils = require("@src/utils");
 		this.helpers = require("@src/helpers");
 		this.handlers = require("@src/handlers");
-		this.logger = new Logger();
-		this.utils = new Utils(this);
 
-		// Initialize client collections with types
-		/** @type {Collection<string, import("@types/event.js").EventStructure>} */
-		this.events = new Collection();
-
-		/** @type {Collection<string, import("@types/command.js").CommandStructure>} */
+		/** @type {Collection<string, import("@types/index").CommandStructure>} */
 		this.commands = new Collection();
 
 		/** @type {Collection<string, Collection<string, string>>} */
 		this.cooldowns = new Collection();
 
 		// Initialize Music Manager if enabled
-		if (this.config.plugins.music.enabled) this.lavalink = new LavalinkPlayer(this);
+		if (this.config.music.enabled) this.lavalink = new LavalinkPlayer(this);
 	}
 
 	/**
@@ -46,12 +41,23 @@ class DiscordClient extends Client {
 	async start() {
 		console.clear();
 
-		// Load the helper modules
-		this.helpers.antiCrash(this); // Load antiCrash system
-		this.helpers.loadLocales(); // Load locales
-		this.helpers.logVanity(this); // Log the vanity
-		await this.helpers.loadEvents(this, "src/events"); // Load event modules
-		await this.helpers.loadCommands(this, "src/commands"); // Load command modules
+		// Load locales
+		this.helpers.loadLocales(this);
+
+		// Load vanity and welcome message
+		this.helpers.logVanity(this);
+
+		// Check and validate the configuraton
+		await validateSystem(this);
+
+		// Load antiCrash system
+		this.helpers.antiCrash(this);
+
+		// Load events
+		await this.helpers.loadEvents(this, "src/events");
+
+		// Load commands
+		await this.helpers.loadCommands(this, "src/commands");
 
 		// Connect to the database
 		await this.db.connect(this);

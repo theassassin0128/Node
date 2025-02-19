@@ -1,20 +1,19 @@
-const mongoose = require("mongoose");
-const { t } = require("i18next");
-const config = require("@src/config.js");
 const chalk = require("chalk");
+const mongoose = require("mongoose");
+const config = require("@src/config.js");
 
 const GuildSchema = new mongoose.Schema({
 	_id: { type: String, required: true },
 	data: {
 		name: String,
-		owner: { type: String, ref: "users" },
+		ownerId: { type: String, ref: "users" },
 		joinedAt: Date,
 		leftAt: Date,
 	},
 	locale: { type: String, default: config.defaultLocale },
 	rank: {
 		enabled: { type: Boolean, default: false },
-		rank_message: { type: String, default: config.plugins.rank.defaultLevelUpMessage },
+		rank_message: { type: String, default: config.rank.defaultLevelUpMessage },
 		channel_id: String,
 	},
 	ticket: {
@@ -114,27 +113,22 @@ const GuildSchema = new mongoose.Schema({
 const model = mongoose.model("guild", GuildSchema);
 
 /**
+ * A function to get stored guild data friom database
  * @param {import('discord.js').Guild} guild
- * @return {Promise<import("@types/database.js").GuildSchema>}
+ * @return {Promise<import("@root/src/types/database.js").GuildSchema>}
  */
 async function getGuild(guild) {
-	if (!guild) {
-		throw new Error(t("errors:missing.param", { param: chalk.yellow("guild") }));
-	}
+	if (!guild) throw new Error(`${chalk.yellow("guild")} parameter is missing`);
+	if (!guild.id) throw new Error(`${chalk.yellow("guild.id")} property is missing`);
 
-	if (!guild.id) {
-		throw new Error(t("errors:missing.property", { property: chalk.yellow("guild.id") }));
-	}
-
-	let changes = false;
-	let guildData = await model.findById(guild.id);
+	var guildData = await model.findById(guild.id);
 
 	if (!guildData) {
 		guildData = new model({
 			_id: guild.id,
 			data: {
 				name: guild.name,
-				owner: guild.ownerId,
+				ownerId: guild.ownerId,
 				joinedAt: guild.joinedAt,
 			},
 		});
@@ -144,15 +138,13 @@ async function getGuild(guild) {
 
 	if (guildData.data.name !== guild.name) {
 		guildData.data.name = guild.name;
-		changes = true;
+		await guildData.save();
 	}
 
-	if (guildData.owner !== guild.ownerId) {
-		guildData.data.owner = guild.ownerId;
-		changes = true;
+	if (guildData.data.ownerId !== guild.ownerId) {
+		guildData.data.ownerId = guild.ownerId;
+		await guildData.save();
 	}
-
-	if (changes) await guildData.save();
 
 	return guildData;
 }

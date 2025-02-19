@@ -1,9 +1,9 @@
 const { Collection } = require("discord.js");
 const chalk = require("chalk");
-const { table } = require("table");
 const { t } = require("i18next");
 const loadFiles = require("./loadFiles");
-const { Permissions } = require("@src/validations/permissions.js");
+const { Permissions } = require("@src/validations");
+const categories = require("@src/categories.js");
 
 /**
  * A function to load command modules
@@ -21,39 +21,27 @@ async function loadCommands(client, dir) {
 		throw new TypeError(t("errors:type.string"), { param: chalk.yellow("dir") });
 	}
 
-	const tableData = [[chalk.cyan("Index"), chalk.cyan("File"), chalk.cyan("Status")]];
-	/** @type {import("table").TableUserConfig} */
-	const tableConfig = {
-		columnDefault: {
-			alignment: "center",
-			width: 30,
-		},
-		columns: [{ width: 5 }, {}, { width: 6 }],
-		border: client.utils.getTableBorder("blue"),
-		drawHorizontalLine: (lineIndex, rowCount) => {
-			return lineIndex === 0 || lineIndex === 1 || lineIndex === rowCount;
-		},
-	};
-
-	let i = 0;
 	client.commands.clear();
 
-	(await loadFiles(dir, [".js"])).forEach((file) => {
-		const filename = file.split(/[\\/]/g).pop();
-
+	const commandFiles = await loadFiles(dir, [".js"]);
+	for (const file of commandFiles) {
 		try {
-			/** @type {import("@types/command.js").CommandStructure} */
+			const filename = chalk.yellow(file.split(/[\\/]/g).pop());
+
+			/** @type {import("@root/src/types/command.js").CommandStructure} */
 			const command = require(file);
 
-			if (command.disabled) return;
+			if (command.disabled) continue;
 
 			if (command?.category !== "none") {
-				if (client.config.categories[command.category]?.enabled === false) return;
+				if (categories[command.category]?.enabled === false) continue;
 			}
 
 			if ((command.cooldown ?? client.config.bot.defaultCooldown) > 0) {
 				client.cooldowns.set(command.data.name, new Collection());
 			}
+
+			if (command.global === undefined) command.global = client.config.bot.global;
 
 			if (command?.botPermissions?.length > 0) {
 				command.botPermissions.forEach((p) => {
@@ -61,7 +49,7 @@ async function loadCommands(client, dir) {
 						throw `${t("errors:validation.permission", {
 							p: chalk.yellow(p),
 							t: "user",
-						})} - ${chalk.yellow(filename)}`;
+						})} - ${filename}`;
 					}
 				});
 			}
@@ -72,31 +60,18 @@ async function loadCommands(client, dir) {
 						throw `${t("errors:validation.permission", {
 							p: chalk.yellow(p),
 							t: "bot",
-						})} - ${chalk.yellow(filename)}`;
+						})} - ${filename}`;
 					}
 				});
 			}
 
-			if (!command.data) {
-				throw `${t("errors:validation.commandData")} - ${chalk.yellow(filename)}`;
-			}
-
-			if (!command.execute) {
-				throw `${t("errors:validation.function")} - ${chalk.yellow(filename)}`;
-			}
-
+			if (!command.data) throw `${t("errors:validation.commandData")} - ${filename}`;
+			if (!command.execute) throw `${t("errors:validation.function")} - ${filename}`;
 			client.commands.set(command.data.name, command);
-
-			i++;
-			tableData.push([`${chalk.magenta(i)}`, chalk.green(filename), "» 🌱 «"]);
 		} catch (error) {
-			i++;
-			tableData.push([`${chalk.magenta(i)}`, chalk.red(filename), "» 🔴 «"]);
 			client.logger.error(error);
 		}
-	});
-
-	if (client.config.table.command) console.log(table(tableData, tableConfig));
+	}
 
 	client.logger.success(
 		t("helpers:loadCommands", {

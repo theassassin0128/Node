@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require("discord.js");
 const { t } = require("i18next");
 
-/** @type {import("@types/command").CommandStructure} */
+/** @type {import("@root/src/types/command").CommandStructure} */
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("ping")

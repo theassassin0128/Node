@@ -5,7 +5,7 @@ const {
 	InteractionContextType,
 } = require("discord.js");
 
-/** @type {import("@types/command").CommandStructure} */
+/** @type {import("@root/src/types/command").CommandStructure} */
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("role")

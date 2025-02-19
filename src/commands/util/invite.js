@@ -4,33 +4,32 @@ const {
 	ActionRowBuilder,
 	ButtonStyle,
 	OAuth2Scopes,
-	EmbedBuilder,
 	MessageFlags,
 } = require("discord.js");
 const { t } = require("i18next");
 
-/** @type {import("@types/command").CommandStructure} */
+/** @type {import("@root/src/types/command").CommandStructure} */
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("invite")
 		.setDescription("returns a link button with bots invite url."),
+	usage: "",
 	category: "utility",
 	cooldown: 0,
 	global: true,
 	premium: false,
 	devOnly: false,
+	disabled: false,
 	voiceChannelOnly: false,
 	botPermissions: ["SendMessages", "SendMessagesInThreads"],
 	userPermissions: ["SendMessages", "SendMessagesInThreads"],
-	usage: "",
-	disabled: false,
-	async execute(client, interaction) {
+	async execute(client, interaction, lng) {
 		if (
 			!client.config.bot.allowedInvite &&
 			!client.config.bot.devs.includes(interaction.user.id)
 		) {
 			return interaction.reply({
-				content: t("commands:invite.disabled"),
+				content: t("commands:invite.disabled", { lng }),
 				flags: MessageFlags.Ephemeral,
 			});
 		}
@@ -46,7 +45,7 @@ module.exports = {
 			.setEmoji("✉️");
 
 		interaction.reply({
-			content: t("commands:invite.reply"),
+			content: t("commands:invite.reply", { lng }),
 			components: [new ActionRowBuilder().addComponents(inviteButton)],
 			flags: MessageFlags.Ephemeral,
 		});

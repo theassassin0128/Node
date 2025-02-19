@@ -1,4 +1,4 @@
-/** @type {import("@types/event").EventStructure} */
+/** @type {import("@types/index").EventStructure} */
 module.exports = {
 	name: "",
 	once: false,

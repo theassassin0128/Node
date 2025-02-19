@@ -1,11 +1,10 @@
 const {
-  SlashCommandBuilder,
-  EmbedBuilder,
-  ChatInputCommandInteraction,
-  Client,
-  PermissionFlagsBits,
+	SlashCommandBuilder,
+	EmbedBuilder,
+	ChatInputCommandInteraction,
+	Client,
+	PermissionFlagsBits,
 } = require("discord.js");
-const { colour } = require("../../config");
 
 module.exports = {
 	disabled: true,

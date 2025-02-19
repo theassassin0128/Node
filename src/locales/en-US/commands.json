@@ -1,5 +1,8 @@
 {
-	"default": {},
+	"default": {
+		"error": "An error occurred while trying to execute the command.",
+		"errorTitle": "AN ERROR OCCURRED"
+	},
 
 	"ping": {
 		"description": "🏓 Pong! Replies with bot's response time.",
@@ -104,5 +107,22 @@
 			"validValue": "Please! provide a value between 1 to 100.",
 			"reply": "🔊 Volume set to **{{volume}}**"
 		}
+	},
+
+	"ban": {
+		"description": "Ban a member from the server.",
+		"options": {
+			"target": "The member to ban from the server.",
+			"reason": "Reason for the baning the target"
+		},
+		"reason": "None was specified.",
+		"errors": {
+			"member": "Target user is no longer a member of this server.",
+			"moderatable": "Target user is not moderatable by me.",
+			"manageable": "Target user is not manageable by me.",
+			"userRole": "Target user's highest role is higher than your highest role.",
+			"botRole": "Target user's highest role is higher than my highest role."
+		},
+		"reply": "Successfully banned *{{target}}* with reason - {{reason}}"
 	}
 }

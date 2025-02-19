@@ -9,7 +9,7 @@ const {
 const { t } = require("i18next");
 const { profileImage } = require("discord-arts");
 
-/** @type {import("@types/command").ContextMenuStructure} */
+/** @type {import("@typings/index").CommandStructure} */
 module.exports = {
 	data: new ContextMenuCommandBuilder()
 		.setName("Member Information")

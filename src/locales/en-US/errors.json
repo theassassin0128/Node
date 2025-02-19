@@ -18,5 +18,19 @@
 		"commandData": "Command data is missing",
 		"function": "Execute function is missing",
 		"permission": "{{p}} is not a valid {{t}} permission"
+	},
+
+	"env": {
+		"emptyValue": "Value of {{value}} cannot be empty",
+		"port": "Value of {{value}} was empty. Using default port: {{port}}",
+		"devs": "{{value}} is empty. Dev commands won't be accessible"
+	},
+
+	"config": {
+		"dashboard": "{{value}} in {{location}} cannot be empty",
+		"nodeArray": "{{value}} must be an Array of Nodes",
+		"lavalinkNode": "{{value}} must have at least 1 Node. But none was provided",
+		"defaultSource": "Provided value of {{value}} is invalid.",
+		"supportServer": "test"
 	}
 }

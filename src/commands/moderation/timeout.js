@@ -1,13 +1,11 @@
 const {
-  Client,
-  ChatInputCommandInteraction,
-  PermissionFlagsBits,
-  SlashCommandBuilder,
-  EmbedBuilder,
+	Client,
+	ChatInputCommandInteraction,
+	PermissionFlagsBits,
+	SlashCommandBuilder,
+	EmbedBuilder,
 } = require("discord.js");
-// const infractions = require("../../models/infractions.js");
 const ms = require("ms");
-const { colour } = require("../../config.js");
 
 module.exports = {
 	disabled: true,

@@ -1,6 +1,6 @@
 {
 	"commands": {
-		"guidlOnly": "❌ Slash commands only work in guilds.",
+		"guildOnly": "❌ Slash commands only work in guilds.",
 		"notFound": "This command is not available at the moment.",
 		"disabled": "This command was **disabled** by the developers.",
 		"devOnly": "This command is only **accessible** to the developers.",

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 
-/** @type {import("@types/command").CommandStructure} */
+/** @type {import("@types/index").CommandStructure} */
 module.exports = {
 	data: new SlashCommandBuilder(),
 	usage: "",
@@ -13,6 +13,6 @@ module.exports = {
 	voiceChannelOnly: false,
 	botPermissions: [],
 	userPermissions: [],
-	execute: async (client, interaction, lng) => {},
-	autocomplete: async (client, interaction) => {},
+	async execute(client, interaction, lng) {},
+	async autocomplete(client, interaction) {},
 };

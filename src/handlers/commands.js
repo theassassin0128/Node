@@ -78,7 +78,7 @@ async function handleCommands(client, interaction) {
 		}
 
 		if ((command.cooldown ?? defaultCooldown) > 0) {
-			const remaining = client.utils.getCooldown(command, user.id);
+			const remaining = client.utils.getCooldown(client, command, user.id);
 
 			if (remaining > 0 && !devs.includes(user.id)) {
 				return interaction.reply({
@@ -104,35 +104,6 @@ async function handleCommands(client, interaction) {
 
 		client.logger.error(error);
 	}
-}
-
-/**
- * @param {object} command - Command object
- * @param {string} userId - User ID
- * @returns {void}
- */
-function setCooldown(command, userId) {
-	const key = command.name + "-" + userId;
-	cooldownCache.set(key, Date.now());
-}
-
-/**
- * @param {object} command - Command object
- * @param {string} userId - User ID
- * @returns {number} - Remaining time in seconds
- */
-function getRemainingTime(command, userId) {
-	const key = command.name + "-" + userId;
-
-	if (cooldownCache.has(key)) {
-		const remaining = (Date.now() - cooldownCache.get(key)) / 1000;
-
-		if (remaining >= command.cooldown) {
-			cooldownCache.delete(key);
-
-			return 0;
-		} else return command.cooldown - remaining;
-	} else return 0;
 }
 
 module.exports = handleCommands;

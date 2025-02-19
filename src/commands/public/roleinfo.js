@@ -1,11 +1,9 @@
 const {
-  EmbedBuilder,
-  SlashCommandBuilder,
-  Client,
-  ChatInputCommandInteraction,
+	EmbedBuilder,
+	SlashCommandBuilder,
+	Client,
+	ChatInputCommandInteraction,
 } = require("discord.js");
-const { colour } = require("../../config");
-// const moment = require("moment");
 
 module.exports = {
 	disabled: true,

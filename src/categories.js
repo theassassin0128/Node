@@ -1,4 +1,4 @@
-const plugins = require("./plugins.js");
+const config = require("./config.js");
 
 module.exports = {
 	admin: {
@@ -10,7 +10,7 @@ module.exports = {
 
 	automod: {
 		name: "Automod",
-		enabled: plugins.automod.enabled,
+		enabled: config.automod.enabled,
 		image:
 			"https://icons.iconarchive.com/icons/google/noto-emoji-smileys/128/10103-robot-face-icon.png",
 		emoji: "🤖",
@@ -18,7 +18,7 @@ module.exports = {
 
 	anime: {
 		name: "Anime",
-		enabled: plugins.anime.enabled,
+		enabled: config.anime.enabled,
 		image: "https://wallpaperaccess.com/full/5680679.jpg",
 		emoji: "🎨",
 	},
@@ -31,7 +31,7 @@ module.exports = {
 
 	economy: {
 		name: "Economy",
-		enabled: plugins.economy.enabled,
+		enabled: config.economy.enabled,
 		image:
 			"https://icons.iconarchive.com/icons/custom-icon-design/pretty-office-11/128/coins-icon.png",
 		emoji: "🪙",
@@ -39,7 +39,7 @@ module.exports = {
 
 	fun: {
 		name: "Fun",
-		enabled: plugins.fun.enabled,
+		enabled: config.fun.enabled,
 		image:
 			"https://icons.iconarchive.com/icons/flameia/aqua-smiles/128/make-fun-icon.png",
 		emoji: "😂",
@@ -47,14 +47,14 @@ module.exports = {
 
 	giveaways: {
 		name: "Giveaway",
-		enabled: plugins.giveaways.enabled,
+		enabled: config.giveaways.enabled,
 		image: "https://cdn-icons-png.flaticon.com/512/4470/4470928.png",
 		emoji: "🎉",
 	},
 
 	image: {
 		name: "Image",
-		enabled: plugins.image.enabled,
+		enabled: config.image.enabled,
 		image: "https://icons.iconarchive.com/icons/dapino/summer-holiday/128/photo-icon.png",
 		emoji: "🖼️",
 	},
@@ -68,7 +68,7 @@ module.exports = {
 
 	moderation: {
 		name: "Moderation",
-		enabled: plugins.moderation.enabled,
+		enabled: config.moderation.enabled,
 		image:
 			"https://icons.iconarchive.com/icons/lawyerwordpress/law/128/Gavel-Law-icon.png",
 		emoji: "🔨",
@@ -76,7 +76,7 @@ module.exports = {
 
 	music: {
 		name: "Music",
-		enabled: plugins.music.enabled,
+		enabled: config.music.enabled,
 		image:
 			"https://icons.iconarchive.com/icons/wwalczyszyn/iwindows/256/Music-Library-icon.png",
 		emoji: "🎵",
@@ -92,7 +92,7 @@ module.exports = {
 
 	social: {
 		name: "Social",
-		enabled: plugins.social.enabled,
+		enabled: config.social.enabled,
 		image:
 			"https://icons.iconarchive.com/icons/dryicons/aesthetica-2/128/community-users-icon.png",
 		emoji: "🫂",
@@ -100,7 +100,7 @@ module.exports = {
 
 	rank: {
 		name: "Ranking",
-		enabled: plugins.rank.enabled,
+		enabled: config.rank.enabled,
 		image:
 			"https://icons.iconarchive.com/icons/graphicloads/flat-finance/256/dollar-stats-icon.png",
 		emoji: "📈",
@@ -108,14 +108,14 @@ module.exports = {
 
 	suggestion: {
 		name: "Suggestion",
-		enabled: plugins.suggestion.enabled,
+		enabled: config.suggestion.enabled,
 		image: "https://cdn-icons-png.flaticon.com/512/1484/1484815.png",
 		emoji: "📝",
 	},
 
 	ticket: {
 		name: "Ticket",
-		enabled: plugins.ticket.enabled,
+		enabled: config.ticket.enabled,
 		image:
 			"https://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/512/ticket-icon.png",
 		emoji: "🎫",

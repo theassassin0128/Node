@@ -5,14 +5,13 @@ const { t } = require("i18next");
 
 /**
  * Returns an array of files from given path filtered by provided extensions.
- * Remember path starts from your projects main folder through **process.cwd()**.
- * So provide path from the base folder.
- * @type {import("@types/utils").LoadFiles}
- * @default loadFiles(path,ext)
- * @example const files = await loadFiles("src", [".js"]);
- * @example const files = await loadFiles("src/commands", [".js"]);
- * @example const files = await loadFiles("src/types", [".ts"]);
- * @example const files = await loadFiles("public", [".mp4", ".mkv", ".jpeg"]);
+ * @param {string} path - path from projects root dir
+ * @param {import("@types/index").FileExtensions[]|string[]} ext - extensions to filter files
+ * @returns {Promise<string[]>}
+ * @example const jsFiles = await loadFiles("src", [".js"]);
+ * @example const commandFiles = await loadFiles("src/commands", [".js"]);
+ * @example const tsFiles = await loadFiles("src/types", [".ts"]);
+ * @example const assets = await loadFiles("public", [".mp4", ".mkv", ".jpeg"]);
  */
 async function loadFiles(path, ext) {
 	// Validate parameters

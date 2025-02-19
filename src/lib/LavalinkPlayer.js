@@ -1,11 +1,16 @@
-const {
-	ButtonBuilder,
-	ButtonStyle,
-	ActionRowBuilder,
-	ActionRow,
-	User,
-} = require("discord.js");
+const { User } = require("discord.js");
 const { LavalinkManager } = require("lavalink-client");
+
+/**
+ * A function to get lavalink nodes
+ * @param {import("@lib/DiscordClient").DiscordClient} client
+ * @return {import("lavalink-client").LavalinkNode[]}
+ */
+function getLavalinkNodes(client) {
+	const { lavalinkNodes } = client.config.music;
+	if (!Array.isArray(lavalinkNodes)) return [];
+	return lavalinkNodes;
+}
 
 class LavalinkPlayer extends LavalinkManager {
 	/**
@@ -14,12 +19,12 @@ class LavalinkPlayer extends LavalinkManager {
 	 */
 	constructor(client) {
 		super({
-			nodes: client.config.plugins.music.lavalinkNodes,
+			nodes: getLavalinkNodes(client),
 			sendToShard: (guildId, payload) => {
 				client.guilds.cache.get(guildId)?.shard?.send(payload);
 			},
 			autoSkip: true,
-			emitNewSongsOnly: true,
+			emitNewSongsOnly: false,
 			playerOptions: {
 				maxErrorsPerTime: {
 					threshold: 10000,
@@ -28,14 +33,15 @@ class LavalinkPlayer extends LavalinkManager {
 				minAutoPlayMs: 10000,
 				applyVolumeAsFilter: false,
 				clientBasedPositionUpdateInterval: 50,
-				defaultSearchPlatform: client.config.plugins.music.defaultSource,
+				defaultSearchPlatform: client.config.music.defaultSource,
+				volumeDecrementer: 0.75,
 				requesterTransformer: requesterTransformer,
 				onDisconnect: {
 					autoReconnect: true,
 					destroyPlayer: false,
 				},
 				onEmptyQueue: {
-					destroyAfterMs: 180000,
+					destroyAfterMs: client.config.music.idleTime,
 					autoPlayFunction: autoPlayFunction,
 				},
 				useUnresolvedData: true,
@@ -74,64 +80,13 @@ class LavalinkPlayer extends LavalinkManager {
 		const s = Math.floor(number / 1000) % 60;
 		return `${h ? `${h}:` : ""}${m ? `${m}:` : ""}${s} `;
 	}
-
-	/**
-	 * A funtion to create buttons for the player
-	 * @param {import("lavalink-client").Player} player
-	 * @returns {ActionRow}
-	 */
-	createButtonRow(player) {
-		const previousButton = new ButtonBuilder()
-			.setCustomId("previous")
-			.setEmoji(this.client.config.emojis.music.previous)
-			.setStyle(ButtonStyle.Secondary)
-			.setDisabled(!player.queue.previous);
-
-		const resumeButton = new ButtonBuilder()
-			.setCustomId("resume")
-			.setEmoji(
-				player.paused
-					? this.client.config.emojis.music.resume
-					: this.client.config.emojis.music.pause,
-			)
-			.setStyle(player.paused ? ButtonStyle.Success : ButtonStyle.Secondary);
-
-		const stopButton = new ButtonBuilder()
-			.setCustomId("stop")
-			.setEmoji(this.client.config.emojis.music.stop)
-			.setStyle(ButtonStyle.Danger);
-
-		const skipButton = new ButtonBuilder()
-			.setCustomId("skip")
-			.setEmoji(this.client.config.emojis.music.next)
-			.setStyle(ButtonStyle.Secondary);
-
-		const loopButton = new ButtonBuilder()
-			.setCustomId("loop")
-			.setEmoji(
-				player.repeatMode === "track"
-					? this.client.config.emojis.music.loop2
-					: this.client.config.emojis.music.loop,
-			)
-			.setStyle(
-				player.repeatMode !== "off" ? ButtonStyle.Success : ButtonStyle.Secondary,
-			);
-
-		return new ActionRowBuilder().addComponents(
-			resumeButton,
-			previousButton,
-			stopButton,
-			skipButton,
-			loopButton,
-		);
-	}
 }
 
 /**
  * A function to transform a requester into a standardized requester object
  * @param {any} requester The requester to transform.
  * Can be a string, a user, or an object with the keys `id`, `username`, and `avatarURL`.
- * @returns {import("@types/index").Requester} The transformed requester object.
+ * @returns {import("@root/src/typings/index").Requester} The transformed requester object.
  */
 function requesterTransformer(requester) {
 	if (
@@ -180,7 +135,7 @@ async function autoPlayFunction(player, lastTrack) {
 				.search(
 					{
 						query: `seed_tracks=${ids.join(",")}`,
-						source: "sprec",
+						source: "spsearch",
 					},
 					lastTrack.requester,
 				)

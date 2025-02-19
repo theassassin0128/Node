@@ -1,6 +1,5 @@
 /**
- * It was a painful process to make custom logger.
- * So, to simpify the process I am using a package called signale.
+ * It was a painful process to make custom logger. So, to simpify the process I am using a package called signale.
  * You can check it here https://www.npmjs.com/package/signale
  * Also the setup is copied from elsewhere.
  */
@@ -14,7 +13,7 @@ const options = {
 	logLevel: "info",
 	scope: "Node",
 	config: {
-		displayScope: true,
+		displayScope: false,
 		displayBadge: true,
 		displayDate: true,
 		displayFilename: false,

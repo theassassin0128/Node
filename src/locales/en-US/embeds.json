@@ -1,10 +1,11 @@
 {
 	"default": {
-		"footer": "Powered by {{u}} | Copyright ©{{y}}"
+		"footer": "Powered by {{username}}",
+		"copy": "{{username}} | Copyright ©{{year}}"
 	},
 
-	"prefix_mention": {
+	"mention": {
 		"title": "Did you just mention me?",
-		"description": "I am {{username}}, a discord bot developed by {{owner}} to manage & moderate discord servers. For more information or help use **`/help`**."
+		"description": "I am {{user}}, a discord bot developed by {{owner}} to manage & moderate discord servers. For more information or help use **`/help`**."
 	}
 }

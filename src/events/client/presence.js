@@ -15,9 +15,7 @@ module.exports = {
 				type: ActivityType.Watching,
 			},
 			{
-				name: `With ${client.guilds.cache
-					.reduce((a, b) => a + b.memberCount, 0)
-					.toString()} Users.`,
+				name: `With ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0).toString()} Users.`,
 				type: ActivityType.Playing,
 			},
 			{

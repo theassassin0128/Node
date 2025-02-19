@@ -1,8 +1,8 @@
-export type GuildSchema = {
+export interface GuildSchema {
 	_id: string;
 	data: {
 		name: string;
-		owner: string;
+		ownerId: string;
 		joinedAt: Date;
 		leftAt: Date;
 	};
@@ -102,13 +102,10 @@ export type GuildSchema = {
 		rejected_channel?: string;
 		staff_roles?: [string];
 	};
-};
+}
 
-export type UserSchema = {
+export interface UserSchema {
 	_id: string;
-	username: string;
-	discriminator: string;
-	locale: string;
 	coins: number;
 	bank: number;
 	reputation: {
@@ -122,4 +119,4 @@ export type UserSchema = {
 	};
 	createdAt: Date;
 	updatedAt: Date;
-};
+}

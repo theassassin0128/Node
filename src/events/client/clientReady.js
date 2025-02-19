@@ -1,7 +1,7 @@
 const chalk = require("chalk");
 const { t } = require("i18next");
 
-/** @type {import("@types/event").EventStructure} */
+/** @type {import("@typings/index").EventStructure} */
 module.exports = {
 	name: "ready",
 	once: true,
@@ -13,12 +13,10 @@ module.exports = {
 			}),
 		);
 
-		if (client.config.plugins.music.enabled) {
-			// Initialize the Lavalink client
-			client.lavalink.init(client.user);
-		}
-
 		// Synchronizing the application commands
 		client.helpers.syncCommands(client);
+
+		// Initialize the Lavalink client
+		if (client.lavalink) client.lavalink.init(client.user);
 	},
 };

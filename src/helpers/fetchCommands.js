@@ -4,38 +4,32 @@ const { t } = require("i18next");
 /**
  * A function to fetch Application Commands
  * @param {import("@lib/DiscordClient").DiscordClient} client
- * @returns {Promise<import("@types/utils").OldCommand[]>}
+ * @returns {Promise<import("@types/index").OldCommand[]>}
  */
 async function fetchCommands(client) {
 	if (typeof client !== "object") {
-		throw new TypeError(t("errors:missing.param", { param: chalk.yellow("client") }));
+		throw new TypeError(
+			t("errors:missing.param", { param: chalk.yellowBright("client") }),
+		);
 	}
 
 	try {
 		const ApplicationCommands = [];
 
-		(
-			await client.application.commands.fetch({
-				withLocalizations: true,
-			})
-		).forEach((command) => {
+		const globalCommands = await client.application.commands.fetch({
+			withLocalizations: true,
+		});
+		globalCommands.forEach((command) => {
 			ApplicationCommands.push({ data: command, global: true });
 		});
 
-		(
-			await client.application.commands.fetch({
-				guildId: client.config.bot.guildId,
-				withLocalizations: true,
-			})
-		).forEach((command) => {
+		const guildCommands = await client.application.commands.fetch({
+			guildId: client.config.bot.guildId,
+			withLocalizations: true,
+		});
+		guildCommands.forEach((command) => {
 			ApplicationCommands.push({ data: command, global: false });
 		});
-
-		client.logger.info(
-			t("helpers:fetchCommands", {
-				count: chalk.yellow(ApplicationCommands.length),
-			}),
-		);
 
 		return ApplicationCommands;
 	} catch (error) {
