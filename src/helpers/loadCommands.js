@@ -33,6 +33,8 @@ async function loadCommands(client, dir) {
 
 			if (command.disabled) continue;
 
+			if (!command.data) throw `${t("errors:validation.commandData")} - ${filename}`;
+
 			if (command?.category !== "none") {
 				if (categories[command.category]?.enabled === false) continue;
 			}
@@ -65,8 +67,8 @@ async function loadCommands(client, dir) {
 				});
 			}
 
-			if (!command.data) throw `${t("errors:validation.commandData")} - ${filename}`;
 			if (!command.execute) throw `${t("errors:validation.function")} - ${filename}`;
+
 			client.commands.set(command.data.name, command);
 		} catch (error) {
 			client.logger.error(error);

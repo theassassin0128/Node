@@ -6,7 +6,7 @@
  * @returns {number} expiration timestamp (in seconds)
  */
 function getCooldown(client, command, userId) {
-	const { cooldowns } = client;
+	const { cooldowns, config } = client;
 	const timestamps = cooldowns.get(command.data.name);
 	if (!timestamps) return 0;
 

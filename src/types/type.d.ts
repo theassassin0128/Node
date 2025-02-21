@@ -82,38 +82,3 @@ export type ChalkColors =
 	| "bgMagentaBright"
 	| "bgCyanBright"
 	| "bgWhiteBright";
-
-export declare enum Language {
-	BanglaBD = "bn-BD",
-	// Bulgarian = "Bulgarian",
-	// ChineseCN = "ChineseCN",
-	// ChineseTW = "ChineseTW",
-	// Croatian = "Croatian",
-	// Czech = "Czech",
-	// Danish = "Danish",
-	// Dutch = "Dutch",
-	// EnglishGB = "en-GB",
-	EnglishUS = "en-US",
-	// Finnish = "Finnish",
-	// French = "French",
-	// German = "German",
-	// Greek = "Greek",
-	// Hindi = "Hi",
-	// Hungarian = "Hungarian",
-	// Indonesian = "Indonesian",
-	// Italian = "Italian",
-	// Japanese = "Japanese",
-	// Korean = "Korean",
-	// Lithuanian = "Lithuanian",
-	// Norwegian = "Norwegian",
-	// Polish = "Polish",
-	PortugueseBR = "pt-BR",
-	// Romanian = "Romanian",
-	// Russian = "Russian",
-	// SpanishES = "SpanishES",
-	// Swedish = "Swedish",
-	// Thai = "Thai",
-	// Turkish = "Turkish",
-	// Ukrainian = "Ukrainian",
-	// Vietnamese = "Vietnamese",
-}

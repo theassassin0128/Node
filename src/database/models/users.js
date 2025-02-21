@@ -29,7 +29,6 @@ const model = mongoose.model("user", UserSchema);
 
 /**
  * @param {string} userId
- * @returns {Promise<import("@typings/index").UserSchema>}
  */
 async function getUser(userId) {
 	if (!userId) throw new Error(`${chalk.yellow("userId")} parameter is missing`);

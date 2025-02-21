@@ -6,6 +6,7 @@ const {
 	ButtonBuilder,
 	ActionRowBuilder,
 	ButtonStyle,
+	OAuth2Scopes,
 } = require("discord.js");
 const { t } = require("i18next");
 const { profileImage } = require("discord-arts");
@@ -98,22 +99,27 @@ module.exports = {
 		const githubButton = new ButtonBuilder()
 			.setLabel("GitHub")
 			.setStyle(ButtonStyle.Link)
-			.setURL(client.config.media.links.github);
+			.setURL(client.config.links.githubRepo);
 
 		const discordButton = new ButtonBuilder()
 			.setLabel("Support")
 			.setStyle(ButtonStyle.Link)
-			.setURL(client.config.media.links.server);
+			.setURL(client.config.links.supportServer);
 
 		const inviteButton = new ButtonBuilder()
 			.setLabel("Invite Me")
 			.setStyle(ButtonStyle.Link)
-			.setURL(client.config.media.links.invite);
+			.setURL(
+				client.generateInvite({
+					permissions: BigInt(1759218604441335),
+					scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands],
+				}),
+			);
 
 		const websiteButton = new ButtonBuilder()
 			.setLabel("Website")
 			.setStyle(ButtonStyle.Link)
-			.setURL(client.config.media.links.website);
+			.setURL(client.config.links.botWebsite);
 
 		const actionRow = new ActionRowBuilder()
 			.addComponents(githubButton)

@@ -1,5 +1,4 @@
 const { ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
-const config = require("@src/config");
 
 /**
  * typings for the parameters
@@ -7,68 +6,68 @@ const config = require("@src/config");
  * @returns {ActionRowBuilder[]}
  */
 function createPlayerButtons(player) {
-	const { music } = config.emojis;
+	const { music } = require("@src/config");
 
 	const volumeDown = new ButtonBuilder()
 		.setCustomId("volumedown")
 		.setLabel("Down")
-		.setEmoji(music.volumeDown)
+		.setEmoji(music.emojis.volumeDown)
 		.setStyle(ButtonStyle.Secondary)
-		.setDisabled(player.volume === config.music.minVolume);
+		.setDisabled(player.volume === music.minVolume);
 
 	const back = new ButtonBuilder()
 		.setCustomId("back")
-		.setLabel("Back")
-		.setEmoji(music.previous)
+		.setLabel("previous")
+		.setEmoji(music.emojis.previous)
 		.setStyle(ButtonStyle.Secondary);
 
 	const resume = new ButtonBuilder()
 		.setCustomId("resume")
 		.setLabel(player.paused ? "Resume" : "Pause")
-		.setEmoji(player.paused ? music.resume : music.pause)
+		.setEmoji(player.paused ? music.emojis.resume : music.emojis.pause)
 		.setStyle(player.paused ? ButtonStyle.Success : ButtonStyle.Secondary);
 
 	const next = new ButtonBuilder()
 		.setCustomId("next")
 		.setLabel("Next")
-		.setEmoji(music.next)
+		.setEmoji(music.emojis.next)
 		.setStyle(ButtonStyle.Secondary);
 
 	const volumeUp = new ButtonBuilder()
 		.setCustomId("volumeup")
 		.setLabel("Up")
-		.setEmoji(music.volumeUp)
+		.setEmoji(music.emojis.volumeUp)
 		.setStyle(ButtonStyle.Secondary)
-		.setDisabled(player.volume === config.music.maxVolume);
+		.setDisabled(player.volume === music.maxVolume);
 
 	const shuffle = new ButtonBuilder()
 		.setCustomId("shuffle")
 		.setLabel("Shuffle")
-		.setEmoji(music.shuffle)
+		.setEmoji(music.emojis.shuffle)
 		.setStyle(ButtonStyle.Secondary);
 
 	const loop = new ButtonBuilder()
 		.setCustomId("loop")
 		.setLabel("Loop")
-		.setEmoji(player.repeatMode === "track" ? music.loop2 : music.loop)
+		.setEmoji(player.repeatMode === "track" ? music.emojis.loop2 : music.emojis.loop)
 		.setStyle(player.repeatMode !== "off" ? ButtonStyle.Success : ButtonStyle.Secondary);
 
 	const stop = new ButtonBuilder()
 		.setCustomId("stop")
 		.setLabel("Stop")
-		.setEmoji(music.stop)
-		.setStyle(ButtonStyle.Danger);
+		.setEmoji(music.emojis.stop)
+		.setStyle(ButtonStyle.Secondary);
 
 	const autoplay = new ButtonBuilder()
 		.setCustomId("autoplay")
 		.setLabel("Autoplay")
-		.setEmoji(music.autoPlay)
+		.setEmoji(music.emojis.autoPlay)
 		.setStyle(ButtonStyle.Secondary);
 
 	const queue = new ButtonBuilder()
 		.setCustomId("queue")
 		.setLabel("Queue")
-		.setEmoji(music.queue)
+		.setEmoji(music.emojis.queue)
 		.setStyle(ButtonStyle.Secondary);
 
 	return [

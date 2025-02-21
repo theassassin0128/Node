@@ -124,5 +124,14 @@
 			"botRole": "Target user's highest role is higher than my highest role."
 		},
 		"reply": "Successfully banned *{{target}}* with reason - {{reason}}"
+	},
+
+	"language": {
+		"description": "🌐 Change your language for the bot.",
+		"options": {
+			"language": "Select a language."
+		},
+		"reply": "You have selected `{{language}}` as your default language for the server.",
+		"available": "Selected language isn't available at the moment."
 	}
 }

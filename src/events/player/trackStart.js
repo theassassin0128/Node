@@ -1,7 +1,7 @@
 const { EmbedBuilder, GuildMember, Message, MessageFlags } = require("discord.js");
 const { t } = require("i18next");
 
-/** @type {import("@types/event").EventStructure} */
+/** @type {import("@types/index").EventStructure} */
 module.exports = {
 	name: "trackStart",
 	player: true,
@@ -12,7 +12,6 @@ module.exports = {
 	execute: async (client, player, track) => {
 		const guild = client.guilds.cache.get(player.guildId);
 		if (!guild) return;
-
 		if (!player.textChannelId) return;
 		if (!track) return;
 
@@ -52,7 +51,7 @@ module.exports = {
 
 		const message = await channel.send({
 			embeds: [embed],
-			components: client.utils.createPlayerButtons(player),
+			components: client.utils.playerButtons(player),
 		});
 
 		createCollector(client, message, player, track, embed);
@@ -119,7 +118,7 @@ function createCollector(client, message, player, track, embed) {
 		async function editMessage() {
 			if (message) {
 				await message.edit({
-					components: client.utils.createPlayerButtons(player),
+					components: client.utils.playerButtons(player),
 				});
 			}
 		}

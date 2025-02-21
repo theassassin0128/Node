@@ -1,15 +1,16 @@
 {
 	"errors": {
-		"no_player": "There is no active player in this guild.",
-		"no_channel": "You need to be in a voice channel to use this command.",
-		"queue_empty": "The queue is empty.",
-		"no_previous": "There are no previous songs in the queue.",
-		"no_song": "There are no songs in the queue.",
-		"already_paused": "The song is already paused."
+		"noPlayer": "There is no active player in this guild.",
+		"noChannel": "You need to be in a voice channel to use this command.",
+		"queueEmpty": "The queue is empty.",
+		"noPrevious": "There are no previous songs in the queue.",
+		"noSong": "There are no songs in the queue.",
+		"alreadyPaused": "The song is already paused."
 	},
+
 	"trackStart": {
-		"now_playing": "Now Playing",
-		"requested_by": "Requested by {user}",
+		"nowPlaying": "Now Playing",
+		"requestedBy": "Requested by {user}",
 		"duration": "Duration",
 		"author": "Author",
 		"not_connected_to_voice_channel": "You are not connected to <#{channel}> to use these buttons.",

@@ -86,7 +86,7 @@ module.exports = {
 
 					if (message && message.editable) {
 						await message.edit({
-							components: [client.lavalink.createButtonRow(player)],
+							components: [client.utils.playerButtons(player)],
 						});
 					}
 				} catch (error) {}

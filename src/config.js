@@ -1,6 +1,6 @@
 module.exports = {
-	// Default locale for the bot
-	defaultLocale: process.env.DEFAULT_LOCALE,
+	// Language settings
+	language: require("./languages.js"),
 
 	// Bot settings
 	bot: {
@@ -97,11 +97,13 @@ module.exports = {
 		maxVolume: 150,
 		/**
 		 * * Default music source
+		 * ? Provide one from the list below
 		 * @type {import("lavalink-client").SearchPlatform}
 		 */
 		defaultSource: "youtube",
 		/**
 		 * * Available sources for use
+		 * ? These are based on the lavalink/example.application.yml file
 		 * ! Don't try to change this unless you know what you are doing.
 		 * @type {import("lavalink-client").SearchPlatform[]}
 		 */
@@ -134,8 +136,31 @@ module.exports = {
 			"local",
 			"uri",
 		],
-		// Lavalink nodes for the music system
+		/** * Lavalink nodes for the music system */
 		lavalinkNodes: require("@root/lavalink-nodes.js"),
+		/**
+		 * * Emojis to use in buttons and messages of music system.
+		 * ! Don't change the keys. Only change the values.
+		 * ? If you want to use custome emojis just change the values with your emojis
+		 */
+		emojis: {
+			next: "⏭️",
+			pause: "⏸️",
+			previous: "⏮️",
+			stop: "⏹️",
+			play: "▶️",
+			resume: "▶️",
+			loop: "🔁",
+			loop2: "🔂",
+			shuffle: "🔀",
+			speedup: "⏩",
+			slowdown: "⏪",
+			queue: "📄",
+			playlist: "💿",
+			volumeUp: "🔊",
+			volumeDown: "🔉",
+			autoPlay: "🎙",
+		},
 	},
 
 	// Settings for the giveaway system
@@ -181,6 +206,8 @@ module.exports = {
 	// Settings for the suggestion system
 	suggestion: {
 		enabled: true,
+		downVote: "⬇️",
+		upVote: "⬆️",
 	},
 
 	// Settings for the ticket system
@@ -223,8 +250,7 @@ module.exports = {
 
 	// Links to use everywhere
 	links: {
-		botWebsite: "https://theassassin0128.github.io/Node",
-		botInvite: "https://discord.com/oauth2/authorize?client_id=1030698369435320350",
+		botWebsite: process.env.BOT_WEBSITE,
 		supportServer: process.env.SUPPORT_SERVER,
 		githubRepo: "https://github.com/theassassin0128/Node#readme",
 	},
@@ -264,24 +290,6 @@ module.exports = {
 			pocket: "👛",
 			bank: "🏦",
 			coins: "💰",
-		},
-		music: {
-			next: "⏭️",
-			pause: "⏸️",
-			previous: "⏮️",
-			stop: "⏹️",
-			play: "▶️",
-			resume: "▶️",
-			loop: "🔁",
-			loop2: "🔂",
-			shuffle: "🔀",
-			speedup: "⏩",
-			slowdown: "⏪",
-			queue: "📄",
-			playlist: "💿",
-			volumeUp: "🔊",
-			volumeDown: "🔉",
-			autoPlay: "🎙",
 		},
 		badges: {
 			bot: "🤖",

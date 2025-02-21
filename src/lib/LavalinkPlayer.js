@@ -34,7 +34,7 @@ class LavalinkPlayer extends LavalinkManager {
 				applyVolumeAsFilter: false,
 				clientBasedPositionUpdateInterval: 50,
 				defaultSearchPlatform: client.config.music.defaultSource,
-				volumeDecrementer: 0.75,
+				volumeDecrementer: 1,
 				requesterTransformer: requesterTransformer,
 				onDisconnect: {
 					autoReconnect: true,
@@ -78,7 +78,7 @@ class LavalinkPlayer extends LavalinkManager {
 		const h = Math.floor(number / 3600000) % 24;
 		const m = Math.floor(number / 60000) % 60;
 		const s = Math.floor(number / 1000) % 60;
-		return `${h ? `${h}:` : ""}${m ? `${m}:` : ""}${s} `;
+		return `${h ? `${h}h ` : ""}${m ? `${m}m ` : ""}${s}s `;
 	}
 }
 
@@ -86,7 +86,7 @@ class LavalinkPlayer extends LavalinkManager {
  * A function to transform a requester into a standardized requester object
  * @param {any} requester The requester to transform.
  * Can be a string, a user, or an object with the keys `id`, `username`, and `avatarURL`.
- * @returns {import("@root/src/typings/index").Requester} The transformed requester object.
+ * @returns {import("@types/index").Requester} The transformed requester object.
  */
 function requesterTransformer(requester) {
 	if (
@@ -135,7 +135,7 @@ async function autoPlayFunction(player, lastTrack) {
 				.search(
 					{
 						query: `seed_tracks=${ids.join(",")}`,
-						source: "spsearch",
+						source: "spotify",
 					},
 					lastTrack.requester,
 				)
@@ -150,7 +150,7 @@ async function autoPlayFunction(player, lastTrack) {
 
 			if (res && res.tracks.length > 0)
 				await player.queue.add(
-					res.tracks.slice(0, 5).map((track) => {
+					res.tracks.slice(0, 10).map((track) => {
 						track.pluginInfo.clientData = {
 							...(track.pluginInfo.clientData || {}),
 							fromAutoplay: true,
@@ -183,11 +183,12 @@ async function autoPlayFunction(player, lastTrack) {
 
 		if (res && res.tracks.length > 0)
 			await player.queue.add(
-				res.tracks.slice(0, 5).map((track) => {
-					track.pluginInfo.clientData = {
-						...(track.pluginInfo.clientData || {}),
-						fromAutoplay: true,
-					};
+				res.tracks.slice(0, 10).map((track) => {
+					(track.requester = lastTrack.requester),
+						(track.pluginInfo.clientData = {
+							...(track.pluginInfo.clientData || {}),
+							fromAutoplay: true,
+						});
 
 					return track;
 				}),

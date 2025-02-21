@@ -35,7 +35,7 @@ module.exports = {
 		}
 
 		const inviteLink = client.generateInvite({
-			permissions: BigInt(1758600129150711),
+			permissions: BigInt(1759218604441335),
 			scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands],
 		});
 		const inviteButton = new ButtonBuilder()

@@ -16,6 +16,7 @@
 		"author": "📝 Author",
 		"id": "🆔 Message ID",
 		"creation": "📆 Creation Date",
-		"edit": "📆 Edit Date"
+		"edit": "📆 Edit Date",
+		"edited": "Not Edited"
 	}
 }

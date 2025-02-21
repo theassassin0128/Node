@@ -11,13 +11,8 @@ const Backend = require("i18next-fs-backend");
  * @example getDefaultLocale(client);
  */
 function getDefaultLocale(client) {
-	const { defaultLocale } = client.config;
-	const localeFolders = readdirSync(join(__dirname, "../locales")).filter((fileName) => {
-		const joinedPath = join(join(__dirname, "../locales"), fileName);
-		if (lstatSync(joinedPath).isDirectory()) return true;
-	});
-
-	if (localeFolders.length === 0) {
+	let { defaultLocale, availableLocales } = client.config.language;
+	if (availableLocales.length === 0) {
 		console.log(
 			`Couldn't load locales. Make sure locale files exist within ${chalk.yellow(
 				"src/locales",
@@ -26,8 +21,8 @@ function getDefaultLocale(client) {
 		process.exit(1);
 	}
 
-	if (!localeFolders.includes(defaultLocale)) return "en-US";
-	else return defaultLocale;
+	if (!availableLocales.includes(defaultLocale)) defaultLocale = "en";
+	return defaultLocale;
 }
 
 /**
@@ -52,14 +47,15 @@ function loadLocales(client) {
 			"handlers",
 			"helpers",
 			"utils",
+			"player",
 		],
 		defaultNS: false,
 		fallbackNS: false,
-		fallbackLng: ["en-US"],
+		fallbackLng: ["en"],
 		lng: getDefaultLocale(client),
 		interpolation: { escapeValue: false },
 		preload: readdirSync(join(__dirname, "../locales")).filter((fileName) => {
-			const joinedPath = join(join(__dirname, "../locales"), fileName);
+			const joinedPath = join(__dirname, "../locales", fileName);
 			if (lstatSync(joinedPath).isDirectory()) return true;
 		}),
 		backend: {

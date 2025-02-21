@@ -115,7 +115,6 @@ const model = mongoose.model("guild", GuildSchema);
 /**
  * A function to get stored guild data friom database
  * @param {import('discord.js').Guild} guild
- * @return {Promise<import("@root/src/types/database.js").GuildSchema>}
  */
 async function getGuild(guild) {
 	if (!guild) throw new Error(`${chalk.yellow("guild")} parameter is missing`);

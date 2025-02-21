@@ -15,7 +15,7 @@ const {
 } = require("./functions.js");
 
 module.exports = {
-	createPlayerButtons: require("./createPlayerButtons.js"),
+	playerButtons: require("./playerButtons.js"),
 	getCooldown: require("./getCooldown.js"),
 	getTableBorder,
 	getRandomInt,
