@@ -70,7 +70,12 @@ function timeFormat(timeInMillis) {
   const h = Math.floor(timeInMillis / 3600000) % 24;
   const m = Math.floor(timeInMillis / 60000) % 60;
   const s = Math.floor(timeInMillis / 1000) % 60;
-  const string = `${d > 0 ? `${d}d,` : ""} ${h > 0 ? `${h}h,` : ""}${m > 0 ? `${m}m,` : ""} ${s}s`;
+  const string = [
+    d > 0 ? `${d}d,` : "",
+    h > 0 ? `${h}h,` : "",
+    m > 0 ? `${m}m,` : "",
+    `${s}s`
+  ].join(" ");
   return string;
 }
 
