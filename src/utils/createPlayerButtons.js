@@ -20,7 +20,7 @@ function createPlayerButtons(client, player) {
     .setLabel("Down")
     .setEmoji(emojis.music.volumeDown)
     .setStyle(ButtonStyle.Secondary)
-    .setDisabled(player.volume <= music.minVolume);
+    .setDisabled(player.volume <= 0);
 
   const back = new ButtonBuilder()
     .setCustomId("back")

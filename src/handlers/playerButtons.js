@@ -64,7 +64,7 @@ async function handlePlayerButtons(
     switch (interaction.customId) {
       case "volumedown": {
         const partialPlayer = await player.setVolume(
-          Math.min(player.volume - 10, 0)
+          Math.max(player.volume - 10, 0)
         );
         await editMessage();
         await interaction.followUp({
