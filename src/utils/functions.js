@@ -1,4 +1,3 @@
-const chalk = require("chalk");
 const config = require("@src/config");
 
 /**
@@ -8,9 +7,9 @@ const config = require("@src/config");
  * @example client.utils.containsLink(text);
  */
 function containsLink(text) {
-	return /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/.test(
-		text,
-	);
+  return /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/.test(
+    text
+  );
 }
 
 /**
@@ -20,9 +19,9 @@ function containsLink(text) {
  * @example client.utils.containsDiscordInvite(text);
  */
 function containsDiscordInvite(text) {
-	return /(https?:\/\/)?(www.)?(discord.(gg|io|me|li|link|plus)|discorda?p?p?.com\/invite|invite.gg|dsc.gg|urlcord.cf)\/[^\s/]+?(?=\b)/.test(
-		text,
-	);
+  return /(https?:\/\/)?(www.)?(discord.(gg|io|me|li|link|plus)|discorda?p?p?.com\/invite|invite.gg|dsc.gg|urlcord.cf)\/[^\s/]+?(?=\b)/.test(
+    text
+  );
 }
 
 /**
@@ -32,7 +31,7 @@ function containsDiscordInvite(text) {
  * @example client.utils.isHex(text);
  */
 function isHex(text) {
-	return /^#[0-9A-F]{6}$/i.test(text);
+  return /^#[0-9A-F]{6}$/i.test(text);
 }
 
 /**
@@ -42,7 +41,7 @@ function isHex(text) {
  * @example client.utils.isValidColor(text);
  */
 function isValidColor(text) {
-	return config.colors.includes(text);
+  return config.colors.includes(text);
 }
 
 /**
@@ -52,31 +51,27 @@ function isValidColor(text) {
  * @example client.utils.durationToMillis(duration);
  */
 function durationToMillis(duration) {
-	return (
-		duration
-			.split(":")
-			.map(Number)
-			.reduce((acc, curr) => curr + acc * 60) * 1000
-	);
+  return (
+    duration
+      .split(":")
+      .map(Number)
+      .reduce((acc, curr) => curr + acc * 60) * 1000
+  );
 }
 
 /**
- * Returns remaining time in days, hours, minutes and seconds
+ * Returns time in days, hours, minutes, seconds
  * @param {number} timeInMillis
  * @returns {string}
  * @example client.utils.timeFormat(timeInMillis);
  */
 function timeFormat(timeInMillis) {
-	const days = Math.floor(timeInMillis / 86400000);
-	const hours = Math.floor(timeInMillis / 3600000) % 24;
-	const minutes = Math.floor(timeInMillis / 60000) % 60;
-	const seconds = Math.floor(timeInMillis / 1000) % 60;
-	return (
-		(days > 0 ? `${days} Days, ` : "") +
-		(hours > 0 ? `${hours} Hrs, ` : "") +
-		(minutes > 0 ? `${minutes} Mins, ` : "") +
-		(seconds > 0 ? `${seconds} Secs` : "")
-	);
+  const d = Math.floor(timeInMillis / 86400000);
+  const h = Math.floor(timeInMillis / 3600000) % 24;
+  const m = Math.floor(timeInMillis / 60000) % 60;
+  const s = Math.floor(timeInMillis / 1000) % 60;
+  const string = `${d > 0 ? `${d}d,` : ""} ${h > 0 ? `${h}h,` : ""}${m > 0 ? `${m}m,` : ""} ${s}s`;
+  return string;
 }
 
 /**
@@ -86,22 +81,8 @@ function timeFormat(timeInMillis) {
  * @example client.utils.parsePermissions(permissions);
  */
 function parsePermissions(p) {
-	const word = ` permission${p.length > 1 ? "s" : ""}`;
-	return `${p.map((perm) => `\`${perm}\``).join(", ")}${word}`;
-}
-
-/**
- * A function to get table border in provided color
- * @param {import("@types/index").ChalkColors} color
- * @returns {object}
- * @example client.utils.getTableBorder(color);
- */
-function getTableBorder(color) {
-	const border = {};
-	Object.keys(config.table.border).forEach((key) => {
-		border[key] = chalk[color](config.table.border[key]);
-	});
-	return border;
+  const word = ` permission${p.length > 1 ? "s" : ""}`;
+  return `${p.map((perm) => `\`${perm}\``).join(", ")}${word}`;
 }
 
 /**
@@ -111,7 +92,7 @@ function getTableBorder(color) {
  * @example client.utils.getRandomInt(max);
  */
 function getRandomInt(max) {
-	return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * max);
 }
 
 /**
@@ -120,8 +101,8 @@ function getRandomInt(max) {
  * @example client.utils.getRandomColor();
  */
 function getRandomColor() {
-	const colorsArray = Object.values(config.colors);
-	return colorsArray[Math.floor(Math.random() * colorsArray.length)];
+  const colorsArray = Object.values(config.colors);
+  return colorsArray[Math.floor(Math.random() * colorsArray.length)];
 }
 
 /**
@@ -131,8 +112,8 @@ function getRandomColor() {
  * @example client.utils.getRemainingTime(timeUntil);
  */
 function getRemainingTime(timeUntil) {
-	const seconds = Math.abs((timeUntil - new Date()) / 1000);
-	return this.timeFormat(seconds * 1000);
+  const seconds = Math.abs((timeUntil - new Date()) / 1000);
+  return this.timeFormat(seconds * 1000);
 }
 
 /**
@@ -143,8 +124,8 @@ function getRemainingTime(timeUntil) {
  * @example client.utils.getBadges(client.user.falgs.toArray())
  */
 function getBadges(badges) {
-	if (!badges.length) return ["x"];
-	return badges.map((badge) => config.emojis.custom[badge] || badge);
+  if (!badges.length) return ["x"];
+  return badges.map((badge) => config.emojis.custom[badge] || badge);
 }
 
 /**
@@ -154,22 +135,21 @@ function getBadges(badges) {
  * @example client.utils.diffHours(Date1, Date2);
  */
 function diffHours(date1, date2) {
-	const diff = (date1.getTime() - date2.getTime()) / 1000 / 60 / 60;
-	return Math.abs(Math.round(diff));
+  const diff = (date1.getTime() - date2.getTime()) / 1000 / 60 / 60;
+  return Math.abs(Math.round(diff));
 }
 
 module.exports = {
-	diffHours,
-	containsLink,
-	containsDiscordInvite,
-	isHex,
-	isValidColor,
-	timeFormat,
-	parsePermissions,
-	durationToMillis,
-	getTableBorder,
-	getRandomInt,
-	getRandomColor,
-	getRemainingTime,
-	getBadges,
+  diffHours,
+  containsLink,
+  containsDiscordInvite,
+  isHex,
+  isValidColor,
+  timeFormat,
+  parsePermissions,
+  durationToMillis,
+  getRandomInt,
+  getRandomColor,
+  getRemainingTime,
+  getBadges
 };

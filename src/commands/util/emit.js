@@ -1,91 +1,95 @@
-const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  ApplicationIntegrationType,
+  InteractionContextType
+} = require("discord.js");
+const { t } = require("i18next");
 
-/** @type {import("@root/src/types/command").CommandStructure} */
+/** @type {import("@types/index").CommandStructure} */
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName("emit")
-		.setDescription("Emit an Event")
-		.addStringOption((option) =>
-			option
-				.setName("event")
-				.setDescription("The event to emit")
-				.setRequired(true)
-				.setChoices(
-					{
-						name: "guildMemeberAdd",
-						value: "gma",
-					},
-					{
-						name: "guildMemberRemove",
-						value: "gmr",
-					},
-					{
-						name: "guildBanAdd",
-						value: "gba",
-					},
-					{
-						name: "guildBanRemove",
-						value: "gbr",
-					},
-				),
-		)
-		.addUserOption((option) =>
-			option
-				.setName("user")
-				.setDescription("Select a user to emit an event.")
-				.setRequired(false),
-		),
-	category: "utility",
-	cooldown: 0,
-	global: true,
-	premium: false,
-	devOnly: true,
-	voiceChannelOnly: false,
-	botPermissions: [],
-	userPermissions: [],
-	usage: '[event]: "event"',
-	disabled: false,
-	execute: async (client, interaction) => {
-		const user = interaction.options.getUser("user");
-		let member = interaction.member;
-		if (user) member = interaction.guild.members.cache.get(user.id);
-		const string = interaction.options.getString("event");
-		switch (string) {
-			case "gma": {
-				client.emit("guildMemberAdd", member);
-				interaction.reply({
-					content: "Emitted `Guild Member Add` event successfully.",
-					flags: MessageFlags.Ephemeral,
-				});
-				break;
-			}
+  data: new SlashCommandBuilder()
+    .setName("emit")
+    .setDescription("💬 Emit an discord.js event for debug and dev purposes.")
+    .setContexts(InteractionContextType.Guild)
+    .setIntegrationTypes(ApplicationIntegrationType.GuildInstall)
+    .addStringOption((option) =>
+      option
+        .setName("event")
+        .setDescription("The event to emit.")
+        .setRequired(true)
+        .setChoices(
+          {
+            name: "guildMemeberAdd",
+            value: "guildMemberAdd"
+          },
+          {
+            name: "guildMemberRemove",
+            value: "guildMemberRemove"
+          },
+          {
+            name: "guildBanAdd",
+            value: "guildBanAdd"
+          },
+          {
+            name: "guildBanRemove",
+            value: "guildBanRemove"
+          }
+        )
+    )
+    .addUserOption((option) =>
+      option
+        .setName("member")
+        .setDescription("Select a member to be part of the event.")
+        .setRequired(false)
+    ),
+  usage: '[event]: "event"',
+  category: "utility",
+  cooldown: 0,
+  global: true,
+  premium: false,
+  devOnly: true,
+  disabled: false,
+  ephemeral: true,
+  voiceChannelOnly: false,
+  botPermissions: [],
+  userPermissions: [],
 
-			case "gmr": {
-				client.emit("guildMemberRemove", member);
-				interaction.reply({
-					content: "Emitted `Guild Member Remove` event successfully.",
-					flags: MessageFlags.Ephemeral,
-				});
-				break;
-			}
+  async execute(client, interaction, lng) {
+    const event = interaction.options.getString("event", true);
+    const member = interaction.options.getMember("user") ?? interaction.member;
 
-			case "gba": {
-				client.emit("guildBanAdd", member);
-				interaction.reply({
-					content: "Emitted `Guild Ban Add` event successfully.",
-					flags: MessageFlags.Ephemeral,
-				});
-				break;
-			}
+    switch (event) {
+      case "guildMemberAdd": {
+        client.emit("guildMemberAdd", member);
+        await interaction.followUp({
+          content: t("commands:emit.reply", { lng, event })
+        });
+        break;
+      }
 
-			case "gbr": {
-				client.emit("guildBanRemove", member);
-				interaction.reply({
-					content: "Emitted `Guild Ban Remove` event successfully.",
-					flags: MessageFlags.Ephemeral,
-				});
-				break;
-			}
-		}
-	},
+      case "guildMemberRemove": {
+        client.emit("guildMemberRemove", member);
+        await interaction.followUp({
+          content: t("commands:emit.reply", { lng, event })
+        });
+        break;
+      }
+
+      case "guildBanAdd": {
+        client.emit("guildBanAdd", member);
+        await interaction.followUp({
+          content: t("commands:emit.reply", { lng, event })
+        });
+        break;
+      }
+
+      case "guildBanRemove": {
+        client.emit("guildBanRemove", member);
+        await interaction.followUp({
+          content: t("commands:emit.reply", { lng, event })
+        });
+        break;
+      }
+    }
+  }
 };

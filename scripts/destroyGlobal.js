@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { REST, Routes } = require("discord.js");
-const colors = require("colors");
+const chalk = require("chalk");
 const token = process.env["DISCORD_CLIENT_TOKEN"];
 const clientId = process.env["DISCORD_CLIENT_ID"];
 const readline = require("readline");
@@ -8,13 +8,16 @@ const rest = new REST({ version: 10 }).setToken(token);
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: process.stdout
 });
 
-const warningMsg =
-  colors.yellow(`----------------------------------- !!! WARNING !!! -----------------------------------
-This script will delete every global slash & context menu command of your discord bot.
-Do you want to continue? (y/n): `);
+const warningMsg = [
+  "----------------------------------- !!! WARNING !!! -----------------------------------",
+  "This script will delete every global slash & context menu command of your discord bot.",
+  "Do you want to continue? (y/n): "
+].join("\n");
+
+console.clear();
 
 rl.question(warningMsg, async function (name) {
   try {
@@ -22,11 +25,11 @@ rl.question(warningMsg, async function (name) {
       await deleteCommands();
       process.exit(0);
     } else {
-      console.log(colors.red("Canceled the deletion."));
+      console.log(chalk.red("Canceled the deletion."));
       process.exit(0);
     }
   } catch (error) {
-    console.log(colors.red(error?.stack ? error?.stack : error));
+    console.log(chalk.red(error?.stack ? error?.stack : error));
     process.exit(1);
   }
 });
@@ -35,26 +38,26 @@ async function deleteCommands() {
   const commands = await rest.get(Routes.applicationCommands(clientId));
 
   if (commands?.length === 0) {
-    return console.log(colors.red("❗ Couldn't fing any global command."));
+    console.log(chalk.red("\n❗ Couldn't fing any global command."));
+    process.exit(0);
   }
 
-  console.log(colors.cyan(`✅ Found ${commands.length} global commands.\n`));
+  console.log(chalk.cyan(`✅ Found ${commands.length} global commands.\n`));
 
   let i = 0;
   commands.forEach((command) => {
     i++;
     console.log(
-      colors.yellow(
-        `${i >= 100 ? "" : i >= 10 ? " " : "  "}${i} | 🔥 Deleted command - ${
-          command.id
-        } - ${command.name} `,
-      ),
+      `${i >= 100 ? "" : i >= 10 ? " " : "  "}${chalk.magenta(i)} | 🔥 ${chalk.red("deleted")} - ${
+        command.id
+      } - ${chalk.cyan(command.name)} `
     );
   });
 
   await rest.put(Routes.applicationCommands(clientId), {
-    body: [],
+    body: []
   });
 
-  return console.log(colors.green(`\n✅ Deleted ${i} global commands.`));
+  console.log(chalk.green(`\n✅ Deleted ${i} global commands.`));
+  process.exit(0);
 }

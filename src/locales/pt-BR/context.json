@@ -1,22 +1,22 @@
 {
-	"error": "Ocorreu um erro ao tentar executar o comando. Tente novamente mais tarde.",
+  "error": "Ocorreu um erro ao tentar executar o comando. Tente novamente mais tarde.",
 
-	"memberinfo": {
-		"username": "📛 Nome de Usuário",
-		"nickname": "🔰 Apelido",
-		"id": "🆔 ID do Usuário",
-		"boost": "🚀 Impulso do Servidor",
-		"creation": "📆 Data de Criação",
-		"join": "📆 Entrada Servidor",
-		"roles": "🎖 Cargos [{{count}}] Mostra até 15"
-	},
+  "memberinfo": {
+    "username": "📛 Nome de Usuário",
+    "nickname": "🔰 Apelido",
+    "id": "🆔 ID do Usuário",
+    "boost": "🚀 Impulso do Servidor",
+    "creation": "📆 Data de Criação",
+    "join": "📆 Entrada Servidor",
+    "roles": "🎖 Cargos [{{count}}] Mostra até 15"
+  },
 
-	"messageinfo": {
-		"click": "Clique aqui para a mensagem",
-		"author": "📝 Autor",
-		"id": "🆔 ID da Mensagem",
-		"creation": "📆 Data de Criação",
-		"edit": "📆 Data de Edição",
-		"edited": "Não editado"
-	}
+  "messageinfo": {
+    "click": "Clique aqui para a mensagem",
+    "author": "📝 Autor",
+    "id": "🆔 ID da Mensagem",
+    "creation": "📆 Data de Criação",
+    "edit": "📆 Data de Edição",
+    "edited": "Não editado"
+  }
 }

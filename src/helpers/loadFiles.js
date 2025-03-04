@@ -1,7 +1,6 @@
+const chalk = require("chalk");
 const { glob } = require("glob");
 const { join, extname, resolve } = require("path");
-const chalk = require("chalk");
-const { t } = require("i18next");
 
 /**
  * Returns an array of files from given path filtered by provided extensions.
@@ -14,25 +13,32 @@ const { t } = require("i18next");
  * @example const assets = await loadFiles("public", [".mp4", ".mkv", ".jpeg"]);
  */
 async function loadFiles(path, ext) {
-	// Validate parameters
-	if (typeof path !== "string") {
-		throw new TypeError(t("errors:type.string", { param: chalk.yellow("path") }));
-	}
-	if (!Array.isArray(ext)) {
-		throw new TypeError(t("errors:type.array", { param: chalk.yellow("ext") }));
-	}
+  // Validate parameters
+  if (typeof path !== "string") {
+    throw new TypeError(
+      `The ${chalk.yellow("path")} parameter must a String. Received type ${typeof client}`
+    );
+  }
 
-	// Helper function to delete cached files
-	function deleteCashedFile(file) {
-		const filePath = resolve(file);
-		delete require.cache[filePath];
-	}
+  if (!Array.isArray(ext)) {
+    throw new TypeError(
+      `The ${chalk.yellow("ext")} parameter must be an Array. Received type ${typeof ext}`
+    );
+  }
 
-	// Retrieve and filter files
-	const allFiles = await glob(join(process.cwd(), path, "*/**").replace(/\\/g, "/"));
-	const files = allFiles.filter((file) => ext.includes(extname(file)));
-	await Promise.all(files.map(deleteCashedFile));
-	return files;
+  // Helper function to delete cached files
+  function deleteCashedFile(file) {
+    const filePath = resolve(file);
+    delete require.cache[filePath];
+  }
+
+  // Retrieve and filter files
+  const allFiles = await glob(
+    join(process.cwd(), path, "*/**").replace(/\\/g, "/")
+  );
+  const files = allFiles.filter((file) => ext.includes(extname(file)));
+  await Promise.all(files.map(deleteCashedFile));
+  return files;
 }
 
 // Export the function

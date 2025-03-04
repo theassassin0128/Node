@@ -1,137 +1,191 @@
 {
-	"default": {
-		"error": "An error occurred while trying to execute the command.",
-		"errorTitle": "AN ERROR OCCURRED"
-	},
+  "default": {
+    "error": "An error occurred while trying to execute the command.",
+    "errorTitle": "AN ERROR OCCURRED",
+    "reason": "None was specified."
+  },
 
-	"ping": {
-		"description": "🏓 Pong! Replies with bot's response time.",
-		"reply": "⏱️ Hold on a moment..."
-	},
+  "ping": {
+    "description": "🏓 Pong! Replies with bot's response time.",
+    "gatewayPing": "📡 Gateway Ping",
+    "responseTime": "🛰 Response Time",
+    "uptime": "⏰ Uptime"
+  },
 
-	"invite": {
-		"description": "returns a link button with bots invite url.",
-		"disabled": "Sorry. Invites has been disabled by the owner.",
-		"reply": "Invite me by clicking the button."
-	},
+  "invite": {
+    "description": "✉️ returns a link button with bots invite url.",
+    "disabled": "😓 Sorry! Invites has been disabled by the owner.",
+    "reply": "👍 Invite me by clicking the button."
+  },
 
-	"botinfo": {
-		"description": "📖 View bot's information.",
-		"reply": {}
-	},
+  "language": {
+    "description": "🌐 Change your language for the bot.",
+    "options": { "language": "Select a language." },
+    "notAvailable": "😓 Selected language isn't available at the moment.",
+    "reply": "😀 You have selected `{{language}}` as your default language for this server."
+  },
 
-	"logger": {
-		"noChannel": "⚠ In order to create a loggin system, a text based channel must be provided.",
-		"created": "✅ Successfully created the logging system.",
-		"updated": "✅ Successfully updated the logger data.",
-		"noLogger": "❌ Sorry there is no logging system.",
-		"destroy": "✅ Successfully deleted the logging system.",
-		"description": "Below are given the stats for all logging systems."
-	},
+  "emit": {
+    "description": "💬 Emit an discord.js event for debug and dev purposes.",
+    "options": {
+      "event": "The event to emit.",
+      "member": "Select a member to be part of the event."
+    },
+    "reply": "✅ Emitted `{{event}}` event successfully."
+  },
 
-	"reload": {
-		"owner": "Sorry, You are not the owner of this application. So, you can't use this command",
-		"reply": "Reloaded {{t}} files."
-	},
+  "botinfo": {
+    "description": "📖 View bot's information.",
+    "tag": "📛 Tag",
+    "nickname": "🔰 Nickname",
+    "id": "🆔 User ID",
+    "gatewayPing": "📡 Gateway Ping",
+    "responseTime": "🛰 Response Time",
+    "uptime": "⏰ Uptime",
+    "version": "🗂️ Version",
+    "ownedBy": "👑 Owned By",
+    "commands": "📝 Commands",
+    "host": "☁️ Running On",
+    "stats": "📊 System Stats"
+  },
 
-	"serverinfo": {
-		"description": "📖 View the server information.",
-		"reply": {
-			"embed": {}
-		}
-	},
+  "roleinfo": {
+    "description": "📖 View any role's information.",
+    "options": { "role": "Select a role to view." },
+    "role": "📛 Role",
+    "id": "🆔 Role ID",
+    "position": "📍 Position (from top)",
+    "color": "🎨 Color Code",
+    "mentionable": "🗯 Mentionable",
+    "hoisted": "📌 Hoisted",
+    "botRole": "🤖 Bot Role",
+    "members": "👥 Members",
+    "createdOn": "📆 Created On"
+  },
 
-	"roles": {
-		"description": "Get the role list of a server.",
-		"reply": {}
-	},
+  "serverinfo": {
+    "description": "📖 View the server information.",
+    "name": "📛 Server Name",
+    "id": "🆔 Server ID",
+    "members": "👥 Members ({{size}})",
+    "ownedBy": "👑 Owner By",
+    "boost": "🌟 Server Boost",
+    "channels": "💬 Channels",
+    "roles": "🛡️ Roles ({{size}})",
+    "roleView": "To view all server roles use `/roles`",
+    "emojis": "✨ Emojis & Stickers {{size}}",
+    "createdOn": "📆 Creation On"
+  },
 
-	"roleinfo": {
-		"description": "📖 View any role's information.",
-		"reply": {}
-	},
+  "logger": {
+    "noChannel": "⚠ In order to create a loggin system, a text based channel must be provided.",
+    "created": "✅ Successfully created the logging system.",
+    "updated": "✅ Successfully updated the logger data.",
+    "noLogger": "❌ Sorry there is no logging system.",
+    "destroy": "✅ Successfully deleted the logging system.",
+    "description": "Below are given the stats for all logging systems."
+  },
 
-	"memberinfo": {
-		"description": "📖 View your or any member's information."
-	},
+  "reload": {
+    "description": "",
+    "owner": "Sorry, You are not the owner of this application. So, you can't use this command.",
+    "reply": "Reloaded {{t}} files."
+  },
 
-	"emit": {
-		"description": "Emit an Event",
-		"reply": "Emitted the selected {{event}} successfully."
-	},
+  "roles": {
+    "description": "📝 Get the role list of a server."
+  },
 
-	"play": {
-		"description": "▶  play a song or track from available sources",
-		"joinVc": "😑 Join the {{vc}} voice channel to use the command.",
-		"loadFailed": "❌ Failed to load the requested track.",
-		"emptyQueue": "❗ No results found for the query.",
-		"track": "✅ Added {{title}} by {{author}} to the queue at {{position}}",
-		"playlist": "✅ Added {{size}} tracks from the {{title}} to the queue."
-	},
+  "memberinfo": {
+    "description": "📖 View your or any member's information."
+  },
 
-	"player": {
-		"description": "💿 Player controls for music playback",
-		"noPlayer": "There is no active music player in this server.",
+  "play": {
+    "description": "▶ play a song or track from available sources.",
+    "joinVc": "😑 Join the <#{{vc}}> voice channel to use the command.",
+    "loadFailed": "❌ Failed to load the requested track. Try with another source.",
+    "source": "❌ Provided source isn't available. Try with another source.",
+    "emptyQueue": "❗ No results found for the query. Provide more info next time.",
+    "track": "✅ Added {{title}} by `{{author}}` to the queue at `{{position}}`.",
+    "playlist": "✅ Added `{{size}}` tracks from the `{{title}}` to the queue."
+  },
 
-		"pause": {
-			"description": "⏸ pause the music player.",
-			"reply": "Paused the music player.",
-			"alreadyPaused": "The player is already paused. To resume use `/player resume`."
-		},
+  "player": {
+    "description": "🎵 Player controls for music playback.",
+    "noPlayer": "There is no active music player in this server.",
 
-		"resume": {
-			"description": "▶  resume the music player",
-			"reply": "Started playing music again.",
-			"alreadyPlaying": "The player is already resumed and playing. To pause use `/player pause`."
-		},
+    "pause": {
+      "description": "⏸ pause the music player.",
+      "reply": "⏸ Paused the music player.",
+      "paused": "The player is already paused. Use `/player resume` to resume."
+    },
 
-		"skip": {
-			"description": "⏭ Skip the now playing track",
-			"noTrack": "There are no tracks in the queue.",
-			"reply": "Skipped the current track."
-		},
+    "resume": {
+      "description": "▶ resume the music player.",
+      "reply": "▶ Started playing music again.",
+      "playing": "The player is already playing. Use `/player pause` to pause."
+    },
 
-		"previous": {
-			"description": "⏮ Replay the previous track",
-			"noTrack": "There are no previous tracks.",
-			"reply": "Replaying the previous track."
-		},
+    "skip": {
+      "description": "⏭ Skip the now playing track.",
+      "options": { "number": "The number of tracks to skip." },
+      "noTrack": "There are no tracks in the queue.",
+      "reply": "⏭ Skipped the current track."
+    },
 
-		"stop": {
-			"description": "⏹ Stop and destroy the music player",
-			"reply": "Destroyed the music player and disconnected from the voice channel."
-		},
+    "previous": {
+      "description": "⏮ Replay the previous track.",
+      "noTrack": "There is no previous track.",
+      "reply": "⏮ Replaying the previous track."
+    },
 
-		"volume": {
-			"description": "🔊 Set volume for the music player",
-			"validValue": "Please! provide a value between 1 to 100.",
-			"reply": "🔊 Volume set to **{{volume}}**"
-		}
-	},
+    "stop": {
+      "description": "⏹ Stop and destroy the music player",
+      "reply": "⏹ Stopped the player and disconnected from the voice channel."
+    },
 
-	"ban": {
-		"description": "Ban a member from the server.",
-		"options": {
-			"target": "The member to ban from the server.",
-			"reason": "Reason for the baning the target"
-		},
-		"reason": "None was specified.",
-		"errors": {
-			"member": "Target user is no longer a member of this server.",
-			"moderatable": "Target user is not moderatable by me.",
-			"manageable": "Target user is not manageable by me.",
-			"userRole": "Target user's highest role is higher than your highest role.",
-			"botRole": "Target user's highest role is higher than my highest role."
-		},
-		"reply": "Successfully banned *{{target}}* with reason - {{reason}}"
-	},
+    "volume": {
+      "description": "🔊 Set volume for the music player",
+      "options": { "volume": "The volume to set for the player." },
+      "validValue": "Please! provide a value between {{min}} to {{max}}.",
+      "reply": "🔊 Volume set to **{{volume}}**"
+    }
+  },
 
-	"language": {
-		"description": "🌐 Change your language for the bot.",
-		"options": {
-			"language": "Select a language."
-		},
-		"reply": "You have selected `{{language}}` as your default language for the server.",
-		"available": "Selected language isn't available at the moment."
-	}
+  "ban": {
+    "description": "Ban a member from the server.",
+    "options": {
+      "target": "The member to ban from the server.",
+      "reason": "Reason for the baning the target"
+    },
+
+    "noMember": "Target user is no longer a member of this server.",
+    "notModeratable": "Target user is not moderatable by me.",
+    "notManageable": "Target user is not manageable by me.",
+    "userRole": "Target user's highest role is higher than your highest role.",
+    "botRole": "Target user's highest role is higher than my highest role.",
+    "reply": "Successfully banned *{{target}}* with reason - {{reason}}"
+  },
+
+  "purge": {
+    "description": "🧹 Delete bulk amount of messages.",
+    "subcommands": {
+      "any": "Delete any type of messages.",
+      "after": "Delete messages that are after a specific message.",
+      "bots": "Delete messages that were sent by bots.",
+      "commands": "Delete messages which are Slash Commands.",
+      "embeds": "Delete messages which contain embeds.",
+      "files": "Delete messages which contain files or attachments.",
+      "user": "Delete messages sent by a specific user."
+    },
+
+    "options": {
+      "count": "Number of messages the bot should delete.",
+      "message": "Message ID or Link to delete messages after.",
+      "user": "Select a user whose message to delete."
+    },
+
+    "noMessage": "❌ Couldn't find the message. Please provide a valid `ID` or `Link`.",
+    "reply": "🧹 Deleted {{count}} messages in {{channel}} successfully."
+  }
 }

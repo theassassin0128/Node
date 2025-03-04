@@ -1,24 +1,24 @@
 {
-	"vanity": {
-		"welcome": "Bem-vindo ao projeto {{name}}",
-		"node": "Executando na versão nodejs {{v}}",
-		"version": "Versão do pacote {{v}}",
-		"message": "Programado por {{author}}"
-	},
+  "vanity": {
+    "welcome": "Bem-vindo ao projeto {{name}}",
+    "node": "Executando na versão nodejs {{v}}",
+    "version": "Versão do pacote {{v}}",
+    "message": "Programado por {{author}}"
+  },
 
-	"loadEvents": "{{count}} eventos carregados com sucesso",
-	"loadCommands": "{{count}} Comandos carregados com sucesso",
-	"fetchCommands": "buscados {{count}} comandos de aplicação",
+  "loadEvents": "{{count}} eventos carregados com sucesso",
+  "loadCommands": "{{count}} Comandos carregados com sucesso",
+  "fetchCommands": "buscados {{count}} comandos de aplicação",
 
-	"syncCommands": {
-		"warning": "Sincronizando comandos do aplicação (Isso pode demorar um pouco)",
-		"success": "Todos os comandos de aplicação estão sincronizados",
-		"add": "ADICIONAR",
-		"addMessage": "Encontrou um novo comando ou ativo e antigo",
-		"delete": "EXCLUIR",
-		"deleteMessage": "Desativado ou o arquivo foi removido",
-		"modify": "MODIFICAR",
-		"modifyMessageData": "Alterações encontradas nos dados de comando",
-		"modifyMessageGlobal": "Alterado para ser global ou apenas do servidor"
-	}
+  "syncCommands": {
+    "warning": "Sincronizando comandos do aplicação (Isso pode demorar um pouco)",
+    "success": "Todos os comandos de aplicação estão sincronizados",
+    "add": "ADICIONAR",
+    "addMessage": "Encontrou um novo comando ou ativo e antigo",
+    "delete": "EXCLUIR",
+    "deleteMessage": "Desativado ou o arquivo foi removido",
+    "modify": "MODIFICAR",
+    "modifyMessageData": "Alterações encontradas nos dados de comando",
+    "modifyMessageGlobal": "Alterado para ser global ou apenas do servidor"
+  }
 }

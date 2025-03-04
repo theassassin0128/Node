@@ -1,11 +1,5 @@
 {
-	"clientReady": {
-		"consoleLog": "{{tag}} is online"
-	},
-
-	"node": {
-		"connect": "The Lavalink Node {{id}} connected",
-		"disconnect": "The Lavalink Node {{id}} disconnected",
-		"error": "The Lavalink Node {{id}} errored"
-	}
+  "clientReady": {
+    "consoleLog": "{{tag}} is online"
+  }
 }

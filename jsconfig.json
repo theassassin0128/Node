@@ -1,15 +1,16 @@
 {
-	"compilerOptions": {
-		"module": "commonjs",
-		"target": "ES6",
-		"resolveJsonModule": true,
-		"baseUrl": "./",
-		"paths": {
-			"@root/*": ["./*"],
-			"@src/*": ["./src/*"],
-			"@lib/*": ["./src/lib/*"],
-			"@types/*": ["./src/types/*"]
-		}
-	},
-	"exclude": ["node_modules"]
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES6",
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@root/*": ["./*"],
+      "@src/*": ["./src/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@types/*": ["./src/types/*"],
+      "@database/*": ["./src/database/*"]
+    }
+  },
+  "exclude": ["node_modules", "**/node_modules"]
 }

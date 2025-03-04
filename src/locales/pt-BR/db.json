@@ -1,4 +1,4 @@
 {
-	"connected": "Banco de dados {{db}} conectado",
-	"disconnected": "Banco de dados {{db}} desconectado"
+  "connected": "Banco de dados {{db}} conectado",
+  "disconnected": "Banco de dados {{db}} desconectado"
 }

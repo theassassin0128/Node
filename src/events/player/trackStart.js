@@ -1,203 +1,120 @@
-const { EmbedBuilder, GuildMember, Message, MessageFlags } = require("discord.js");
+const { EmbedBuilder, GuildMember, MessageFlags } = require("discord.js");
 const { t } = require("i18next");
 
 /** @type {import("@types/index").EventStructure} */
 module.exports = {
-	name: "trackStart",
-	player: true,
-	/**
-	 * @param {import("lavalink-client").Player} player
-	 * @param {import("lavalink-client").Track} track
-	 */
-	execute: async (client, player, track) => {
-		const guild = client.guilds.cache.get(player.guildId);
-		if (!guild) return;
-		if (!player.textChannelId) return;
-		if (!track) return;
+  name: "trackStart",
+  player: true,
+  /**
+   * @param {import("lavalink-client").Player} player
+   * @param {import("lavalink-client").Track} track
+   */
+  execute: async (client, player, track) => {
+    if (!track) return;
 
-		/** @type {import("discord.js").GuildTextBasedChannel} */
-		const channel = client.channels.cache.get(player.textChannelId);
-		if (!channel) return;
+    const guild = client.guilds.cache.get(player.guildId);
+    if (!guild) return;
 
-		const embed = new EmbedBuilder()
-			.setAuthor({
-				name: "Now Playing",
-				iconURL:
-					client.config.icons[track.info.sourceName] ??
-					client.user?.displayAvatarURL({ extension: "png" }),
-			})
-			.setColor(client.config.colors.Main)
-			.setDescription(`**[${track.info.title}](${track.info.uri})**`)
-			.setFooter({
-				text: `Requested by ${track.requester.username}`,
-				iconURL: track.requester?.avatarURL,
-			})
-			.setThumbnail(track.info.artworkUrl)
-			.addFields(
-				{
-					name: "Duration",
-					value: track.info.isStream
-						? "LIVE"
-						: client.lavalink.formatTime(track.info.duration),
-					inline: true,
-				},
-				{
-					name: "Author",
-					value: track.info.author,
-					inline: true,
-				},
-			)
-			.setTimestamp();
+    const lng = (await client.db.guilds.get(guild.id))?.locale;
 
-		const message = await channel.send({
-			embeds: [embed],
-			components: client.utils.playerButtons(player),
-		});
+    /** @type {import("discord.js").GuildTextBasedChannel} */
+    const channel = guild.channels.cache.get(player.textChannelId);
+    if (!channel) return;
 
-		createCollector(client, message, player, track, embed);
+    const embed = new EmbedBuilder()
+      .setAuthor({
+        name: t("player:nowPlaying", { lng }),
+        iconURL:
+          client.config.icons[track.info.sourceName] ??
+          client.user?.displayAvatarURL({ extension: "png" })
+      })
+      .setColor(client.utils.getRandomColor())
+      .setDescription(`**[${track.info.title}](${track.info.uri})**`)
+      .setThumbnail(track.info.artworkUrl)
+      .addFields([
+        // {
+        // 	name: t("player:requestedBy"),
+        // 	value: `<@${track.requester?.id}>`,
+        // 	inline: true,
+        // },
+        {
+          name: t("player:duration", { lng }),
+          value: track.info.isStream
+            ? "LIVE"
+            : client.utils.timeFormat(track.info.duration),
+          inline: true
+        },
+        {
+          name: t("player:author", { lng }),
+          value: track.info.author,
+          inline: true
+        }
+      ])
+      .setFooter({
+        text: t("player:requestedBy", { lng, user: track.requester?.username }),
+        iconURL: track.requester?.avatarURL()
+      });
 
-		player.set("messageId", message.id);
+    // this.client.utils.updateStatus(this.client, guild.id);
 
-		// this.client.utils.updateStatus(this.client, guild.id);
+    // const setup = await this.client.db.getSetup(guild.id);
+    //
+    // if (setup?.textId) {
+    // 	const textChannel = guild.channels.cache.get(setup.textId)
+    // 	if (textChannel) {
+    // 		await trackStart(setup.messageId, textChannel, player, track, this.client, locale);
+    // 	}
+    // } else {
+    //	const message = await channel.send({
+    //		embeds: [embed],
+    //		components: [createButtonRow(player)],
+    //	});
+    //
+    //}
 
-		// const locale = await this.client.db.getLanguage(guild.id);
+    const message = await channel.send({
+      embeds: [embed],
+      components: client.utils.createPlayerButtons(client, player)
+    });
 
-		// const setup = await this.client.db.getSetup(guild.id);
-		//
-		// if (setup?.textId) {
-		// 	const textChannel = guild.channels.cache.get(setup.textId)
-		// 	if (textChannel) {
-		// 		await trackStart(setup.messageId, textChannel, player, track, this.client, locale);
-		// 	}
-		// } else {
-		//	const message = await channel.send({
-		//		embeds: [embed],
-		//		components: [createButtonRow(player)],
-		//	});
-		//
-		//}
-	},
+    player.set("messageId", message.id);
+
+    const collector = message.createMessageComponentCollector({
+      filter: async (b) => {
+        if (b.member instanceof GuildMember) {
+          const isSameVoiceChannel =
+            b.guild?.members.me?.voice.channelId === b.member.voice.channelId;
+          if (isSameVoiceChannel) return true;
+        }
+
+        await b.reply({
+          content: t("player:notConnected", {
+            lng,
+            channel: b.guild?.members.me?.voice.channelId ?? "None"
+          }),
+          flags: MessageFlags.Ephemeral
+        });
+
+        return false;
+      }
+    });
+
+    collector.on("collect", async (interaction) => {
+      await client.handlers.handlePlayerButtons(
+        client,
+        interaction,
+        message,
+        embed,
+        player,
+        lng
+      );
+    });
+  }
 };
-
-/**
- * A function to create a message componnent collector for music buttons
- * @param {import("@root/src/lib/DiscordClient").DiscordClient} client
- * @param {Message} message
- * @param {import("lavalink-client").Player} player
- * @param {import("lavalink-client").Track} track
- * @param {EmbedBuilder} embed
- * @returns {void}
- */
-function createCollector(client, message, player, track, embed) {
-	const collector = message.createMessageComponentCollector({
-		filter: async (b) => {
-			if (b.member instanceof GuildMember) {
-				const isSameVoiceChannel =
-					b.guild?.members.me?.voice.channelId === b.member.voice.channelId;
-				if (isSameVoiceChannel) return true;
-			}
-			await b.reply({
-				content: `You are not connected to <#${
-					b.guild?.members.me?.voice.channelId ?? "None"
-				}> to use these buttons.`,
-				flags: MessageFlags.Ephemeral,
-			});
-			return false;
-		},
-	});
-
-	collector.on("collect", async (interaction) => {
-		//if (!(await checkDj(client, interaction))) {
-		//  await interaction.reply({
-		//    content: T(locale, "player.trackStart.need_dj_role"),
-		//    flags: MessageFlags.Ephemeral
-		//  });
-		//  return;
-		//}
-
-		async function editMessage() {
-			if (message) {
-				await message.edit({
-					components: client.utils.playerButtons(player),
-				});
-			}
-		}
-
-		switch (interaction.customId) {
-			case "back":
-				{
-					if (player.queue.previous) {
-						await interaction.deferUpdate();
-						player.play({
-							track: player.queue.previous[0],
-						});
-						// await editMessage(`Previous by ${interaction.user.tag}`);
-					} else {
-						await interaction.reply({
-							content: "There is no previous song.",
-							flags: MessageFlags.Ephemeral,
-						});
-					}
-				}
-				break;
-			case "resume":
-				{
-					if (player.paused) {
-						player.resume();
-						await interaction.deferUpdate();
-					} else {
-						player.pause();
-						await interaction.deferUpdate();
-					}
-					await editMessage();
-				}
-				break;
-			case "stop": {
-				player.stopPlaying(true, false);
-				await interaction.deferUpdate();
-				break;
-			}
-			case "next":
-				{
-					if (player.queue.tracks.length > 0) {
-						await interaction.deferUpdate();
-						player.skip();
-					} else {
-						await interaction.reply({
-							content: "There is no more song in the queue.",
-							flags: MessageFlags.Ephemeral,
-						});
-					}
-				}
-				break;
-			case "loop": {
-				await interaction.deferUpdate();
-				switch (player.repeatMode) {
-					case "off": {
-						player.setRepeatMode("track");
-						await editMessage();
-						break;
-					}
-					case "track": {
-						player.setRepeatMode("queue");
-						await editMessage();
-						break;
-					}
-					case "queue": {
-						player.setRepeatMode("off");
-						await editMessage();
-						break;
-					}
-				}
-				break;
-			}
-		}
-	});
-}
 
 /*
 
-//import { trackStart } from '../../utils/SetupSystem';
+import { trackStart } from '../../utils/SetupSystem';
 
 /*
 		"requested_by": "Requested by {user}",

@@ -1,11 +1,10 @@
 {
-	"default": {
-		"footer": "Desenvolvido por {{username}}",
-		"copy": "{{username}} | Copyright ©{{year}}"
-	},
+  "default": {
+    "footer": "Powered by {{username}} | Copyright ©{{year}}"
+  },
 
-	"mention": {
-		"title": "Você acabou de me mencionar?",
-		"description": "Eu sou {{user}}, um bot do Discord desenvolvido por {{owner}} para gerenciar e moderar servidores do Discord. Para mais informações ou ajuda, use **`/help`**."
-	}
+  "mention": {
+    "title": "Você acabou de me mencionar?",
+    "description": "Eu sou {{user}}, um bot do Discord desenvolvido por {{owner}} para gerenciar e moderar servidores do Discord. Para mais informações ou ajuda, use **`/help`**."
+  }
 }
