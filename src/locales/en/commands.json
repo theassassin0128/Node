@@ -77,6 +77,23 @@
     "createdOn": "📆 Creation On"
   },
 
+  "memberinfo": {
+    "description": "📖 View your or any member's information.",
+    "options": {
+      "member": "Select a member or leave empty to view your own info."
+    },
+
+    "username": "📛 Username",
+    "nickname": "🔰 Nickname",
+    "id": "🆔 Identifier",
+    "position": "📍 Joined Position",
+    "badge": "🛡️ Badges",
+    "boost": "🚀 Server Boost",
+    "creation": "📆 Created On",
+    "join": "📆 Joined On",
+    "roles": "🎖 Roles [ {{count}} ] (shows top 5)"
+  },
+
   "logger": {
     "noChannel": "⚠ In order to create a loggin system, a text based channel must be provided.",
     "created": "✅ Successfully created the logging system.",
@@ -94,10 +111,6 @@
 
   "roles": {
     "description": "📝 Get the role list of a server."
-  },
-
-  "memberinfo": {
-    "description": "📖 View your or any member's information."
   },
 
   "play": {

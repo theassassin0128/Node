@@ -67,7 +67,7 @@ async function handleContext(client, interaction) {
     }
 
     if ((command.cooldown ?? defaultCooldown) > 0) {
-      const remaining = client.utils.getCooldown(client, command, user.id);
+      const remaining = client.utils.getCooldown(command, user.id);
 
       if (remaining > 0 && !devs.includes(user.id)) {
         return interaction.reply({
@@ -90,7 +90,7 @@ async function handleContext(client, interaction) {
       content: t("handlers:context.error", { lng })
     });
     client.logger.error(error);
-    client.utils.sendError(client, error);
+    client.utils.sendError(error);
   }
 }
 

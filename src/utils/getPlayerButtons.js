@@ -10,9 +10,9 @@ const {
  * typings for the parameters
  * @param {import("@lib/Bot").Bot} client
  * @param {import("lavalink-client").Player} player
- * @returns {ActionRowBuilder[]}
+ * @returns {Promise<ActionRowBuilder[]>}
  */
-function createPlayerButtons(client, player) {
+async function getPlayerButtons(client, player) {
   const { music, emojis } = client.config;
 
   const volumeDown = new ButtonBuilder()
@@ -206,4 +206,4 @@ function createPlayerButtons(client, player) {
   );
 }
 
-module.exports = createPlayerButtons;
+module.exports = { getPlayerButtons };

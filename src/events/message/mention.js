@@ -20,7 +20,7 @@ module.exports = {
     const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
     if (!message.content.match(prefixMention)) return;
 
-    const lng = (await client.db.guilds.getGuild(message.guild))?.locale;
+    const lng = (await client.db.guilds.get(message.guild.id))?.locale;
     const embed = new EmbedBuilder()
       .setTitle(t("embeds:mention.title", { lng }))
       .setDescription(
@@ -53,7 +53,7 @@ module.exports = {
     const inviteButton = new ButtonBuilder()
       .setLabel("Invite Me")
       .setStyle(ButtonStyle.Link)
-      .setURL(await client.utils.generateInvite(client));
+      .setURL(await client.utils.getInvite());
 
     const websiteButton = new ButtonBuilder()
       .setLabel("Website")

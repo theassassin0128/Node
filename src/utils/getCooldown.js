@@ -26,4 +26,4 @@ function getCooldown(client, command, userId) {
   return 0;
 }
 
-module.exports = getCooldown;
+module.exports = { getCooldown };

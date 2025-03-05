@@ -127,7 +127,7 @@ module.exports = {
     const inviteButton = new ButtonBuilder()
       .setLabel("Invite Me")
       .setStyle(ButtonStyle.Link)
-      .setURL(await client.utils.generateInvite(client));
+      .setURL(await client.utils.getInvite());
 
     const websiteButton = new ButtonBuilder()
       .setLabel("Website")

@@ -2,8 +2,8 @@ const {
   ContextMenuCommandBuilder,
   ApplicationCommandType,
   EmbedBuilder,
-  InteractionContextType,
   AttachmentBuilder,
+  InteractionContextType,
   ApplicationIntegrationType
 } = require("discord.js");
 const { t } = require("i18next");
@@ -26,18 +26,24 @@ module.exports = {
   ephemeral: false,
   botPermissions: ["SendMessages"],
   userPermissions: ["UseApplicationCommands"],
-  execute: async (client, interaction, lng) => {
+
+  async execute(client, interaction, lng) {
     const { targetId, guild } = interaction;
     const member = await guild.members.fetch(targetId);
-    const profileBuffer = await profileImage(targetId);
-    const imageAttachment = new AttachmentBuilder(profileBuffer, {
-      name: "profile.png"
+    const topRoles = member.roles.cache
+      .sort((a, b) => b.position - a.position)
+      .map((r) => r)
+      .slice(0, 5);
+
+    const profileBuffer = await profileImage(member.id);
+    const banner = new AttachmentBuilder(profileBuffer, {
+      name: "banner.png"
     });
 
     const embed = new EmbedBuilder()
       .setColor(member.roles.color?.hexColor || client.utils.getRandomColor())
       .setThumbnail(member.displayAvatarURL({ size: 4096 }))
-      .setImage("attachment://profile.png")
+      .setImage("attachment://banner.png")
       .setDescription(`<@${member.id}>`)
       .addFields([
         {
@@ -56,42 +62,38 @@ module.exports = {
           inline: false
         },
         {
+          name: t("context:memberinfo.roles", {
+            lng,
+            count: member.roles.cache.size
+          }),
+          value: `- ${topRoles.join("\n- ")}`,
+          inline: false
+        },
+        {
           name: t("context:memberinfo.boost", { lng }),
           value: member.premiumSince
-            ? `- <t:${member.premiumSinceTimestamp}:R>`
+            ? `- Since <t:${Math.floor(member.premiumSinceTimestamp / 1000)}:F>`
             : "- No",
           inline: false
         },
         {
           name: t("context:memberinfo.creation", { lng }),
-          value: `- <t:${Math.floor(member.user.createdTimestamp / 1000)}:F>\n- <t:${Math.floor(
-            member.user.createdTimestamp / 1000
-          )}:R>`,
+          value: [
+            `- <t:${Math.floor(member.user.createdTimestamp / 1000)}:F>`,
+            `- <t:${Math.floor(member.user.createdTimestamp / 1000)}:R>`
+          ].join("\n"),
           inline: false
         },
         {
           name: t("context:memberinfo.join", { lng }),
-          value: `- <t:${Math.floor(member.joinedTimestamp / 1000)}:F>\n- <t:${Math.floor(
-            member.joinedTimestamp / 1000
-          )}:R>`,
-          inline: false
-        },
-        {
-          name: t("context:memberinfo.roles", {
-            lng,
-            count: member.roles.cache.size
-          }),
-          value: `${member.roles.cache
-            .map((r) => r)
-            .slice(0, 15)
-            .join(", ")}`,
+          value: [
+            `- <t:${Math.floor(member.joinedTimestamp / 1000)}:F>`,
+            `- <t:${Math.floor(member.joinedTimestamp / 1000)}:R>`
+          ].join("\n"),
           inline: false
         }
       ]);
 
-    await interaction.followUp({
-      embeds: [embed],
-      files: [imageAttachment]
-    });
+    await interaction.followUp({ embeds: [embed], files: [banner] });
   }
 };

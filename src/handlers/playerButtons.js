@@ -35,11 +35,10 @@ async function handlePlayerButtons(
      */
     async function editMessage(text) {
       if (!message || !message.editable) return;
+      const components = await client.utils.getPlayerButtons(player);
 
       if (!text) {
-        return await message.edit({
-          components: client.utils.createPlayerButtons(client, player)
-        });
+        return await message.edit({ components });
       }
 
       return await message.edit({
@@ -49,7 +48,7 @@ async function handlePlayerButtons(
             iconURL: interaction.user.avatarURL()
           })
         ],
-        components: client.utils.createPlayerButtons(client, player)
+        components
       });
     }
 
@@ -223,7 +222,7 @@ async function handlePlayerButtons(
     }
   } catch (error) {
     client.logger.error(error);
-    client.utils.sendError(client, error);
+    client.utils.sendError(error);
   }
 }
 

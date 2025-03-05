@@ -15,21 +15,27 @@ async function validateSystem(client) {
   // Checking if default locale was provided or not
   if (!process.env.DEFAULT_LANGUAGE) {
     client.logger.warn(
-      `${chalk.yellow("DEFAULT_LANGUAGE")} in ${env} is empty. Using ${chalk.green("en")} as fallback locale.`
+      `${chalk.yellow(
+        "DEFAULT_LANGUAGE"
+      )} in ${env} is empty. Using ${chalk.green("en")} as fallback locale.`
     );
   }
 
   // Checking the provided locale is valid or not
   else if (!availableLanguages.includes(defaultLanguage)) {
     client.logger.warn(
-      `${chalk.yellow("DEFAULT_LANGUAGE")} in ${env} is invalid. Using ${chalk.green("en")} as fallback locale.`
+      `${chalk.yellow(
+        "DEFAULT_LANGUAGE"
+      )} in ${env} is invalid. Using ${chalk.green("en")} as fallback locale.`
     );
   }
 
   // Checking if bot token was provided or not
   if (!process.env.DISCORD_CLIENT_TOKEN) {
     client.logger.error(
-      `${chalk.yellow("DISCORD_CLIENT_TOKEN")} in ${env} cannot be empty. Provide a valid token`
+      `${chalk.yellow(
+        "DISCORD_CLIENT_TOKEN"
+      )} in ${env} cannot be empty. Provide a valid token`
     );
     process.exit(1);
   }
@@ -37,7 +43,9 @@ async function validateSystem(client) {
   // Checking if guildId was provided or not
   if (!process.env.GUILD_ID) {
     client.logger.error(
-      `${chalk.yellow("GUILD_ID")} in ${env} cannot be empty. Provide a valid guild id`
+      `${chalk.yellow(
+        "GUILD_ID"
+      )} in ${env} cannot be empty. Provide a valid guild id`
     );
     process.exit(1);
   }
@@ -45,7 +53,9 @@ async function validateSystem(client) {
   // Checking if bot ownerId was provided or not
   if (!process.env.OWNER_ID) {
     client.logger.error(
-      `${chalk.yellow("OWNER_ID")} in ${env} cannot be empty. Provide a valid owner id`
+      `${chalk.yellow(
+        "OWNER_ID"
+      )} in ${env} cannot be empty. Provide a valid owner id`
     );
     process.exit(1);
   }
@@ -53,14 +63,18 @@ async function validateSystem(client) {
   // Checking if developer id was provided or not
   if (!process.env.DEV_IDS) {
     client.logger.warn(
-      `${chalk.yellow("DEV_IDS")} in ${env} is empty. Developer commands won't work`
+      `${chalk.yellow(
+        "DEV_IDS"
+      )} in ${env} is empty. Developer commands won't work`
     );
   }
 
   // Checking if mongo uri was provided or not
   if (!process.env.MONGO_URI) {
     client.logger.error(
-      `${chalk.yellow("MONGO_URI")} in ${env} cannot be empty. Provide a valid mongo uri`
+      `${chalk.yellow(
+        "MONGO_URI"
+      )} in ${env} cannot be empty. Provide a valid mongo uri`
     );
     process.exit(1);
   }
@@ -70,7 +84,9 @@ async function validateSystem(client) {
     // Check if bot secret was provided or not
     if (!process.env.DISCORD_CLIENT_SECRET) {
       client.logger.error(
-        `${chalk.yellow("DISCORD_CLIENT_SECRET")} in ${env} cannot be empty. Provide a valid secret`
+        `${chalk.yellow(
+          "DISCORD_CLIENT_SECRET"
+        )} in ${env} cannot be empty. Provide a valid secret`
       );
       process.exit(1);
     }
@@ -78,7 +94,11 @@ async function validateSystem(client) {
     // Check if dashboard port was provided or not
     if (!process.env.DASHBOARD_PORT) {
       client.logger.warn(
-        `${chalk.yellow("DASHBOARD_PORT")} in ${env} is empty. Using ${chalk.magenta(dashboard.port)} as fallback port`
+        `${chalk.yellow(
+          "DASHBOARD_PORT"
+        )} in ${env} is empty. Using ${chalk.magenta(
+          dashboard.port
+        )} as fallback port`
       );
     }
 
@@ -131,7 +151,9 @@ async function validateSystem(client) {
       !resources.Music.searchPlatforms.includes(music.defaultSearchPlatform)
     ) {
       client.logger.error(
-        `${chalk.yellow("defaultSearchPlatform")} is invalid. Provide a valid search platform`
+        `${chalk.yellow(
+          "defaultSearchPlatform"
+        )} is invalid. Provide a valid search platform`
       );
       process.exit(1);
     }
@@ -140,16 +162,22 @@ async function validateSystem(client) {
   // Checking if sopport server was provided or not
   if (!process.env.SUPPORT_SERVER) {
     client.logger.warn(
-      `${chalk.yellow("SUPPORT_SERVER")} in ${env} is empty. This may cause issues in help related commands`
+      `${chalk.yellow(
+        "SUPPORT_SERVER"
+      )} in ${env} is empty. This may cause issues in help related commands`
     );
   }
 
   // Checking if bot website was provided or not
   if (!process.env.BOT_WEBSITE) {
     client.logger.warn(
-      `${chalk.yellow("BOT_WEBSITE")} in ${env} is empty. This may cause issues with dashboard`
+      `${chalk.yellow(
+        "BOT_WEBSITE"
+      )} in ${env} is empty. This may cause issues with dashboard`
     );
   }
+
+  client.logger.info("Validated the whole configuration");
 }
 
-module.exports = validateSystem;
+module.exports = { validateSystem };

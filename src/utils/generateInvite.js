@@ -62,4 +62,4 @@ function generateInvite(client) {
   });
 }
 
-module.exports = generateInvite;
+module.exports = { generateInvite };

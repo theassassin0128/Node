@@ -56,11 +56,11 @@ async function start() {
   // Load anticrash system
   client.helpers.antiCrash(client);
 
+  // Check and validate the configuraton
+  client.utils.validate();
+
   // Load languages
   await client.helpers.loadLanguages(client);
-
-  // Check and validate the configuraton
-  client.utils.validateSystem(client);
 
   // Load events
   await client.helpers.loadEvents(client, "src/events");

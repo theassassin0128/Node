@@ -1,5 +1,6 @@
 const { Client, Collection } = require("discord.js");
 const { Logger } = require("./Logger.js");
+const { Utils } = require("@src/utils");
 const { Lavalink } = require("./Lavalink.js");
 const { DataBase } = require("@src/database");
 
@@ -20,7 +21,7 @@ class Bot extends Client {
 
     // Initialize global functions and utilities
     this.logger = new Logger();
-    this.utils = require("@src/utils");
+    this.utils = new Utils(this);
     this.helpers = require("@src/helpers");
     this.handlers = require("@src/handlers");
 

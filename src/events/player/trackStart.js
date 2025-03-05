@@ -74,7 +74,7 @@ module.exports = {
 
     const message = await channel.send({
       embeds: [embed],
-      components: client.utils.createPlayerButtons(client, player)
+      components: await client.utils.getPlayerButtons(player)
     });
 
     player.set("messageId", message.id);

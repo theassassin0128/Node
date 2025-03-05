@@ -20,18 +20,18 @@ async function sendError(client, error) {
     .setColor(client.config.colors.Wrong)
     .setTitle("AN ERROR OCCURRED")
     .setDescription(
-      `\`\`\`js\n${errStack.length > 4000 ? errStack.substring(0, 4000) + "..." : errStack}\n\`\`\``
+      `\`\`\`js\n${
+        errStack.length > 4000 ? errStack.substring(0, 4000) + "..." : errStack
+      }\n\`\`\``
     )
     .setFooter({
-      text: `Memory: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB CPU: ${(
-        process.cpuUsage().system /
-        1024 /
-        1024
-      ).toFixed(2)}%`
+      text: `Memory: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
+        2
+      )} MB CPU: ${(process.cpuUsage().system / 1024 / 1024).toFixed(2)}%`
     })
     .setTimestamp();
 
   channel.send({ embeds: [embed] }).catch(client.logger.error);
 }
 
-module.exports = sendError;
+module.exports = { sendError };

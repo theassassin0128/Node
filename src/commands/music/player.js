@@ -73,7 +73,7 @@ module.exports = {
         const message = await channel.messages.fetch(player.get("messageId"));
         if (!message) return;
         await message.edit({
-          components: client.utils.createPlayerButtons(client, player)
+          components: await client.utils.getPlayerButtons(player)
         });
       } catch (error) {}
     }
