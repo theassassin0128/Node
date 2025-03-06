@@ -1,6 +1,6 @@
 {
   "name": "node",
-  "version": "3.3.3-dev",
+  "version": "3.3.4-dev",
   "description": "A multipurpose discord bot.",
   "main": "src/index.js",
   "engines": {
