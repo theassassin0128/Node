@@ -20,4 +20,4 @@ async function handleAutocomplete(client, interaction) {
   }
 }
 
-module.exports = handleAutocomplete;
+module.exports = { handleAutocomplete };

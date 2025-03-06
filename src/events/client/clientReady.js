@@ -1,17 +1,12 @@
 const chalk = require("chalk");
-const { t } = require("i18next");
 
 /** @type {import("@typings/index").EventStructure} */
 module.exports = {
   name: "ready",
   once: true,
-  execute: async (client) => {
+  async execute(client) {
     // Log that the bot is online
-    client.logger.info(
-      t("events:clientReady.consoleLog", {
-        tag: chalk.green(client.user.tag)
-      })
-    );
+    client.logger.info(`${chalk.green(client.user.tag)} is online`);
 
     // Synchronizing the application commands
     client.helpers.syncCommands(client);

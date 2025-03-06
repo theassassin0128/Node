@@ -10,8 +10,9 @@ class Utils {
    * @param {import("@lib/Bot.js").Bot} client
    */
   constructor(client) {
-    // base client
+    // base client property for this class
     this.client = client;
+    // config property for easier access in this class
     this.config = client.config;
   }
 

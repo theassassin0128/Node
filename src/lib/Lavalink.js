@@ -1,3 +1,4 @@
+const { User, GuildMember } = require("discord.js");
 const { LavalinkManager } = require("lavalink-client");
 
 class Lavalink extends LavalinkManager {
@@ -60,26 +61,37 @@ class Lavalink extends LavalinkManager {
 
 /**
  * A function to transform a requester into a standardized requester object
- * @param {any} requester The requester to transform.
+ * @param {User|GuildMember|any} requester The requester to transform.
  * Can be a string, a user, or an object with the keys `id`, `username`, and `avatarURL`.
  * @returns {import("@types/index").Requester} The transformed requester object.
  */
 function requesterTransformer(requester) {
-  if (
-    typeof requester === "object" &&
-    "avatar" in requester &&
-    Object.keys(requester).length === 3
-  ) {
-    return requester;
-  }
-
-  if (typeof requester === "object" && "displayAvatarURL" in requester) {
+  if (requester instanceof User) {
+    console.log("❗ Done");
     return {
       id: requester.id,
       username: requester.username,
-      avatarURL: requester.displayAvatarURL({ extension: "png" }),
+      avatarURL: requester.avatarURL({ extension: "png" }),
       discriminator: requester.discriminator
     };
+  }
+
+  if (requester instanceof GuildMember) {
+    console.log("📍 Done");
+    return {
+      id: requester.id,
+      username: requester.user.username,
+      avatarURL: requester.displayAvatarURL({ extension: "png" }),
+      discriminator: requester.user.discriminator
+    };
+  }
+
+  if (
+    typeof requester === "object" &&
+    "avatarURL" in requester &&
+    Object.keys(requester).length === 4
+  ) {
+    return requester;
   }
 
   return { id: requester.toString(), username: "unknown" };
@@ -140,22 +152,16 @@ async function autoPlayFunction(player, lastTrack) {
   }
 
   if (lastTrack.info.sourceName === ("youtube" || "youtubemusic")) {
-    const res = await player
-      .search(
-        {
-          query: `https://www.youtube.com/watch?v=${lastTrack.info.identifier}&list=RD${lastTrack.info.identifier}`,
-          source: "youtube"
-        },
-        lastTrack.requester
-      )
-      .then((response) => {
-        response.tracks = response.tracks.filter(
-          (v) => v.info.identifier !== lastTrack.info.identifier
-        );
-
-        return response;
-      })
-      .catch(console.warn);
+    const res = await player.search(
+      {
+        query: `https://www.youtube.com/watch?v=${lastTrack.info.identifier}&list=RD${lastTrack.info.identifier}`,
+        source: "youtube"
+      },
+      lastTrack.requester
+    );
+    res.tracks = res.tracks.filter(
+      (t) => t.info.identifier !== lastTrack.info.identifier
+    );
 
     if (res && res.tracks.length > 0)
       await player.queue.add(

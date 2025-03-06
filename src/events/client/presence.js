@@ -4,7 +4,7 @@ const { ActivityType } = require("discord.js");
 module.exports = {
   name: "ready",
   once: true,
-  execute: async (client) => {
+  async execute(client) {
     const activities = [
       {
         name: "Slash Commands",
@@ -15,7 +15,9 @@ module.exports = {
         type: ActivityType.Watching
       },
       {
-        name: `With ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0).toString()} Users.`,
+        name: `With ${client.guilds.cache
+          .reduce((a, b) => a + b.memberCount, 0)
+          .toString()} Users.`,
         type: ActivityType.Playing
       },
       {

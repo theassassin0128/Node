@@ -5,6 +5,7 @@ const { t } = require("i18next");
  * A function to handle slash commands
  * @param {import("@lib/Bot").Bot} client
  * @param {ChatInputCommandInteraction} interaction
+ * @returns {Promise<void>}
  */
 async function handleCommands(client, interaction) {
   if (!interaction.inGuild()) {
@@ -112,4 +113,4 @@ async function handleCommands(client, interaction) {
   }
 }
 
-module.exports = handleCommands;
+module.exports = { handleCommands };

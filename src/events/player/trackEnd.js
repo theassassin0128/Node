@@ -6,7 +6,7 @@ module.exports = {
    * @param {import("lavalink-client").Player} player
    * @param {import("lavalink-client").Track} track
    */
-  execute: async (client, player, track) => {
+  async execute(client, player, track) {
     try {
       const guild = client.guilds.cache.get(player.guildId);
       if (!guild) return;
@@ -22,7 +22,7 @@ module.exports = {
 
       if (!message) return;
 
-      await message.edit({ components: [] });
+      if (message.editable) await message.edit({ components: [] });
     } catch (error) {}
   }
 };

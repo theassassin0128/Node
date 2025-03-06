@@ -5,6 +5,7 @@ const { t } = require("i18next");
  * A function to handle contextmenu commands
  * @param {import("@lib/Bot").Bot} client
  * @param {ContextMenuCommandInteraction} interaction
+ * @returns {Promise<void>}
  */
 async function handleContext(client, interaction) {
   if (!interaction.inGuild()) {
@@ -94,4 +95,4 @@ async function handleContext(client, interaction) {
   }
 }
 
-module.exports = handleContext;
+module.exports = { handleContext };

@@ -3,6 +3,7 @@ const { Logger } = require("./Logger.js");
 const { Utils } = require("@src/utils");
 const { Lavalink } = require("./Lavalink.js");
 const { DataBase } = require("@src/database");
+const { Handlers } = require("@src/handlers");
 
 class Bot extends Client {
   /**
@@ -23,7 +24,7 @@ class Bot extends Client {
     this.logger = new Logger();
     this.utils = new Utils(this);
     this.helpers = require("@src/helpers");
-    this.handlers = require("@src/handlers");
+    this.handlers = new Handlers(this);
 
     /** @type {Collection<string, import("@types/index").CommandStructure>} */
     this.commands = new Collection();

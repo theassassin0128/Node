@@ -1,6 +1,6 @@
 {
   "name": "node",
-  "version": "3.3.2-dev",
+  "version": "3.3.3-dev",
   "description": "A multipurpose discord bot.",
   "main": "src/index.js",
   "engines": {
@@ -8,11 +8,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js",
-    "devShard": "nodemon src/shard.js",
     "trace": "node --trace-warnings src/index.js",
     "start": "node src/index.js",
     "shard": "node src/shard.js",
+    "dev": "nodemon src/index.js",
+    "devShard": "nodemon src/shard.js",
     "destroyGlobal": "node scripts/destroyGlobal.js",
     "destroyGuild": "node scripts/destroyGuild.js",
     "fetchEmojis": "node scripts/fetchEmojis.js"
@@ -39,7 +39,6 @@
     "nodemon": "^3.1.4"
   },
   "dependencies": {
-    "ascii-table": "^0.0.9",
     "chalk": "^4.1.2",
     "discord-arts": "^0.6.1",
     "discord.js": "^14.18.0",
@@ -60,6 +59,13 @@
     "bufferutil": "^4.0.8",
     "utf-8-validate": "^6.0.4",
     "zlib-sync": "^0.1.9"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "bufferutil",
+      "utf-8-validate",
+      "zlib-sync"
+    ]
   },
   "repository": {
     "type": "git",

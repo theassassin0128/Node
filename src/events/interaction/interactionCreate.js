@@ -1,24 +1,24 @@
-/** @type {import("@types/event").EventStructure} */
+/** @type {import("@types/index").EventStructure} */
 module.exports = {
   name: "interactionCreate",
   /**
    * types for base commmand interaction
    * @param {import("discord.js").BaseInteraction} interaction
    */
-  execute: async (client, interaction) => {
+  async execute(client, interaction) {
     // For handling slash commands
     if (interaction.isChatInputCommand()) {
-      await client.handlers.handleCommands(client, interaction);
+      await client.handlers.handleCommands(interaction);
     }
 
     // For handling auto complete interactions
-    if (interaction.isAutocomplete()) {
-      await client.handlers.handleAutocomplete(client, interaction);
+    else if (interaction.isAutocomplete()) {
+      await client.handlers.handleAutocomplete(interaction);
     }
 
     // For handling contextmenu commands
-    if (interaction.isContextMenuCommand()) {
-      await client.handlers.handleContext(client, interaction);
+    else if (interaction.isContextMenuCommand()) {
+      await client.handlers.handleContext(interaction);
     }
 
     // Buttons

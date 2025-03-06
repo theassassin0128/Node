@@ -11,6 +11,6 @@ module.exports = [
     closeOnError: true,
     heartBeatInterval: 30000,
     enablePingOnStatsCheck: true,
-    regions: ["Voice regions for this node"]
+    regions: [] // Voice regions for this node
   }
 ];

@@ -9,7 +9,7 @@ module.exports = {
    * @param {import("lavalink-client").Player} player
    * @param {import("lavalink-client").Track} track
    */
-  execute: async (client, player, track) => {
+  async execute(client, player, track) {
     if (!track) return;
 
     const guild = client.guilds.cache.get(player.guildId);
@@ -49,6 +49,7 @@ module.exports = {
           inline: true
         }
       ]);
+    console.log(track.requester);
 
     // this.client.utils.updateStatus(this.client, guild.id);
 
@@ -94,15 +95,8 @@ module.exports = {
       }
     });
 
-    collector.on("collect", async (interaction) => {
-      await client.handlers.handlePlayerButtons(
-        client,
-        interaction,
-        message,
-        embed,
-        player,
-        lng
-      );
+    collector.on("collect", async (i) => {
+      await client.handlers.handlePlayerButtons(i, message, embed, player, lng);
     });
   }
 };

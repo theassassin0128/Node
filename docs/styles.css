@@ -35,7 +35,7 @@ header ul {
 header li {
   float: left;
   display: inline;
-  padding: 0 20px 0 20px;
+  padding: 0 20px;
 }
 
 header #branding {
@@ -95,6 +95,7 @@ header nav {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

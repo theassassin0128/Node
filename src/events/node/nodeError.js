@@ -8,7 +8,7 @@ module.exports = {
   /**
    * @param {import("lavalink-client").LavalinkNode} node
    */
-  execute: async (client, node, error) => {
+  async execute(client, node, error) {
     client.logger.error(`The Lavalink Node ${chalk.magenta(node.id)} errored`);
     console.error(error);
   }

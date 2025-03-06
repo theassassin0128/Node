@@ -1,6 +1,10 @@
 {
   "default": {
-    "footer": "Powered by {{username}} | Copyright ©{{year}}"
+    "footer": "Desenvolvido por {{username}} | Copyright ©{{year}}"
+  },
+
+  "bot": {
+    "description": "Um aplicativo _Multipurpose_ do Discord para todas as suas necessidades com **Serviços Premium**. Para mais informações, acesse {{website}}"
   },
 
   "mention": {

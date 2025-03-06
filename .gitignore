@@ -2,7 +2,7 @@
 node_modules
 
 # Auto created & updated on npm install
-package-lock.json
+pnpm-lock.yaml
 
 # All secrets are stored here
 .env

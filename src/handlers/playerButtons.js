@@ -25,6 +25,7 @@ async function handlePlayerButtons(
   lng
 ) {
   const { maxVolume } = client.config.music;
+  const user = interaction.user.username;
   await interaction.deferUpdate();
 
   try {
@@ -35,9 +36,6 @@ async function handlePlayerButtons(
      */
     async function editMessage(text) {
       if (!message || !message.editable) return;
-      const components = client.utils.getPlayerButtons(player);
-
-      if (!text) return await message.edit({ components });
       await message.edit({
         embeds: [
           embed.setFooter({
@@ -45,7 +43,7 @@ async function handlePlayerButtons(
             iconURL: interaction.user.avatarURL()
           })
         ],
-        components
+        components: client.utils.getPlayerButtons(player)
       });
     }
 
@@ -59,33 +57,30 @@ async function handlePlayerButtons(
 
     switch (interaction.customId) {
       case "volumedown": {
-        const partialPlayer = await player.setVolume(
+        let { volume } = await player.setVolume(
           Math.max(player.volume - 10, 0)
         );
-        await editMessage();
         await interaction.followUp({
-          content: t("player:volumedown", {
-            lng,
-            volume: partialPlayer.volume
-          }),
+          content: t("player:volumedown", { lng, volume }),
           flags: MessageFlags.Ephemeral
         });
+        await editMessage(t("player:volumeBy", { lng, volume, user }));
         break;
       }
 
       case "volumeup": {
-        const partialPlayer = await player.setVolume(
+        let { volume } = await player.setVolume(
           Math.min(player.volume + 10, maxVolume)
         );
-        await editMessage();
         await interaction.followUp({
-          content: t("player:volumeup", { lng, volume: partialPlayer.volume }),
+          content: t("player:volumeup", { lng, volume }),
           flags: MessageFlags.Ephemeral
         });
+        await editMessage(t("player:volumeBy", { lng, volume, user }));
         break;
       }
 
-      case "back": {
+      case "previous": {
         if (!player.queue.previous) {
           await interaction.followUp({
             content: t("player:noPrevious", { lng }),
@@ -93,17 +88,14 @@ async function handlePlayerButtons(
           });
           break;
         }
-
         player.play({
           track: player.queue.previous[0]
         });
-
-        await editMessage(
-          t("player:previousBy", {
-            lng,
-            user: interaction.user.username
-          })
-        );
+        await interaction.followUp({
+          content: t("player:previous", { lng }),
+          flags: MessageFlags.Ephemeral
+        });
+        await editMessage(t("player:previousBy", { lng, user }));
         break;
       }
 
@@ -115,48 +107,51 @@ async function handlePlayerButtons(
           });
           break;
         }
-
         player.skip();
+        await interaction.followUp({
+          content: t("player:skip", { lng }),
+          flags: MessageFlags.Ephemeral
+        });
+        await editMessage(t("player:skippedBy", { lng, user }));
         break;
       }
 
       case "resume": {
         if (player.paused) {
           player.resume();
-
-          await editMessage(
-            t("player:resumedBy", {
-              lng,
-              user: interaction.user.username
-            })
-          );
+          await interaction.followUp({
+            content: t("player:resume", { lng }),
+            flags: MessageFlags.Ephemeral
+          });
+          await editMessage(t("player:resumedBy", { lng, user }));
         } else {
           player.pause();
-
-          await editMessage(
-            t("player:pausedBy", {
-              lng,
-              user: interaction.user.username
-            })
-          );
+          await interaction.followUp({
+            content: t("player:pause", { lng }),
+            flags: MessageFlags.Ephemeral
+          });
+          await editMessage(t("player:pausedBy", { lng, user }));
         }
         break;
       }
 
       case "stop": {
         player.stopPlaying(true, false);
+        await interaction.followUp({
+          content: t("player:stop", { lng }),
+          flags: MessageFlags.Ephemeral
+        });
+        await editMessage(t("player:stoppedBy", { lng, user }));
         break;
       }
 
       case "shuffle": {
         await player.queue.shuffle();
-        await editMessage(
-          t("player:shuffledBy", { lng, user: interaction.user.username })
-        );
         await interaction.followUp({
           content: t("player:shuffle", { lng }),
           flags: MessageFlags.Ephemeral
         });
+        await editMessage(t("player:shuffledBy", { lng, user }));
         break;
       }
 
@@ -164,34 +159,19 @@ async function handlePlayerButtons(
         switch (player.repeatMode) {
           case "off": {
             player.setRepeatMode("queue");
-            await editMessage(
-              t("player:loopingQueueBy", {
-                lng,
-                user: interaction.user.username
-              })
-            );
+            await editMessage(t("player:loopingQueueBy", { lng, user }));
             break;
           }
 
           case "queue": {
             player.setRepeatMode("track");
-            await editMessage(
-              t("player:loopingTrackBy", {
-                lng,
-                user: interaction.user.username
-              })
-            );
+            await editMessage(t("player:loopingTrackBy", { lng, user }));
             break;
           }
 
           case "track": {
             player.setRepeatMode("off");
-            await editMessage(
-              t("player:loopingOffBy", {
-                lng,
-                user: interaction.user.username
-              })
-            );
+            await editMessage(t("player:loopingOffBy", { lng, user }));
             break;
           }
         }
@@ -201,10 +181,10 @@ async function handlePlayerButtons(
       case "autoplay": {
         let autoplay = player.get("autoplay");
 
-        if (autoplay) player.set("autoplay", false);
-        else player.set("autoplay", true);
+        if (!autoplay) player.set("autoplay", true);
+        else player.set("autoplay", false);
 
-        await editMessage();
+        await editMessage(t("player:autoplayBy", { lng, user }));
         break;
       }
 
@@ -269,22 +249,4 @@ async function handlePlayerButtons(
 //		});
 //		break;
 
-//	case "skip":
-//		if (player.queue.tracks.length > 0) {
-//			await interaction.deferUpdate();
-//			player.skip();
-//			await editMessage(
-//				T( "player.trackStart.skipped_by", {
-//					user: interaction.user.username,
-//				}),
-//			);
-//		} else {
-//			await interaction.reply({
-//				content: T( "player.trackStart.no_more_songs_in_queue"),
-//				ephemeral: true,
-//			});
-//		}
-//		break;
-//
-
-module.exports = handlePlayerButtons;
+module.exports = { handlePlayerButtons };

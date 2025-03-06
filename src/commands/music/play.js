@@ -126,7 +126,7 @@ module.exports = {
       return;
     }
 
-    const response = await player.search({ query, source }, user);
+    const response = await player.search({ query, source }, member);
 
     if (!response || response.loadType === "error") {
       await interaction.followUp({
@@ -143,11 +143,7 @@ module.exports = {
     }
 
     if (response.loadType === "playlist") {
-      response.tracks.forEach(async (t) => {
-        t.requester = user;
-        await player.queue.add();
-      });
-
+      await player.queue.add(response.tracks);
       await interaction.followUp({
         content: t("commands:play.playlist", {
           lng,
@@ -157,9 +153,7 @@ module.exports = {
       });
     } else {
       const track = response.tracks.shift();
-      track.requester = user;
       await player.queue.add(track);
-
       await interaction.followUp({
         content: t("commands:play.track", {
           lng,
