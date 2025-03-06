@@ -16,13 +16,17 @@ async function loadFiles(path, ext) {
   // Validate parameters
   if (typeof path !== "string") {
     throw new TypeError(
-      `The ${chalk.yellow("path")} parameter must a String. Received type ${typeof client}`
+      `The ${chalk.yellow(
+        "path"
+      )} parameter must a String. Received type ${typeof client}`
     );
   }
 
   if (!Array.isArray(ext)) {
     throw new TypeError(
-      `The ${chalk.yellow("ext")} parameter must be an Array. Received type ${typeof ext}`
+      `The ${chalk.yellow(
+        "ext"
+      )} parameter must be an Array. Received type ${typeof ext}`
     );
   }
 

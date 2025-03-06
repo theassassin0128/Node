@@ -16,7 +16,7 @@ module.exports = {
     .setIntegrationTypes(ApplicationIntegrationType.GuildInstall),
   usage: "",
   category: "information",
-  cooldown: 20,
+  cooldown: 30,
   global: true,
   premium: false,
   devOnly: false,
@@ -45,64 +45,50 @@ module.exports = {
           inline: true
         },
         {
-          name: t("commands:serverinfo.boost", { lng }),
-          value: `- **${guild.premiumSubscriptionCount}** Boosts (level: ${guild.premiumTier})`,
-          inline: true
-        },
-        {
           name: t("commands:serverinfo.ownedBy", { lng }),
           value: `- <@${guild.ownerId}>`,
           inline: true
         },
         {
+          name: t("commands:serverinfo.boost", { lng }),
+          value: [
+            `- **${guild.premiumSubscriptionCount}** Boosts`,
+            `( Level: **${guild.premiumTier}** )`
+          ].join(" "),
+          inline: false
+        },
+        {
           name: t("commands:serverinfo.members", { lng, size: members.size }),
-          value: `- **${members.filter((m) => !m.user.bot).size}** Humans | **${
-            members.filter((m) => m.user.bot).size
-          }** Bots (${members.size})`,
+          value: [
+            "-",
+            `**${members.filter((m) => !m.user.bot).size}** Humans`,
+            "|",
+            `**${members.filter((m) => m.user.bot).size}** Bots`
+          ].join(" "),
           inline: true
+        },
+        {
+          name: t("commands:serverinfo.expressions", {
+            lng,
+            size: emojis.size + stickers.size
+          }),
+          value: [
+            `- **${emojis.filter((e) => e.animated === false).size}** Normal`,
+            `| **${emojis.filter((e) => e.animated === true).size}** Animated`,
+            `| **${stickers.size}** Sticker`
+          ].join(" "),
+          inline: false
         },
         {
           name: t("commands:serverinfo.channels", { lng, size: channels.size }),
           value: [
-            `**${
-              channels.filter((c) => c.type === ChannelType.GuildCategory).size
-            }**   Categories`,
-            `**${
+            `- **${
               channels.filter((c) => c.type === ChannelType.GuildText).size
-            }**   Text`,
-            `**${
+            }** Text | **${
               channels.filter((c) => c.type === ChannelType.GuildVoice).size
-            }**   Voice`,
-            `**${
-              channels.filter((c) => c.type === ChannelType.GuildAnnouncement)
-                .size
-            }**   Announcement`,
-            `**${
-              channels.filter((c) => c.type === ChannelType.GuildStageVoice)
-                .size
-            }**   Stage`,
-            `**${
-              channels.filter((c) => c.type === ChannelType.GuildForum).size
-            }**   Forum`,
-            `**${
-              channels.filter((c) => c.type === ChannelType.GuildMedia).size
-            }**   Media`,
-            `**${
-              channels.filter((c) => c.type === ChannelType.GuildDirectory).size
-            }**   Directory`
+            }** Voice`,
+            `- ${t("commands:serverinfo.channelView", { lng })}`
           ].join("\n"),
-          inline: false
-        },
-        {
-          name: t("commands:serverinfo.emojis", {
-            lng,
-            size: emojis.size + stickers.size
-          }),
-          value: `- **${
-            emojis.filter((e) => e.animated === false).size
-          }** Normal | **${
-            emojis.filter((e) => e.animated === true).size
-          }** Animated | **${stickers.size}** Sticker`,
           inline: false
         },
         {
@@ -115,9 +101,10 @@ module.exports = {
         },
         {
           name: t("commands:serverinfo.createdOn", { lng }),
-          value: `- <t:${Math.floor(
-            guild.createdTimestamp / 1000
-          )}:F> | <t:${Math.floor(guild.createdTimestamp / 1000)}:R>`,
+          value: [
+            `- <t:${Math.floor(guild.createdTimestamp / 1000)}:F>`,
+            `- <t:${Math.floor(guild.createdTimestamp / 1000)}:R>`
+          ].join("\n"),
           inline: true
         }
       ])
@@ -127,39 +114,6 @@ module.exports = {
           year: new Date().getFullYear()
         })
       });
-
-    let server = new EmbedBuilder()
-      .setTitle(`${interaction.guild.name}`)
-      .addFields(
-        {
-          name: "🆔 ID",
-          value: `${guild.id}`
-        },
-        {
-          name: "📅 Created On",
-          value: `<t:${Math.floor(
-            guild.createdTimestamp / 1000
-          )}:F> | <t:${Math.floor(guild.createdTimestamp / 1000)}:R>`
-        },
-        {
-          name: "👑 Owned by",
-          value: `<@${guild.ownerId}> (${guild.ownerId})`
-        },
-        {
-          name: `👥 Members [${guild.memberCount}]`,
-          value: "More information will be added in future Updates."
-        },
-        {
-          name: `💬 Channels [${channels.size}]`,
-          value: "More information will be added in the future updates."
-        },
-        {
-          name: `🔐 Roles [${guild.roles.cache.size}]`,
-          value: "Use `/roles` to get a list of roles"
-        }
-      )
-      .setColor(client.utils.getRandomColor())
-      .setThumbnail(guild.iconURL({ size: 4096 }));
 
     await interaction.followUp({
       embeds: [embed]

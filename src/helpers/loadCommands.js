@@ -13,13 +13,17 @@ const categories = require("@src/categories.js");
 async function loadCommands(client, dir) {
   if (typeof client !== "object") {
     throw new TypeError(
-      `The ${chalk.yellow("client")} parameter must be an Object. Received type ${typeof client}`
+      `The ${chalk.yellow(
+        "client"
+      )} parameter must be an Object. Received type ${typeof client}`
     );
   }
 
   if (typeof dir !== "string") {
     throw new TypeError(
-      `The ${chalk.yellow("dir")} parameter must be a String. Received type ${typeof dir}`
+      `The ${chalk.yellow(
+        "dir"
+      )} parameter must be a String. Received type ${typeof dir}`
     );
   }
 

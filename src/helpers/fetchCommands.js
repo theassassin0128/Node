@@ -8,7 +8,9 @@ const chalk = require("chalk");
 async function fetchCommands(client) {
   if (typeof client !== "object") {
     throw new TypeError(
-      `The ${chalk.yellow("client")} parameter must be an object. Received type ${typeof client}`
+      `The ${chalk.yellow(
+        "client"
+      )} parameter must be an object. Received type ${typeof client}`
     );
   }
 

@@ -17,7 +17,7 @@ module.exports = {
     .setContexts(InteractionContextType.Guild)
     .setIntegrationTypes(ApplicationIntegrationType.GuildInstall),
   category: "information",
-  cooldown: 180,
+  cooldown: 120,
   premium: false,
   guildOnly: true,
   devOnly: false,
@@ -34,6 +34,14 @@ module.exports = {
       .sort((a, b) => b.position - a.position)
       .map((r) => r)
       .slice(0, 5);
+
+    const joinedPosition = client.utils.addSuffix(
+      Array.from(
+        guild.members.cache
+          .sort((a, b) => a.joinedTimestamp - b.joinedTimestamp)
+          .keys()
+      ).indexOf(member.id) + 1
+    );
 
     const profileBuffer = await profileImage(member.id);
     const banner = new AttachmentBuilder(profileBuffer, {
@@ -59,6 +67,11 @@ module.exports = {
         {
           name: t("context:memberinfo.id", { lng }),
           value: `- ${member.id}`,
+          inline: false
+        },
+        {
+          name: t("context:memberinfo.position", { lng }),
+          value: `- ${joinedPosition}`,
           inline: false
         },
         {

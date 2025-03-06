@@ -70,11 +70,12 @@
     "members": "👥 Members ({{size}})",
     "ownedBy": "👑 Owner By",
     "boost": "🌟 Server Boost",
-    "channels": "💬 Channels",
+    "channels": "💬 Channels ({{size}})",
+    "channelView": "To view all server channels use `/channels`",
     "roles": "🛡️ Roles ({{size}})",
     "roleView": "To view all server roles use `/roles`",
-    "emojis": "✨ Emojis & Stickers {{size}}",
-    "createdOn": "📆 Creation On"
+    "expressions": "✨ Emojis & Stickers ({{size}})",
+    "createdOn": "📆 Created On"
   },
 
   "memberinfo": {
@@ -172,12 +173,29 @@
       "reason": "Reason for the baning the target"
     },
 
+    "failed": "Failed to ban target user bacause",
     "noMember": "Target user is no longer a member of this server.",
     "notModeratable": "Target user is not moderatable by me.",
     "notManageable": "Target user is not manageable by me.",
     "userRole": "Target user's highest role is higher than your highest role.",
     "botRole": "Target user's highest role is higher than my highest role.",
-    "reply": "Successfully banned *{{target}}* with reason - {{reason}}"
+    "reply": "Successfully banned **{{target}}** with reason: {{reason}}"
+  },
+
+  "kick": {
+    "description": "Kick a member from the server.",
+    "options": {
+      "target": "The member to kick from the server.",
+      "reason": "Reason for the kicking the target."
+    },
+
+    "failed": "Failed to kick target user bacause",
+    "noMember": "Target user is no longer a member of this server.",
+    "notModeratable": "Target user is not moderatable by me.",
+    "notManageable": "Target user is not manageable by me.",
+    "userRole": "Target user's highest role is higher than your highest role.",
+    "botRole": "Target user's highest role is higher than my highest role.",
+    "reply": "Successfully kicked **{{target}}** with reason: {{reason}}"
   },
 
   "purge": {

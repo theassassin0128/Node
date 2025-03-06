@@ -11,13 +11,17 @@ const loadFiles = require("./loadFiles.js");
 async function loadEvents(client, dir) {
   if (typeof client !== "object") {
     throw new TypeError(
-      `The ${chalk.yellow("client")} parameter must be an Object. Received type ${typeof client}`
+      `The ${chalk.yellow(
+        "client"
+      )} parameter must be an Object. Received type ${typeof client}`
     );
   }
 
   if (typeof dir !== "string") {
     throw new TypeError(
-      `The ${chalk.yellow("dir")} parameter must be a String. Received type ${typeof dir}`
+      `The ${chalk.yellow(
+        "dir"
+      )} parameter must be a String. Received type ${typeof dir}`
     );
   }
 
@@ -46,12 +50,12 @@ async function loadEvents(client, dir) {
       const target = event.rest
         ? client.rest
         : event.ws
-          ? client.ws
-          : event.player
-            ? client.lavalink
-            : event.node
-              ? client.lavalink.nodeManager
-              : client;
+        ? client.ws
+        : event.player
+        ? client.lavalink
+        : event.node
+        ? client.lavalink.nodeManager
+        : client;
 
       target[event.once ? "once" : "on"](event.name, execute) && i++;
     } catch (error) {

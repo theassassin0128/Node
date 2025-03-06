@@ -28,15 +28,14 @@ module.exports = {
           client.config.icons[track.info.sourceName] ??
           client.user?.displayAvatarURL({ extension: "png" })
       })
-      .setColor(client.utils.getRandomColor())
       .setDescription(`**[${track.info.title}](${track.info.uri})**`)
       .setThumbnail(track.info.artworkUrl)
       .addFields([
-        // {
-        // 	name: t("player:requestedBy"),
-        // 	value: `<@${track.requester?.id}>`,
-        // 	inline: true,
-        // },
+        {
+          name: t("player:requestedBy"),
+          value: `<@${track.requester?.id}>`,
+          inline: true
+        },
         {
           name: t("player:duration", { lng }),
           value: track.info.isStream
@@ -46,14 +45,10 @@ module.exports = {
         },
         {
           name: t("player:author", { lng }),
-          value: track.info.author,
+          value: `${track.info.author}`,
           inline: true
         }
-      ])
-      .setFooter({
-        text: t("player:requestedBy", { lng, user: track.requester?.username }),
-        iconURL: track.requester?.avatarURL()
-      });
+      ]);
 
     // this.client.utils.updateStatus(this.client, guild.id);
 
@@ -74,7 +69,7 @@ module.exports = {
 
     const message = await channel.send({
       embeds: [embed],
-      components: await client.utils.getPlayerButtons(player)
+      components: client.utils.getPlayerButtons(player)
     });
 
     player.set("messageId", message.id);

@@ -31,17 +31,14 @@ async function handlePlayerButtons(
     /**
      * A function to edit the footer of the message
      * @param {string} text
-     * @returns
+     * @returns {Promise<void>}
      */
     async function editMessage(text) {
       if (!message || !message.editable) return;
-      const components = await client.utils.getPlayerButtons(player);
+      const components = client.utils.getPlayerButtons(player);
 
-      if (!text) {
-        return await message.edit({ components });
-      }
-
-      return await message.edit({
+      if (!text) return await message.edit({ components });
+      await message.edit({
         embeds: [
           embed.setFooter({
             text,

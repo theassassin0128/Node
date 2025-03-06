@@ -3,9 +3,9 @@ const chalk = require("chalk");
 /**
  * A function to validate the whole system before starting everything
  * @param {import("@lib/Bot").Bot} client
- * @returns {Promise<void>}
+ * @returns {void}
  */
-async function validateSystem(client) {
+function validateSystem(client) {
   const { defaultLanguage, availableLanguages, dashboard, music, resources } =
     client.config;
 

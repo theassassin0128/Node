@@ -8,7 +8,7 @@
   "notConnected": "You are not connected to <#{channel}> to use these buttons.",
 
   "nowPlaying": "Now Playing",
-  "requestedBy": "Requested By {{user}}",
+  "requestedBy": "Requested By",
   "duration": "Track Duration",
   "author": "Track Author",
 

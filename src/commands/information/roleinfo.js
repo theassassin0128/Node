@@ -21,7 +21,7 @@ module.exports = {
     ),
   usage: "[role]: <role>",
   category: "information",
-  cooldown: 20,
+  cooldown: 30,
   global: true,
   premium: false,
   devOnly: false,

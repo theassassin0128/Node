@@ -23,7 +23,7 @@ module.exports = {
     ),
   usage: "[member]: <GuildMember|InteractionUser>",
   category: "information",
-  cooldown: 60,
+  cooldown: 120,
   global: true,
   premium: false,
   devOnly: false,
@@ -36,7 +36,7 @@ module.exports = {
   async execute(client, interaction, lng) {
     const { user, guild, options } = interaction;
     const member = await guild.members.fetch(
-      options.getMember("member") || user.id
+      options.getUser("member").id || user.id
     );
 
     const profileBuffer = await profileImage(member.id);
@@ -44,12 +44,13 @@ module.exports = {
       name: "banner.png"
     });
 
-    const joinedPosition =
+    const joinedPosition = client.utils.addSuffix(
       Array.from(
         guild.members.cache
           .sort((a, b) => a.joinedTimestamp - b.joinedTimestamp)
           .keys()
-      ).indexOf(member.id) + 1;
+      ).indexOf(member.id) + 1
+    );
 
     const topRoles = member.roles.cache
       .sort((a, b) => b.position - a.position)
@@ -59,6 +60,7 @@ module.exports = {
     const MemberInfo = new EmbedBuilder()
       .setColor(member.displayHexColor || client.utils.getRandomColor())
       .setThumbnail(member.displayAvatarURL({ extension: "png", size: 1024 }))
+      .setDescription(`<@${member.id}>`)
       .setImage("attachment://banner.png")
       .addFields(
         {

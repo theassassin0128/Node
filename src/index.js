@@ -72,7 +72,7 @@ async function start() {
   await client.db.connect(client);
 
   // Log into the client
-  await client.login(client.config.bot.token);
+  client.login(client.config.bot.token);
 }
 
 // Start the bot and handle any errors

@@ -10,9 +10,9 @@ const {
  * typings for the parameters
  * @param {import("@lib/Bot").Bot} client
  * @param {import("lavalink-client").Player} player
- * @returns {Promise<ActionRowBuilder[]>}
+ * @returns {ActionRowBuilder[]}
  */
-async function getPlayerButtons(client, player) {
+function getPlayerButtons(client, player) {
   const { music, emojis } = client.config;
 
   const volumeDown = new ButtonBuilder()
@@ -183,14 +183,6 @@ async function getPlayerButtons(client, player) {
   );
 
   const row3 = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setCustomId("volume_up")
-      .setLabel("Volume Up")
-      .setStyle(ButtonStyle.Primary),
-    new ButtonBuilder()
-      .setCustomId("volume_down")
-      .setLabel("Volume Down")
-      .setStyle(ButtonStyle.Primary),
     new ButtonBuilder()
       .setCustomId("lyrics")
       .setLabel("Lyrics")

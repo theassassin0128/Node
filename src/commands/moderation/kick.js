@@ -1,17 +1,15 @@
 const {
   SlashCommandBuilder,
   EmbedBuilder,
-  ChatInputCommandInteraction,
-  Client,
   PermissionFlagsBits
 } = require("discord.js");
+const { t } = require("i18next");
 
+/** @type {import("@types/index").CommandStructure} */
 module.exports = {
-  disabled: true,
   data: new SlashCommandBuilder()
     .setName("kick")
     .setDescription("Kick a member from the server.")
-    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
     .addUserOption((option) =>
       option
@@ -22,85 +20,68 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("reason")
-        .setDescription("Reason for the kick.")
+        .setDescription("Reason for the kick the target.")
         .setRequired(false)
     ),
-  permissionsRequired: ["KickMembers"],
-  botPermissions: ["KickMembers"],
-  /**
-   *
-   * @param {ChatInputCommandInteraction} interaction
-   * @param {Client} client
-   */
-  execute: async (interaction, client) => {
-    await interaction.deferReply();
-
-    let errEmbed = new EmbedBuilder().setColor(colour.error).setTitle("ERROR");
+  usage: "[target]: <GuildMember> (reason): <reason>",
+  category: "moderation",
+  cooldown: 10,
+  global: true,
+  premium: false,
+  devOnly: false,
+  disabled: false,
+  ephemeral: true,
+  voiceChannelOnly: false,
+  userPermissions: ["KickMembers", "ModerateMembers"],
+  botPermissions: ["KickMembers", "ModerateMembers", "ManageGuild"],
+  async execute(client, interaction, lng) {
     let errArray = [];
-    const { options, guild } = interaction;
-    const target = options.getUser("target").id;
-    const reason = options.getString("reason") || "No reason specified";
-    const member = (await guild.members.fetch()).get(target);
-    const fetchUser = (await guild.members.fetch()).get(interaction.user.id);
-    const fetchBot = (await guild.members.fetch()).get(client.user.id);
+    let errEmbed = new EmbedBuilder()
+      .setColor(client.config.colors.Wrong)
+      .setTitle(t("commands:kick.failed", { lng }));
 
-    if (!member) {
-      errArray.push("Target user is no longer a member of this server.");
+    const { member, guild, options } = interaction;
+    const target = await guild.members.fetch(
+      options.getUser("target", true).id
+    );
+    const reason =
+      options.getString("reason") || t("commands:default.reason", { lng });
+    const bot = await guild.members.fetchMe();
+
+    if (!target) {
+      errArray.push(`- ${t("commands:kick.noMember", { lng })}`);
     }
-    if (!member.moderatable) {
-      errArray.push("Target user is not moderatable by me.");
+
+    if (!target.moderatable) {
+      errArray.push(`- ${t("commands:kick.notModeratable", { lng })}`);
     }
-    if (!member.manageable) {
-      errArray.push("Target user is not manageable by me.");
+
+    if (!target.manageable) {
+      errArray.push(`- ${t("commands:kick.notManageable", { lng })}`);
     }
-    if (fetchUser.roles.highest.position <= member.roles.highest.position) {
-      errArray.push(
-        "Target user's highest role is higher than your highest role."
-      );
+
+    if (member.roles.highest.position <= target.roles.highest.position) {
+      errArray.push(`- ${t("commands:kick.userRole", { lng })}`);
     }
-    if (fetchBot.roles.highest.position <= member.roles.highest.position) {
-      errArray.push(
-        "Target user's highest role is higher than my highest role."
-      );
+
+    if (bot.roles.highest.position <= target.roles.highest.position) {
+      errArray.push(`- ${t("commands:kick.botRole", { lng })}`);
     }
 
     if (errArray.length) {
       errEmbed.setDescription(errArray.join("\n"));
-
-      await interaction.editReply({
+      return interaction.followUp({
         embeds: [errEmbed]
       });
-      return;
     }
 
-    const Embed = new EmbedBuilder()
-      .setTitle("__KICK NOTICE__")
-      .setDescription(
-        `${member},\nThis is to notify you that have been kicked out of ${interaction.guild.name}.\n **Reason**: ${reason}`
-      )
-      .setColor(colour.main)
-      .setFooter({
-        text: interaction.guild.name,
-        iconURL: interaction.guild.iconURL()
+    await target.kick(reason);
+    await interaction.followUp({
+      content: t("commands:kick.reply", {
+        lng,
+        target: target.displayName,
+        reason
       })
-      .setTimestamp();
-    if (!member.user.bot) await member.send({ embeds: [Embed] });
-
-    const embed = new EmbedBuilder()
-      .setTitle("__KICK NOTICE__")
-      .setDescription(
-        `Sucessfully kicked **${member.user.tag}**\n**Executed By**: ${interaction.user}\n**Reason**: ${reason}`
-      )
-      .setColor(colour.main);
-    try {
-      await member.kick({ reason });
-      return interaction.editReply({
-        embeds: [embed]
-      });
-    } catch (error) {
-      interaction.editReply({
-        content: `There was an error while banning the member. Error: ${error}`
-      });
-    }
+    });
   }
 };

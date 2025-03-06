@@ -39,6 +39,7 @@ class Lavalink extends LavalinkManager {
       linksAllowed: true
     });
 
+    // base client as a property of this class
     this.client = client;
   }
 

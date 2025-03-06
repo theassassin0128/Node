@@ -17,10 +17,10 @@ class Utils {
 
   /**
    * A function to validate the whole system before starting everything
-   * @returns {Promise<void>}
+   * @returns {void}
    */
   async validate() {
-    await validateSystem(this.client);
+    validateSystem(this.client);
   }
 
   /**
@@ -38,7 +38,7 @@ class Utils {
    * @param {string} userId - the userId
    * @returns {number} expiration timestamp (in seconds)
    */
-  async getCooldown(command, userId) {
+  getCooldown(command, userId) {
     return getCooldown(this.client, command, userId);
   }
 
@@ -46,17 +46,17 @@ class Utils {
    * A function to generate invite links fot the client
    * @returns {string}
    */
-  async getInvite() {
+  getInvite() {
     return generateInvite(this.client);
   }
 
   /**
    * typings for the parameters
    * @param {import("lavalink-client").Player} player
-   * @returns {Promise<ActionRowBuilder[]>}
+   * @returns {ActionRowBuilder[]}
    */
-  async getPlayerButtons(player) {
-    return await getPlayerButtons(this.client, player);
+  getPlayerButtons(player) {
+    return getPlayerButtons(this.client, player);
   }
 
   /**
