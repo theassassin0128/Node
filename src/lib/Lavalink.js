@@ -67,7 +67,6 @@ class Lavalink extends LavalinkManager {
  */
 function requesterTransformer(requester) {
   if (requester instanceof User) {
-    console.log("❗ Done");
     return {
       id: requester.id,
       username: requester.username,
@@ -77,7 +76,6 @@ function requesterTransformer(requester) {
   }
 
   if (requester instanceof GuildMember) {
-    console.log("📍 Done");
     return {
       id: requester.id,
       username: requester.user.username,

@@ -54,15 +54,8 @@ class Handlers {
    * @param {string} lng
    * @returns {Promise<void>}
    */
-  async handlePlayerButtons(interaction, message, embed, player, lng) {
-    await handlePlayerButtons(
-      this.client,
-      interaction,
-      message,
-      embed,
-      player,
-      lng
-    );
+  handlePlayerButtons(message, embed, player, lng) {
+    handlePlayerButtons(this.client, message, embed, player, lng);
   }
 }
 

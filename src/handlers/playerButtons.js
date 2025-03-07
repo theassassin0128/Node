@@ -2,7 +2,8 @@ const {
   ButtonInteraction,
   Message,
   MessageFlags,
-  EmbedBuilder
+  EmbedBuilder,
+  GuildMember
 } = require("discord.js");
 const { t } = require("i18next");
 
@@ -14,38 +15,55 @@ const { t } = require("i18next");
  * @param {EmbedBuilder} embed
  * @param {import("lavalink-client").Player} player
  * @param {string} lng
- * @returns {Promise<void>}
+ * @returns {void}
  */
-async function handlePlayerButtons(
-  client,
-  interaction,
-  message,
-  embed,
-  player,
-  lng
-) {
+function handlePlayerButtons(client, message, embed, player, lng) {
   const { maxVolume } = client.config.music;
-  const user = interaction.user.username;
-  await interaction.deferUpdate();
 
-  try {
+  const collector = message.createMessageComponentCollector({
+    filter: async (b) => {
+      if (b.member instanceof GuildMember) {
+        let isSameVoiceChannel =
+          b.guild?.members.me?.voice.channelId === b.member.voice.channelId;
+        if (isSameVoiceChannel) return true;
+      }
+
+      await b.reply({
+        content: t("player:notConnected", {
+          lng,
+          channel: b.guild?.members.me?.voice.channelId ?? "None"
+        }),
+        flags: MessageFlags.Ephemeral
+      });
+
+      return false;
+    }
+  });
+
+  collector.on("collect", async (interaction) => {
+    let user = interaction.user.username;
+    await interaction.deferUpdate();
+
     /**
      * A function to edit the footer of the message
      * @param {string} text
      * @returns {Promise<void>}
      */
-    async function editMessage(text) {
-      if (!message || !message.editable) return;
-      await message.edit({
-        embeds: [
-          embed.setFooter({
-            text,
-            iconURL: interaction.user.avatarURL()
+    const editMessage = async (text) => {
+      if (message) {
+        await message
+          .edit({
+            embeds: [
+              embed.setFooter({
+                text,
+                iconURL: interaction.user.avatarURL()
+              })
+            ],
+            components: client.utils.getPlayerButtons(player)
           })
-        ],
-        components: client.utils.getPlayerButtons(player)
-      });
-    }
+          .catch(console.warn);
+      }
+    };
 
     //if (!(await checkDj(client, interaction))) {
     //  await interaction.followUp({
@@ -60,10 +78,6 @@ async function handlePlayerButtons(
         let { volume } = await player.setVolume(
           Math.max(player.volume - 10, 0)
         );
-        await interaction.followUp({
-          content: t("player:volumedown", { lng, volume }),
-          flags: MessageFlags.Ephemeral
-        });
         await editMessage(t("player:volumeBy", { lng, volume, user }));
         break;
       }
@@ -72,10 +86,6 @@ async function handlePlayerButtons(
         let { volume } = await player.setVolume(
           Math.min(player.volume + 10, maxVolume)
         );
-        await interaction.followUp({
-          content: t("player:volumeup", { lng, volume }),
-          flags: MessageFlags.Ephemeral
-        });
         await editMessage(t("player:volumeBy", { lng, volume, user }));
         break;
       }
@@ -91,10 +101,6 @@ async function handlePlayerButtons(
         player.play({
           track: player.queue.previous[0]
         });
-        await interaction.followUp({
-          content: t("player:previous", { lng }),
-          flags: MessageFlags.Ephemeral
-        });
         await editMessage(t("player:previousBy", { lng, user }));
         break;
       }
@@ -108,10 +114,6 @@ async function handlePlayerButtons(
           break;
         }
         player.skip();
-        await interaction.followUp({
-          content: t("player:skip", { lng }),
-          flags: MessageFlags.Ephemeral
-        });
         await editMessage(t("player:skippedBy", { lng, user }));
         break;
       }
@@ -119,17 +121,9 @@ async function handlePlayerButtons(
       case "resume": {
         if (player.paused) {
           player.resume();
-          await interaction.followUp({
-            content: t("player:resume", { lng }),
-            flags: MessageFlags.Ephemeral
-          });
           await editMessage(t("player:resumedBy", { lng, user }));
         } else {
           player.pause();
-          await interaction.followUp({
-            content: t("player:pause", { lng }),
-            flags: MessageFlags.Ephemeral
-          });
           await editMessage(t("player:pausedBy", { lng, user }));
         }
         break;
@@ -147,10 +141,6 @@ async function handlePlayerButtons(
 
       case "shuffle": {
         await player.queue.shuffle();
-        await interaction.followUp({
-          content: t("player:shuffle", { lng }),
-          flags: MessageFlags.Ephemeral
-        });
         await editMessage(t("player:shuffledBy", { lng, user }));
         break;
       }
@@ -197,10 +187,7 @@ async function handlePlayerButtons(
         break;
       }
     }
-  } catch (error) {
-    client.logger.error(error);
-    client.utils.sendError(error);
-  }
+  });
 }
 
 //	case "clear_queue":

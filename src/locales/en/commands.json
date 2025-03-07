@@ -22,7 +22,7 @@
     "description": "🌐 Change your language for the bot.",
     "options": { "language": "Select a language." },
     "notAvailable": "😓 Selected language isn't available at the moment.",
-    "reply": "😀 You have selected `{{language}}` as your default language for this server."
+    "reply": "👍 You have selected `{{language}}` as default language of this server."
   },
 
   "emit": {

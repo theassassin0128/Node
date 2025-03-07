@@ -22,7 +22,8 @@ module.exports = {
 
       if (!message) return;
 
-      if (message.editable) await message.edit({ components: [] });
+      await message.delete();
+      //await message.edit({ components: [] });
     } catch (error) {}
   }
 };

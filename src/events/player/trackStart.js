@@ -32,7 +32,7 @@ module.exports = {
       .setThumbnail(track.info.artworkUrl)
       .addFields([
         {
-          name: t("player:requestedBy"),
+          name: t("player:requestedBy", { lng }),
           value: `<@${track.requester?.id}>`,
           inline: true
         },
@@ -49,7 +49,6 @@ module.exports = {
           inline: true
         }
       ]);
-    console.log(track.requester);
 
     // this.client.utils.updateStatus(this.client, guild.id);
 
@@ -74,30 +73,7 @@ module.exports = {
     });
 
     player.set("messageId", message.id);
-
-    const collector = message.createMessageComponentCollector({
-      filter: async (b) => {
-        if (b.member instanceof GuildMember) {
-          const isSameVoiceChannel =
-            b.guild?.members.me?.voice.channelId === b.member.voice.channelId;
-          if (isSameVoiceChannel) return true;
-        }
-
-        await b.reply({
-          content: t("player:notConnected", {
-            lng,
-            channel: b.guild?.members.me?.voice.channelId ?? "None"
-          }),
-          flags: MessageFlags.Ephemeral
-        });
-
-        return false;
-      }
-    });
-
-    collector.on("collect", async (i) => {
-      await client.handlers.handlePlayerButtons(i, message, embed, player, lng);
-    });
+    client.handlers.handlePlayerButtons(message, embed, player, lng);
   }
 };
 

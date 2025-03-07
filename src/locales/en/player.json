@@ -6,7 +6,7 @@
   "noTrack": "❗ There are no tracks in the queue.",
   "alreadyPaused": "❗ The track is already paused.",
   "alreadyResumed": "❗ The track is already playing.",
-  "notConnected": "You are not connected to <#{channel}> to use these buttons.",
+  "notConnected": "You are not connected to <#{{channel}}> to use these buttons.",
 
   "nowPlaying": "Now Playing",
   "requestedBy": "Requested By",
@@ -34,7 +34,7 @@
   "autoplayBy": "Autoplay toggled by {{user}}",
   "stoppedBy": "Stopped by {{user}}",
 
-  "needDjRole": "You need to have the DJ role to use this command.",
+  "needDjRole": "You need to have the **DJ Role** to use this command.",
 
   "setupStart": {
     "now_playing": "Now Playing",
