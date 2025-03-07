@@ -1,40 +1,40 @@
 const { ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
+const config = require("@src/config.js");
 
 /**
  * typings for the parameters
- * @param {import("@lib/Bot").Bot} client
  * @param {import("lavalink-client").Player} player
  * @returns {ActionRowBuilder[]}
  */
-function getPlayerButtons(client, player) {
-  const { music, emojis } = client.config;
+function getPlayerButtons(player) {
+  const { music, emojis } = config;
 
   const row1 = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId("volumedown")
-      .setLabel("Down")
-      .setEmoji(emojis.music.volumeDown)
+      // .setLabel("Down")
+      .setEmoji(emojis.music.volumedown)
       .setStyle(ButtonStyle.Secondary)
       .setDisabled(player.volume <= 0),
     new ButtonBuilder()
       .setCustomId("previous")
-      .setLabel("Previous")
+      // .setLabel("Previous")
       .setEmoji(emojis.music.previous)
       .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId("resume")
-      .setLabel(player.paused ? "Resume" : "Pause")
+      // .setLabel(player.paused ? "Resume" : "Pause")
       .setEmoji(player.paused ? emojis.music.resume : emojis.music.pause)
       .setStyle(player.paused ? ButtonStyle.Success : ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId("skip")
-      .setLabel("Skip")
+      // .setLabel("Skip")
       .setEmoji(emojis.music.next)
       .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId("volumeup")
-      .setLabel("Up")
-      .setEmoji(emojis.music.volumeUp)
+      // .setLabel("Up")
+      .setEmoji(emojis.music.volumeup)
       .setStyle(ButtonStyle.Secondary)
       .setDisabled(player.volume >= music.maxVolume)
   );
@@ -42,12 +42,12 @@ function getPlayerButtons(client, player) {
   const row2 = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId("shuffle")
-      .setLabel("Shuffle")
+      // .setLabel("Shuffle")
       .setEmoji(emojis.music.shuffle)
       .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId("loop")
-      .setLabel("Loop")
+      // .setLabel("Loop")
       .setEmoji(
         player.repeatMode === "track" ? emojis.music.loop2 : emojis.music.loop
       )
@@ -58,19 +58,19 @@ function getPlayerButtons(client, player) {
       ),
     new ButtonBuilder()
       .setCustomId("stop")
-      .setLabel("Stop")
+      // .setLabel("Stop")
       .setEmoji(emojis.music.stop)
-      .setStyle(ButtonStyle.Secondary),
+      .setStyle(ButtonStyle.Danger),
     new ButtonBuilder()
       .setCustomId("autoplay")
-      .setLabel("Autoplay")
-      .setEmoji(emojis.music.autoPlay)
+      // .setLabel("Autoplay")
+      .setEmoji(emojis.music.autoplay)
       .setStyle(
         player.get("autoplay") ? ButtonStyle.Success : ButtonStyle.Secondary
       ),
     new ButtonBuilder()
       .setCustomId("queue")
-      .setLabel("Queue")
+      // .setLabel("Queue")
       .setEmoji(emojis.music.queue)
       .setStyle(ButtonStyle.Secondary)
   );
@@ -136,4 +136,4 @@ function getPlayerButtons(client, player) {
   //  );
 }
 
-module.exports = { getPlayerButtons };
+module.exports = getPlayerButtons;

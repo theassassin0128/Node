@@ -47,10 +47,24 @@ function handlePlayerButtons(client, message, embed, player, lng) {
     /**
      * A function to edit the footer of the message
      * @param {string} text
+     * @param {boolean} clearButtons
      * @returns {Promise<void>}
      */
-    const editMessage = async (text) => {
-      if (message) {
+    async function editMessage(text, clearButtons) {
+      if (!message) return;
+      if (clearButtons) {
+        await message
+          .edit({
+            embeds: [
+              embed.setFooter({
+                text,
+                iconURL: interaction.user.avatarURL()
+              })
+            ],
+            components: []
+          })
+          .catch(console.error);
+      } else {
         await message
           .edit({
             embeds: [
@@ -61,9 +75,9 @@ function handlePlayerButtons(client, message, embed, player, lng) {
             ],
             components: client.utils.getPlayerButtons(player)
           })
-          .catch(console.warn);
+          .catch(console.error);
       }
-    };
+    }
 
     //if (!(await checkDj(client, interaction))) {
     //  await interaction.followUp({
@@ -101,7 +115,7 @@ function handlePlayerButtons(client, message, embed, player, lng) {
         player.play({
           track: player.queue.previous[0]
         });
-        await editMessage(t("player:previousBy", { lng, user }));
+        // await editMessage(t("player:previousBy", { lng, user }));
         break;
       }
 
@@ -114,7 +128,7 @@ function handlePlayerButtons(client, message, embed, player, lng) {
           break;
         }
         player.skip();
-        await editMessage(t("player:skippedBy", { lng, user }));
+        // await editMessage(t("player:skippedBy", { lng, user }));
         break;
       }
 
@@ -130,12 +144,12 @@ function handlePlayerButtons(client, message, embed, player, lng) {
       }
 
       case "stop": {
-        player.stopPlaying(true, false);
+        await player.stopPlaying(true, false);
         await interaction.followUp({
           content: t("player:stop", { lng }),
           flags: MessageFlags.Ephemeral
         });
-        await editMessage(t("player:stoppedBy", { lng, user }));
+        await editMessage(t("player:stoppedBy", { lng, user }), true);
         break;
       }
 
@@ -170,20 +184,21 @@ function handlePlayerButtons(client, message, embed, player, lng) {
 
       case "autoplay": {
         let autoplay = player.get("autoplay");
-
-        if (!autoplay) player.set("autoplay", true);
-        else player.set("autoplay", false);
-
-        await editMessage(t("player:autoplayBy", { lng, user }));
+        if (!autoplay) {
+          player.set("autoplay", true);
+          await editMessage(t("player:autoplayOnBy", { lng, user }));
+        } else {
+          player.set("autoplay", false);
+          await editMessage(t("player:autoplayOffBy", { lng, user }));
+        }
         break;
       }
 
       case "queue": {
-        interaction.followUp({
+        await interaction.followUp({
           content: "Still in development",
           flags: MessageFlags.Ephemeral
         });
-
         break;
       }
     }

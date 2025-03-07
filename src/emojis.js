@@ -45,11 +45,11 @@ module.exports = {
     shuffle: "🔀",
     speedup: "⏩",
     slowdown: "⏪",
-    queue: "💿",
+    queue: "🇶",
     playlist: "📃",
-    volumeUp: "🔊",
-    volumeDown: "🔉",
-    autoPlay: "🎶"
+    volumeup: "🔊",
+    volumedown: "🔉",
+    autoplay: "🇦"
   },
   badges: {
     bot: "🤖",

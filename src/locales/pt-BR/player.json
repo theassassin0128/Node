@@ -31,7 +31,8 @@
   "loopingOffBy": "Desligando em loop por {{user}}",
   "shuffledBy": "Fila embaralhada por {{user}}",
   "volumeBy": "Volume definido como {{volume}} por {{user}}",
-  "autoplayBy": "Reprodução automática alternada por {{user}}",
+  "autoplayOnBy": "Reprodução automática ativada por {{user}}",
+  "autoplayOffBy": "Reprodução automática desativada por {{user}}",
   "stoppedBy": "Parado por {{user}}",
 
   "needDjRole": "Você precisa ter a função de DJ para usar este comando.",

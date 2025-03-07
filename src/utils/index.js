@@ -1,5 +1,4 @@
 const { generateInvite } = require("./generateInvite.js");
-const { getPlayerButtons } = require("./getPlayerButtons.js");
 const { sendError } = require("./sendError.js");
 const { getCooldown } = require("./getCooldown.js");
 const { validateSystem } = require("./validateSystem.js");
@@ -14,6 +13,13 @@ class Utils {
     this.client = client;
     // config property for easier access in this class
     this.config = client.config;
+
+    // Functions to use in Lavalink Manager
+    this.requesterTransformer = require("./requesterTransformer.js");
+    this.autoPlayFunction = require("./autoPlayFunction.js");
+
+    // functions which does now need base client to work
+    this.getPlayerButtons = require("./getPlayerButtons.js");
   }
 
   /**
@@ -49,15 +55,6 @@ class Utils {
    */
   getInvite() {
     return generateInvite(this.client);
-  }
-
-  /**
-   * typings for the parameters
-   * @param {import("lavalink-client").Player} player
-   * @returns {ActionRowBuilder[]}
-   */
-  getPlayerButtons(player) {
-    return getPlayerButtons(this.client, player);
   }
 
   /**

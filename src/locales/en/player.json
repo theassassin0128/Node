@@ -31,7 +31,8 @@
   "loopingOffBy": "Looping off by {{user}}",
   "shuffledBy": "Queue shuffled by {{user}}",
   "volumeBy": "Volume set to {{volume}} by {{user}}",
-  "autoplayBy": "Autoplay toggled by {{user}}",
+  "autoplayOnBy": "Autoplay on by {{user}}",
+  "autoplayOffBy": "Autoplay off by {{user}}",
   "stoppedBy": "Stopped by {{user}}",
 
   "needDjRole": "You need to have the **DJ Role** to use this command.",

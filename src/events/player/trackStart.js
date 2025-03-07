@@ -22,6 +22,7 @@ module.exports = {
     if (!channel) return;
 
     const embed = new EmbedBuilder()
+      .setColor(client.config.colors.Transparent)
       .setAuthor({
         name: t("player:nowPlaying", { lng }),
         iconURL:

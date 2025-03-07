@@ -29,9 +29,10 @@
   "loopingTrackBy": "ট্র্যাক লুপিং করেছেন {{user}}",
   "loopingQueueBy": "কিউ লুপিং করেছেন {{user}}",
   "loopingOffBy": "লুপিং বন্ধ করেছেন {{user}}",
-  "shuffledBy": "এলোমেলো করেছেন {{user}}",
+  "shuffledBy": "কিউ এলোমেলো করেছেন {{user}}",
   "volumeBy": "ভলিউম {{volume}} এ সেট করেছেন {{user}}",
-  "autoplayBy": "অটোপ্লে টগল করেছেন {{user}}",
+  "autoplayOnBy": "অটোপ্লে চালু করেছেন {{user}}",
+  "autoplayOffBy": "অটোপ্লে বন্ধ করেছেন {{user}}",
   "stoppedBy": "প্লেয়ার বন্ধ করেছেন {{user}}",
 
   "needDjRole": "এই কমান্ডটি ব্যবহার করার জন্য আপনার **DJ Role** থাকা প্রয়োজন।",
