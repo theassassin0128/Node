@@ -1,6 +1,4 @@
 const {
-  Client,
-  ChatInputCommandInteraction,
   PermissionFlagsBits,
   SlashCommandBuilder,
   EmbedBuilder
@@ -12,7 +10,6 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("timeout")
     .setDescription("Restrict a members ability to communicate.")
-    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     .addUserOption((options) =>
       options
@@ -42,7 +39,7 @@ module.exports = {
    * @param {ChatInputCommandInteraction} client
    * @returns
    */
-  execute: async (interaction, client) => {
+  execute: async (client, interaction) => {
     const { options, guild, member, user } = interaction;
 
     const target = options.getMember("target");
@@ -53,7 +50,7 @@ module.exports = {
 
     const errorEmbed = new EmbedBuilder()
       .setAuthor({ name: "Could not timeout member due to" })
-      .setColor(colour.error);
+      .setColor(client.config.colors.Good);
 
     if (!target)
       return interaction.reply({
@@ -82,7 +79,7 @@ module.exports = {
 
     try {
       await target.timeout(ms(duration), reason);
-    } catch (err) {
+    } catch (error) {
       interaction.reply({
         embeds: [
           errorEmbed.setDescription(
@@ -91,7 +88,7 @@ module.exports = {
         ],
         ephemeral: true
       });
-      return;
+      throw error;
     }
 
     const newInfractionObject = {
@@ -118,7 +115,7 @@ module.exports = {
 
     const sEmbed = new EmbedBuilder()
       .setAuthor({ name: "Timeout Issues", iconURL: guild.iconURL() })
-      .setColor(colour.success)
+      .setColor(client.config.colors.Good)
       .setDescription(
         [
           `${target} was issued a timeout for **${ms(ms(duration), {

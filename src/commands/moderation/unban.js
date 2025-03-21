@@ -1,17 +1,10 @@
-const {
-  SlashCommandBuilder,
-  EmbedBuilder,
-  ChatInputCommandInteraction,
-  Client,
-  PermissionFlagsBits
-} = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
   disabled: true,
   data: new SlashCommandBuilder()
     .setName("unban")
     .setDescription("Unban a member from the server.")
-    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
     .addStringOption((option) =>
       option
@@ -26,7 +19,7 @@ module.exports = {
    * @param {ChatInputCommandInteraction} interaction
    * @param {Client} client
    */
-  execute: async (interaction, client) => {
+  execute: async (client, interaction) => {
     await interaction.deferReply();
 
     const { options, guild } = interaction;

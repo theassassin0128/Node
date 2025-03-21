@@ -1,10 +1,7 @@
 const { Buttons } = require("./Buttons.js");
 const { Invites } = require("./Invites.js");
-const { generateInvite } = require("./generateInvite.js");
-const { sendError } = require("./sendError.js");
-const { getCooldown } = require("./getCooldown.js");
+const { Errors } = require("./Errors.js");
 const { validateSystem } = require("./validateSystem.js");
-const { getPlayerButtons } = require("./getPlayerButtons.js");
 
 class Utils {
   constructor(client) {
@@ -24,16 +21,19 @@ class Utils {
      * A class dedicated to button related utility
      * @type {Buttons}
      */
-    this.buttons = new Buttons(this);
+    this.buttons = new Buttons(client);
 
     /**
      * A class dedicated to invite related utility
      * @type {Invites}
      */
-    this.invites = new Invites(this);
+    this.invites = new Invites(client);
 
-    // Function to create player button row
-    this.getPlayerButtons = getPlayerButtons;
+    /**
+     * A class dedicated to error handling
+     * @type {Errors}
+     */
+    this.errors = new Errors(client);
   }
 
   /**
@@ -45,30 +45,30 @@ class Utils {
   }
 
   /**
-   * A function to send errors to discord
-   * @param {Error} error
-   * @returns {Promise<void>}
-   */
-  async sendError(error) {
-    await sendError(this.client, error);
-  }
-
-  /**
    * A function to set, get and delete command cooldowns
    * @param {import("@types/index").CommandStructure} command - the command object
    * @param {string} userId - the userId
    * @returns {number} expiration timestamp (in seconds)
    */
   getCooldown(command, userId) {
-    return getCooldown(this.client, command, userId);
-  }
+    const timestamps = this.client.cooldowns.get(command.data.name);
+    if (!timestamps) return 0;
 
-  /**
-   * A function to generate invite links fot the client
-   * @returns {string}
-   */
-  getInvite() {
-    return generateInvite(this.client);
+    const now = Date.now();
+    const { defaultCooldown } = this.config.bot;
+    const cooldownAmount = (command.cooldown ?? defaultCooldown) * 1000;
+
+    if (!timestamps.has(userId)) {
+      timestamps.set(userId, now);
+      setTimeout(() => timestamps.delete(userId), cooldownAmount);
+      return 0;
+    }
+
+    const expirationTime = timestamps.get(userId) + cooldownAmount;
+    if (now < expirationTime) return Math.floor(expirationTime / 1000);
+
+    timestamps.set(userId, now);
+    return 0;
   }
 
   /**

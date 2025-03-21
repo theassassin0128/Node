@@ -15,7 +15,7 @@ class Guild extends Base {
      * @type {string}
      * @readonly
      */
-    this.id = data.id;
+    this.id = data._id;
 
     /**
      * The name of the guild
@@ -59,6 +59,13 @@ class Guild extends Base {
      */
     this.leftAt = data.leftAt;
 
+    /**
+     * The time this schema was last updated
+     * @type {Date}
+     * @readonly
+     */
+    this.updatedAt = data.updatedAt;
+
     if ("level" in data) {
       const level = {
         enabled: false,
@@ -72,7 +79,8 @@ class Guild extends Base {
       }
 
       if ("message" in data.level) {
-        level.message = data.level.message ??= config.level.defaultMessage;
+        level.message = data.level.message ??=
+          this.client.config.level.defaultMessage;
       }
 
       if ("channelId" in data.level) {

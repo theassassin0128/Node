@@ -2,8 +2,7 @@ const { Client, Collection } = require("discord.js");
 const { Logger } = require("./Logger.js");
 const { Utils } = require("@src/utils");
 const { MusicManager } = require("./Lavalink.js");
-const { DatabaseManager } = require("@db/Manager.js");
-const { Handlers } = require("@src/handlers");
+const { DatabaseManager } = require("@db/index.js");
 const { Helpers } = require("@src/helpers");
 
 class Bot extends Client {
@@ -37,9 +36,18 @@ class Bot extends Client {
      * @type {Logger}
      */
     this.logger = new Logger();
+
+    /**
+     * The utility tools manager for the bot
+     * @type {Utils}
+     */
     this.utils = new Utils(this);
+
+    /**
+     * Helpers for the bot
+     * @type {Helpers}
+     */
     this.helpers = new Helpers(this);
-    this.handlers = new Handlers(this);
 
     /** @type {Collection<string, import("@types/index").CommandStructure>} */
     this.commands = new Collection();

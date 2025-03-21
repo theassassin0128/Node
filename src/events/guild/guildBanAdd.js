@@ -1,11 +1,11 @@
-const { GuildBan, EmbedBuilder } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 /** @type {import("@types/index").EventStructure} */
 module.exports = {
   name: "guildBanAdd",
   /**
    * typings for the parameters
-   * @param {GuildBan} ban
+   * @param {import("discord.js").GuildBan} ban
    */
   async execute(client, ban) {
     if (ban.user.bot) return;

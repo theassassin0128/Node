@@ -1,3 +1,7 @@
+const { handleCommands } = require("@handlers/commands.js");
+const { handleContext } = require("@handlers/context.js");
+const { handleAutocomplete } = require("@handlers/autocomplete.js");
+
 /** @type {import("@types/index").EventStructure} */
 module.exports = {
   name: "interactionCreate",
@@ -8,17 +12,17 @@ module.exports = {
   async execute(client, interaction) {
     // For handling slash commands
     if (interaction.isChatInputCommand()) {
-      await client.handlers.handleCommands(interaction);
+      await handleCommands(client, interaction);
     }
 
     // For handling auto complete interactions
     else if (interaction.isAutocomplete()) {
-      await client.handlers.handleAutocomplete(interaction);
+      await handleAutocomplete(client, interaction);
     }
 
     // For handling contextmenu commands
     else if (interaction.isContextMenuCommand()) {
-      await client.handlers.handleContext(interaction);
+      await handleContext(client, interaction);
     }
 
     // Buttons

@@ -6,7 +6,7 @@ class BaseManager {
   constructor(manager, holds) {
     /**
      * The database manager that instantiated this Manager
-     * @type {import("@database/Manager.js").DatabaseManager}
+     * @type {import("@db/index.js").DatabaseManager}
      * @readonly
      */
     this.manager = manager;

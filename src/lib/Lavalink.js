@@ -163,7 +163,7 @@ async function autoPlayFunction(player, lastTrack) {
     return;
   }
 
-  if (lastTrack.info.sourceName === ("youtube" || "youtubemusic")) {
+  if (["youtube", "youtubemusic"].includes(lastTrack.info.sourceName)) {
     const response = await player.search(
       {
         query: `https://www.youtube.com/watch?v=${lastTrack.info.identifier}&list=RD${lastTrack.info.identifier}`,
@@ -188,7 +188,7 @@ async function autoPlayFunction(player, lastTrack) {
     );
 
     if (response && response.tracks.length > 0) {
-      const track = res.tracks.filter(
+      const track = response.tracks.filter(
         (t) => t.info.identifier !== lastTrack.info.identifier
       )[0];
       await player.queue.add(track);

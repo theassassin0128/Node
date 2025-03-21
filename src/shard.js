@@ -17,16 +17,21 @@ async function shardStart() {
   manager.on("shardCreate", (shard) => {
     shard.on("ready", () => {
       logger.info(
-        `Shard ${chalk.cyanBright(shard.id)} connected to Discord's Gateway.`
+        `Shard ${chalk.cyan(shard.id)} connected to Discord's Gateway.`
       );
     });
+
+    shard.on("disconnect", () => {
+      logger.info(
+        `Shard ${chalk.cyan(shard.id)} disconnected from Discord's Gateway.`
+      );
+    });
+
+    shard.on("error", logger.error);
   });
 
   await manager.spawn();
-
   logger.info(`${chalk.blueBright(manager.totalShards)} shard(s) spawned.`);
 }
 
-shardStart().catch((error) => {
-  throw error;
-});
+shardStart().catch(logger.error);

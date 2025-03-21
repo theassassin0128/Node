@@ -1,6 +1,5 @@
 const { Collection } = require("discord.js");
 const { Guild } = require("../structures/Guild.js");
-const { BaseManager } = require("./BaseManager.js");
 const { CachedManager } = require("./CachedManager.js");
 
 /**
@@ -13,7 +12,7 @@ class GuildManager extends CachedManager {
 
     /**
      * The cache of this Manager
-     * @type {Collection<Snowflake, Guild>}
+     * @type {Collection<string, Guild>}
      * @name GuildManager#cache
      */
     this.cache;
@@ -39,45 +38,50 @@ class GuildManager extends CachedManager {
       throw new Error(`parameter id is missing`);
     }
 
+    const existing = this.cache.get(id);
+    console.log(this.cache);
+    if (existing) return existing;
+
     const guild = this.client.guilds.cache.get(id);
     if (!guild) return;
 
     var data = await this.collection.findOne({ _id: guild.id });
-    if (!data) {
-      const userDB = await this.client.db.users.get(guild.ownerId);
-      await userDB.save();
+    if (data) return this._add(data, true);
 
-      data = {
-        _id: guild.id,
-        name: guild.name,
-        ownerId: guild.ownerId,
-        joinedAt: guild.joinedAt,
-        language: this.client.config.defaultLanguage
-      };
+    const userDB = await this.client.db.users.get(guild.ownerId);
+    await userDB.save();
 
-      await this.collection.insertOne(data);
-    } else {
-      let change = false;
-      if (data.name !== guild.name) {
-        data.name = guild.name;
-        change = true;
-      }
+    data = {
+      _id: guild.id,
+      name: guild.name,
+      ownerId: guild.ownerId,
+      joinedAt: guild.joinedAt,
+      language: this.client.config.defaultLanguage
+    };
 
-      if (data.ownerId !== guild.ownerId) {
-        data.ownerId = guild.ownerId;
-        change = false;
-      }
+    await this.collection.insertOne(data);
+    return this._add(data, true);
 
-      if (change) {
-        await this.collection.updateOne(
-          { _id: guild.id },
-          { $push: data },
-          { upsert: true }
-        );
-      }
-    }
-
-    return new Guild(this.manager, data);
+    // {
+    //   let change = false;
+    //   if (data.name !== guild.name) {
+    //     data.name = guild.name;
+    //     change = true;
+    //   }
+    //
+    //   if (data.ownerId !== guild.ownerId) {
+    //     data.ownerId = guild.ownerId;
+    //     change = false;
+    //   }
+    //
+    //   if (change) {
+    //     await this.collection.updateOne(
+    //       { _id: guild.id },
+    //       { $push: data },
+    //       { upsert: true }
+    //     );
+    //   }
+    // }
   }
 
   /**
@@ -90,15 +94,15 @@ class GuildManager extends CachedManager {
   /**
    * Options used to fetch multiple guilds.
    * @typedef {Object} FetchGuildsOptions
-   * @property {Snowflake} [before] Get guilds before this guild id
-   * @property {Snowflake} [after] Get guilds after this guild id
+   * @property {string} [before] Get guilds before this guild id
+   * @property {string} [after] Get guilds after this guild id
    * @property {number} [limit] Maximum number of guilds to request (1-200)
    */
 
   /**
    * Obtains one or multiple guilds from Discord, or the guild cache if it's already available.
    * @param {GuildResolvable|FetchGuildOptions|FetchGuildsOptions} [options] The guild's id or options
-   * @returns {Promise<Guild|Collection<Snowflake, OAuth2Guild>>}
+   * @returns {Promise<Guild|Collection<string, Guild>>}
    */
   async fetch(options = {}) {
     const id = this.resolveId(options) ?? this.resolveId(options.guild);
@@ -109,21 +113,14 @@ class GuildManager extends CachedManager {
         if (existing) return existing;
       }
 
-      const data = await this.client.rest.get(Routes.guild(id), {
-        query: makeURLSearchParams({ with_counts: options.withCounts ?? true })
-      });
-      data.shardId = ShardClientUtil.shardIdForGuildId(
-        id,
-        this.client.options.shardCount
-      );
+      const data = await this.collection.findOne({ _id: id });
       return this._add(data, options.cache);
     }
 
-    const data = await this.client.rest.get(Routes.userGuilds(), {
-      query: makeURLSearchParams(options)
-    });
+    //** @type {Array} */
+    const data = await this.collection.find();
     return data.reduce(
-      (coll, guild) => coll.set(guild.id, new OAuth2Guild(this.client, guild)),
+      (coll, guild) => coll.set(guild._id, new Guild(this.manager, guild)),
       new Collection()
     );
   }
@@ -142,40 +139,6 @@ class GuildManager extends CachedManager {
     });
     return result;
   }
-
-  // /**
-  //  * A function to delete guild data from database
-  //  * @param {string} id - id of the guild to delete
-  //  * @returns {Promise<import("mongoose").DeleteResult | void>}
-  //  */
-  // async delete(id) {
-  //   if (!id || typeof id !== "string") {
-  //     throw new Error(`${chalk.yellow("guildId")} parameter is missing`);
-  //   }
-  //
-  //   const schema = await this.model.findById(id);
-  //   if (!schema) return;
-  //
-  //   return await schema.deleteOne();
-  // }
-  //
-  // /**
-  //  * A function to get a specific value of this model from database
-  //  * @param {string} id - if of the guild to get the value
-  //  * @param {string} key - the key of the value
-  //  * @returns {any}
-  //  */
-  // async getValue(id, key) {
-  //   if (!key || typeof key !== "string") {
-  //     throw new TypeError(`${chalk.yellow("guildId")} parameter is missing`);
-  //   }
-  //
-  //   const doc = await this.get(id);
-  //   const value = doc[key];
-  //
-  //   console.log(value);
-  //   return value;
-  // }
 }
 
 module.exports = { GuildManager };

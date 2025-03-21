@@ -1,9 +1,7 @@
-const { AutocompleteInteraction } = require("discord.js");
-
 /**
  * A function to handle AutoComplete Commands
  * @param {import("@lib/Bot").Bot} client
- * @param {AutocompleteInteraction} interaction
+ * @param {import("discord.js").AutocompleteInteraction} interaction
  * @returns {Promise<void>}
  */
 async function handleAutocomplete(client, interaction) {
@@ -16,7 +14,7 @@ async function handleAutocomplete(client, interaction) {
     await command.autocomplete(client, interaction);
   } catch (error) {
     client.logger.error(error);
-    client.utils.sendError(error);
+    client.utils.errors.send(error);
   }
 }
 

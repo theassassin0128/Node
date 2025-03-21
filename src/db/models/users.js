@@ -66,10 +66,8 @@ class Users {
     return doc;
   }
 
-  async delete(id) {}
-
   async getReputationLevel(limit = 10) {
-    return model
+    return this.model
       .find({
         "reputation.received": { $gt: 0 }
       })

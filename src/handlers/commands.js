@@ -1,10 +1,10 @@
-const { ChatInputCommandInteraction, MessageFlags } = require("discord.js");
+const { MessageFlags } = require("discord.js");
 const { t } = require("i18next");
 
 /**
  * A function to handle slash commands
  * @param {import("@lib/Bot").Bot} client
- * @param {ChatInputCommandInteraction} interaction
+ * @param {import("discord.js").ChatInputCommandInteraction} interaction
  * @returns {Promise<void>}
  */
 async function handleCommands(client, interaction) {
@@ -111,7 +111,7 @@ async function handleCommands(client, interaction) {
       content: t("handlers:commands.error", { lng })
     });
     client.logger.error(error);
-    client.utils.sendError(error);
+    client.utils.errors.send(error);
   }
 }
 

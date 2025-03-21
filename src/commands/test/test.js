@@ -26,7 +26,7 @@ module.exports = {
   voiceChannelOnly: false,
   botPermissions: [],
   userPermissions: [],
-  async execute(client, interaction, lng) {
+  async execute(client, interaction) {
     const { guildId } = client.config.bot;
     const filePath = path.join(
       "src",

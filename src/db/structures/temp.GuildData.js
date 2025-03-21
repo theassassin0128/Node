@@ -2218,3 +2218,5 @@ const stickers = [
     guild_id: "1054284394791178291"
   }
 ];
+
+module.exports = { guild, roles, emojis, stickers };

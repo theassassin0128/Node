@@ -55,7 +55,7 @@ module.exports = {
   botPermissions: ["SendMessages", "Connect", "Speak", "EmbedLinks"],
   userPermissions: ["SendMessages"],
   execute: async (client, interaction, lng) => {
-    const { user, member, guild, channel, options } = interaction;
+    const { guild, options } = interaction;
     const subCommand = options.getSubcommand(true);
     const player = client.lavalink.getPlayer(guild.id);
 
@@ -67,15 +67,13 @@ module.exports = {
     }
 
     async function editMessage() {
-      try {
-        /** @type {import("discord.js").TextBasedChannel} */
-        const channel = client.channels.cache.get(player.textChannelId);
-        const message = await channel.messages.fetch(player.get("messageId"));
-        if (!message) return;
-        await message.edit({
-          components: client.utils.getPlayerButtons(player)
-        });
-      } catch (error) {}
+      /** @type {import("discord.js").TextBasedChannel} */
+      const channel = client.channels.cache.get(player.textChannelId);
+      const message = await channel.messages.fetch(player.get("messageId"));
+      if (!message) return;
+      await message.edit({
+        components: client.utils.getPlayerButtons(player)
+      });
     }
 
     switch (subCommand) {

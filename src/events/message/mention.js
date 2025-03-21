@@ -1,5 +1,4 @@
 const {
-  Message,
   EmbedBuilder,
   ButtonBuilder,
   ButtonStyle,
@@ -12,7 +11,7 @@ module.exports = {
   name: "messageCreate",
   /**
    * Typing for execution function
-   * @param {Message} message
+   * @param {import("discord.js").Message} message
    */
   async execute(client, message) {
     if (message.author.bot) return;

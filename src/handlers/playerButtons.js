@@ -1,28 +1,41 @@
-const {
-  Message,
-  MessageFlags,
-  EmbedBuilder,
-  GuildMember
-} = require("discord.js");
+const { MessageFlags, EmbedBuilder, GuildMember } = require("discord.js");
 const { t } = require("i18next");
 
 /**
  * A function to handle player buttons controls
  * @param {import("@lib/Bot").Bot} client
- * @param {Message} message
+ * @param {import("discord.js").Message} message
  * @param {import("lavalink-client").Player} player
  * @returns {void}
  */
 async function handlePlayerButtons(client, message, player) {
   const { music } = client.config;
-  
-  const collector = message.createMessageComponentCollector({ filter });
+
+  const collector = message.createMessageComponentCollector({
+    filter: async (b) => {
+      const lng = (await client.db.guilds.get(b.guild.id))?.locale;
+      if (b.member instanceof GuildMember) {
+        let isSameVoiceChannel =
+          b.guild?.members.me?.voice.channelId === b.member.voice.channelId;
+        if (isSameVoiceChannel) return true;
+      }
+
+      await b.reply({
+        content: t("player:notConnected", {
+          lng,
+          channel: b.guild?.members.me?.voice.channelId ?? "None"
+        }),
+        flags: MessageFlags.Ephemeral
+      });
+      return false;
+    }
+  });
+
   collector.on("collect", async (interaction) => {
     await interaction.deferUpdate();
     const lng = (await client.db.guilds.get(interaction.guild.id))?.locale;
     const user = interaction.user.username;
-    const { author, description, image, fields, color } =
-      message.embeds.shift();
+    const { author, description, image, fields, color } = message.embeds[0];
     const embed = new EmbedBuilder()
       .setAuthor(author)
       .setColor(color)
@@ -162,27 +175,6 @@ async function handlePlayerButtons(client, message, player) {
       }
     }
   });
-}
-
-/**
- * typings for parameters
- * @param {ButtonInteraction} b
- */
-async function filter(b) {
-  if (b.member instanceof GuildMember) {
-    let isSameVoiceChannel =
-      b.guild?.members.me?.voice.channelId === b.member.voice.channelId;
-    if (isSameVoiceChannel) return true;
-  }
-
-  await b.reply({
-    content: t("player:notConnected", {
-      lng,
-      channel: b.guild?.members.me?.voice.channelId ?? "None"
-    }),
-    flags: MessageFlags.Ephemeral
-  });
-  return false;
 }
 
 //	case "clear_queue":

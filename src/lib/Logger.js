@@ -4,9 +4,9 @@
  * Also the setup is copied from elsewhere.
  */
 
-const { Signale, SignaleOptions } = require("signale");
+const { Signale } = require("signale");
 
-/** @type {SignaleOptions} */
+/** @type {import("signale").SignaleOptions} */
 const options = {
   disabled: false,
   interactive: false,

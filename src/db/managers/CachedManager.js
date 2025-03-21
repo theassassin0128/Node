@@ -1,5 +1,5 @@
 const { BaseManager } = require("./BaseManager.js");
-const MakeCacheOverrideSymbol = Symbol("DatabaseManagers.makeCacheOverride");
+const MakeCacheOverrideSymbol = Symbol("db.makeCacheOverride");
 
 /**
  * Manages the API methods of a data model with a mutable cache of instances.
@@ -17,13 +17,11 @@ class CachedManager extends BaseManager {
      * @readonly
      * @name CachedManager#_cache
      */
-    Object.defineProperty(this, "_cache", {
-      value: this.manager.makeCache(
-        this.constructor[MakeCacheOverrideSymbol] ?? this.constructor,
-        holds,
-        this.constructor
-      )
-    });
+    this._cache = this.manager.makeCache(
+      this.constructor[MakeCacheOverrideSymbol] ?? this.constructor,
+      holds,
+      this.constructor
+    );
 
     if (iterable) {
       for (const item of iterable) {
@@ -54,7 +52,7 @@ class CachedManager extends BaseManager {
     }
 
     const entry = this.holds
-      ? new this.holds(this.client, data, ...extras)
+      ? new this.holds(this.manager, data, ...extras)
       : data;
     if (cache) this.cache.set(id ?? entry.id, entry);
     return entry;

@@ -77,63 +77,42 @@ class Buttons {
   }
 }
 
-function getPlayerButtons(player) {
-  const qualityMenu = new StringSelectMenuBuilder()
-    .setCustomId("song-quality")
-    .setPlaceholder("Select song quality")
-    .addOptions([
-      {
-        label: "Low",
-        value: "low",
-        emoji: "🔇"
-      },
-      {
-        label: "Medium",
-        value: "medium",
-        emoji: "💡"
-      },
-      {
-        label: "High",
-        value: "high",
-        emoji: "🔊"
-      }
-    ]);
-  const row4 = new ActionRowBuilder().addComponents(qualityMenu);
-
-  const row2 = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setCustomId("shuffle")
-      .setLabel("Shuffle")
-      .setStyle(ButtonStyle.Primary),
-    new ButtonBuilder()
-      .setCustomId("clear_queue")
-      .setLabel("Clear Queue")
-      .setStyle(ButtonStyle.Danger),
-    new ButtonBuilder()
-      .setCustomId("vote_skip")
-      .setLabel("Vote to Skip")
-      .setStyle(ButtonStyle.Primary),
-    new ButtonBuilder()
-      .setCustomId("dj_mode")
-      .setLabel("DJ Mode")
-      .setStyle(ButtonStyle.Success)
-      .setDisabled(!message.member.permissions.has("MANAGE_GUILD")) // Only server managers can toggle DJ //mode
-  );
-
-  const row3 = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setCustomId("lyrics")
-      .setLabel("Lyrics")
-      .setStyle(ButtonStyle.Secondary),
-    new ButtonBuilder()
-      .setCustomId("seek")
-      .setLabel("Seek")
-      .setStyle(ButtonStyle.Secondary),
-    new ButtonBuilder()
-      .setCustomId("view_queue")
-      .setLabel("View Queue")
-      .setStyle(ButtonStyle.Secondary)
-  );
-}
+// function getPlayerButtons(player) {
+//   const row2 = new ActionRowBuilder().addComponents(
+//     new ButtonBuilder()
+//       .setCustomId("shuffle")
+//       .setLabel("Shuffle")
+//       .setStyle(ButtonStyle.Primary),
+//     new ButtonBuilder()
+//       .setCustomId("clear_queue")
+//       .setLabel("Clear Queue")
+//       .setStyle(ButtonStyle.Danger),
+//     new ButtonBuilder()
+//       .setCustomId("vote_skip")
+//       .setLabel("Vote to Skip")
+//       .setStyle(ButtonStyle.Primary),
+//     new ButtonBuilder()
+//       .setCustomId("dj_mode")
+//       .setLabel("DJ Mode")
+//       .setStyle(ButtonStyle.Success)
+//       .setDisabled(!message.member.permissions.has("MANAGE_GUILD")) // Only server managers can toggle DJ //mode
+//   );
+//
+//   const row3 = new ActionRowBuilder().addComponents(
+//     new ButtonBuilder()
+//       .setCustomId("lyrics")
+//       .setLabel("Lyrics")
+//       .setStyle(ButtonStyle.Secondary),
+//     new ButtonBuilder()
+//       .setCustomId("seek")
+//       .setLabel("Seek")
+//       .setStyle(ButtonStyle.Secondary),
+//     new ButtonBuilder()
+//       .setCustomId("view_queue")
+//       .setLabel("View Queue")
+//       .setStyle(ButtonStyle.Secondary)
+//   );
+// }
+//
 
 module.exports = { Buttons };

@@ -1,10 +1,10 @@
-const { ContextMenuCommandInteraction, MessageFlags } = require("discord.js");
+const { MessageFlags } = require("discord.js");
 const { t } = require("i18next");
 
 /**
  * A function to handle contextmenu commands
  * @param {import("@lib/Bot").Bot} client
- * @param {ContextMenuCommandInteraction} interaction
+ * @param {import("discord.js").ContextMenuCommandInteraction} interaction
  * @returns {Promise<void>}
  */
 async function handleContext(client, interaction) {
@@ -91,7 +91,7 @@ async function handleContext(client, interaction) {
       content: t("handlers:context.error", { lng })
     });
     client.logger.error(error);
-    client.utils.sendError(error);
+    client.utils.errors.send(error);
   }
 }
 
