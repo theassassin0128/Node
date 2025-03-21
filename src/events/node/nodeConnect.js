@@ -9,6 +9,6 @@ module.exports = {
    * @param {import("lavalink-client").LavalinkNode} node
    */
   async execute(client, node) {
-    client.logger.info(`The Lavalink Node ${chalk.magenta(node.id)} connected`);
+    client.logger.success(`${chalk.magenta(node.id)} connected`);
   }
 };

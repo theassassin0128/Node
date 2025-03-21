@@ -12,28 +12,23 @@ function getPlayerButtons(player) {
   const row1 = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId("volumedown")
-      // .setLabel("Down")
       .setEmoji(emojis.music.volumedown)
       .setStyle(ButtonStyle.Secondary)
       .setDisabled(player.volume <= 0),
     new ButtonBuilder()
       .setCustomId("previous")
-      // .setLabel("Previous")
       .setEmoji(emojis.music.previous)
       .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId("resume")
-      // .setLabel(player.paused ? "Resume" : "Pause")
       .setEmoji(player.paused ? emojis.music.resume : emojis.music.pause)
       .setStyle(player.paused ? ButtonStyle.Success : ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId("skip")
-      // .setLabel("Skip")
       .setEmoji(emojis.music.next)
       .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId("volumeup")
-      // .setLabel("Up")
       .setEmoji(emojis.music.volumeup)
       .setStyle(ButtonStyle.Secondary)
       .setDisabled(player.volume >= music.maxVolume)
@@ -42,12 +37,10 @@ function getPlayerButtons(player) {
   const row2 = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId("shuffle")
-      // .setLabel("Shuffle")
       .setEmoji(emojis.music.shuffle)
       .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId("loop")
-      // .setLabel("Loop")
       .setEmoji(
         player.repeatMode === "track" ? emojis.music.loop2 : emojis.music.loop
       )
@@ -58,19 +51,16 @@ function getPlayerButtons(player) {
       ),
     new ButtonBuilder()
       .setCustomId("stop")
-      // .setLabel("Stop")
       .setEmoji(emojis.music.stop)
       .setStyle(ButtonStyle.Danger),
     new ButtonBuilder()
       .setCustomId("autoplay")
-      // .setLabel("Autoplay")
       .setEmoji(emojis.music.autoplay)
       .setStyle(
         player.get("autoplay") ? ButtonStyle.Success : ButtonStyle.Secondary
       ),
     new ButtonBuilder()
       .setCustomId("queue")
-      // .setLabel("Queue")
       .setEmoji(emojis.music.queue)
       .setStyle(ButtonStyle.Secondary)
   );
@@ -136,4 +126,4 @@ function getPlayerButtons(player) {
   //  );
 }
 
-module.exports = getPlayerButtons;
+module.exports = { getPlayerButtons };

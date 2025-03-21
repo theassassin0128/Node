@@ -10,16 +10,18 @@ module.exports = {
   async execute(client, ban) {
     if (ban.user.bot) return;
 
-    const banEmbed = new EmbedBuilder()
+    const embed = new EmbedBuilder()
       .setTitle("BAN NOTICE")
       .setDescription(
-        `${ban.user}, you have been banned from *${ban.guild.name}*.\n **Reason**: ${ban.reason ?? "None was given"}.`
+        [
+          `<@${ban.user.id}>, you have been banned from **${ban.guild.name}**`,
+          `**Reason**: ${ban.reason ?? "None was specified"}.`
+        ].join("\n")
       )
       .setColor(client.config.colors.Wrong)
       .setThumbnail(ban.guild.iconURL({ extension: "png", size: 1024 }))
       .setTimestamp();
 
-    await ban.user.send({ embeds: [banEmbed] }).catch();
-    return;
+    await ban.user.send({ embeds: [embed] }).catch(client.logger.error);
   }
 };

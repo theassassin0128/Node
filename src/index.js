@@ -54,22 +54,22 @@ async function start() {
   client.helpers.loadWelcome();
 
   // Load anticrash system
-  client.helpers.antiCrash(client);
+  client.helpers.antiCrash();
 
   // Check and validate the configuraton
   client.utils.validate();
 
   // Load languages
-  await client.helpers.loadLanguages(client);
+  await client.helpers.loadLanguages();
 
   // Load events
-  await client.helpers.loadEvents(client, "src/events");
+  await client.helpers.loadEvents("src/events");
 
   // Load commands
-  await client.helpers.loadCommands(client, "src/commands");
+  await client.helpers.loadCommands("src/commands");
 
   // Connect to the database
-  await client.db.connect(client);
+  await client.db.connect();
 
   // Log into the client
   client.login(client.config.bot.token);

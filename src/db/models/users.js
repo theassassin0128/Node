@@ -81,4 +81,4 @@ class Users {
       .lean();
   }
 }
-module.exports = Users;
+module.exports = { Users };

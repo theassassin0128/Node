@@ -43,35 +43,32 @@ async function deleteCommands() {
 
   if (commands?.length === 0) {
     console.log(
-      chalk.red(
-        `\n❗ Couldn't fing any guild command in ${chalk.yellow(guild.name)}.`
-      )
+      `\n❗ Couldn't fing any guild command in ${chalk.yellow(guild.name)}.`
     );
     process.exit(0);
   }
 
   console.log(
-    chalk.cyan(
-      `✅ Found ${commands.length} guild commands in ${chalk.underline(guild.name)}.\n`
-    )
+    `\n✅ Found ${chalk.cyan(commands.length)} guild commands in ${chalk.yellow(
+      guild.name
+    )}.\n`
   );
 
   let i = 0;
-  commands.forEach((command) => {
+  for (const command of commands) {
     i++;
     console.log(
-      `${i >= 100 ? "" : i >= 10 ? " " : "  "}${chalk.magenta} | 🔥 ${chalk.red("deleted")} - ${
-        command.id
-      } - ${chalk.cyan(command.name)} `
+      `${i >= 100 ? "" : i >= 10 ? " " : "  "}${chalk.magenta(
+        i
+      )} | 🔥 ${chalk.red("deleted")} - ${command.id} - ${chalk.cyan(
+        command.name
+      )} `
     );
-  });
+  }
 
   await rest.put(Routes.applicationGuildCommands(clientId, serverId), {
     body: []
   });
-
-  console.log(
-    chalk.green(`\n✅ Deleted ${i} commands in ${chalk.underline(guild.name)}.`)
-  );
+  console.log(`\n✅ Deleted all commands in ${chalk.yellow(guild.name)}.`);
   process.exit(0);
 }

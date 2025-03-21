@@ -42,22 +42,21 @@ async function deleteCommands() {
     process.exit(0);
   }
 
-  console.log(chalk.cyan(`✅ Found ${commands.length} global commands.\n`));
+  console.log(`\n✅ Found ${chalk.cyan(commands.length)} global commands.\n`);
 
   let i = 0;
-  commands.forEach((command) => {
+  for (const command of commands) {
     i++;
     console.log(
-      `${i >= 100 ? "" : i >= 10 ? " " : "  "}${chalk.magenta(i)} | 🔥 ${chalk.red("deleted")} - ${
-        command.id
-      } - ${chalk.cyan(command.name)} `
+      `${i >= 100 ? "" : i >= 10 ? " " : "  "}${chalk.magenta(
+        i
+      )} | 🔥 ${chalk.red("deleted")} - ${command.id} - ${chalk.cyan(
+        command.name
+      )}`
     );
-  });
+  }
 
-  await rest.put(Routes.applicationCommands(clientId), {
-    body: []
-  });
-
-  console.log(chalk.green(`\n✅ Deleted ${i} global commands.`));
+  await rest.put(Routes.applicationCommands(clientId), { body: [] });
+  console.log(`\n✅ Deleted all global commands.`);
   process.exit(0);
 }

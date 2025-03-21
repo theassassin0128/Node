@@ -10,8 +10,8 @@
 
   "nowPlaying": "Now Playing",
   "requestedBy": "Requested By",
-  "duration": "Track Duration",
-  "author": "Track Author",
+  "duration": "Duration",
+  "author": "Author",
 
   "pause": "⏸ Paused the music player.",
   "resume": "▶ Started playing music again.",

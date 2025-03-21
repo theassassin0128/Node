@@ -1,11 +1,16 @@
+# VS Code setting files
+.vscode
+
 # To ignore packages
 node_modules
 
-# Auto created & updated on npm install
+# package lock files
+package-lock.json
 pnpm-lock.yaml
 
 # All secrets are stored here
 .env
+lavalink-nodes.js
 
 # Log files
 logs
@@ -13,9 +18,3 @@ logs
 
 # Extra files
 collected
-
-# VS Code files
-.vscode
-
-# Lavalink Nodes
-lavalink-nodes.js

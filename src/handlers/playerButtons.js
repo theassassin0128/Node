@@ -1,5 +1,4 @@
 const {
-  ButtonInteraction,
   Message,
   MessageFlags,
   EmbedBuilder,
@@ -10,39 +9,26 @@ const { t } = require("i18next");
 /**
  * A function to handle player buttons controls
  * @param {import("@lib/Bot").Bot} client
- * @param {ButtonInteraction} interaction
  * @param {Message} message
- * @param {EmbedBuilder} embed
  * @param {import("lavalink-client").Player} player
- * @param {string} lng
  * @returns {void}
  */
-function handlePlayerButtons(client, message, embed, player, lng) {
-  const { maxVolume } = client.config.music;
-
-  const collector = message.createMessageComponentCollector({
-    filter: async (b) => {
-      if (b.member instanceof GuildMember) {
-        let isSameVoiceChannel =
-          b.guild?.members.me?.voice.channelId === b.member.voice.channelId;
-        if (isSameVoiceChannel) return true;
-      }
-
-      await b.reply({
-        content: t("player:notConnected", {
-          lng,
-          channel: b.guild?.members.me?.voice.channelId ?? "None"
-        }),
-        flags: MessageFlags.Ephemeral
-      });
-
-      return false;
-    }
-  });
-
+async function handlePlayerButtons(client, message, player) {
+  const { music } = client.config;
+  
+  const collector = message.createMessageComponentCollector({ filter });
   collector.on("collect", async (interaction) => {
-    let user = interaction.user.username;
     await interaction.deferUpdate();
+    const lng = (await client.db.guilds.get(interaction.guild.id))?.locale;
+    const user = interaction.user.username;
+    const { author, description, image, fields, color } =
+      message.embeds.shift();
+    const embed = new EmbedBuilder()
+      .setAuthor(author)
+      .setColor(color)
+      .setDescription(description)
+      .setImage(image.url)
+      .setFields(fields);
 
     /**
      * A function to edit the footer of the message
@@ -52,40 +38,15 @@ function handlePlayerButtons(client, message, embed, player, lng) {
      */
     async function editMessage(text, clearButtons) {
       if (!message) return;
-      if (clearButtons) {
-        await message
-          .edit({
-            embeds: [
-              embed.setFooter({
-                text,
-                iconURL: interaction.user.avatarURL()
-              })
-            ],
-            components: []
-          })
-          .catch(console.error);
-      } else {
-        await message
-          .edit({
-            embeds: [
-              embed.setFooter({
-                text,
-                iconURL: interaction.user.avatarURL()
-              })
-            ],
-            components: client.utils.getPlayerButtons(player)
-          })
-          .catch(console.error);
-      }
+      let data = {
+        embeds: [
+          embed.setFooter({ text, iconURL: interaction.user.avatarURL() })
+        ],
+        components: client.utils.getPlayerButtons(player)
+      };
+      if (clearButtons) data.components = [];
+      await message.edit(data).catch(client.logger.error);
     }
-
-    //if (!(await checkDj(client, interaction))) {
-    //  await interaction.followUp({
-    //    content: T( "player.trackStart.need_dj_role"),
-    //    flags: MessageFlags.Ephemeral
-    //  });
-    //  return;
-    //}
 
     switch (interaction.customId) {
       case "volumedown": {
@@ -98,7 +59,7 @@ function handlePlayerButtons(client, message, embed, player, lng) {
 
       case "volumeup": {
         let { volume } = await player.setVolume(
-          Math.min(player.volume + 10, maxVolume)
+          Math.min(player.volume + 10, music.maxVolume)
         );
         await editMessage(t("player:volumeBy", { lng, volume, user }));
         break;
@@ -112,10 +73,8 @@ function handlePlayerButtons(client, message, embed, player, lng) {
           });
           break;
         }
-        player.play({
-          track: player.queue.previous[0]
-        });
-        // await editMessage(t("player:previousBy", { lng, user }));
+        await editMessage(t("player:previousBy", { lng, user }));
+        player.play({ track: player.queue.previous[0] });
         break;
       }
 
@@ -127,8 +86,8 @@ function handlePlayerButtons(client, message, embed, player, lng) {
           });
           break;
         }
+        await editMessage(t("player:skippedBy", { lng, user }));
         player.skip();
-        // await editMessage(t("player:skippedBy", { lng, user }));
         break;
       }
 
@@ -162,18 +121,18 @@ function handlePlayerButtons(client, message, embed, player, lng) {
       case "loop": {
         switch (player.repeatMode) {
           case "off": {
-            player.setRepeatMode("queue");
-            await editMessage(t("player:loopingQueueBy", { lng, user }));
-            break;
-          }
-
-          case "queue": {
             player.setRepeatMode("track");
             await editMessage(t("player:loopingTrackBy", { lng, user }));
             break;
           }
 
           case "track": {
+            player.setRepeatMode("queue");
+            await editMessage(t("player:loopingQueueBy", { lng, user }));
+            break;
+          }
+
+          case "queue": {
             player.setRepeatMode("off");
             await editMessage(t("player:loopingOffBy", { lng, user }));
             break;
@@ -203,6 +162,27 @@ function handlePlayerButtons(client, message, embed, player, lng) {
       }
     }
   });
+}
+
+/**
+ * typings for parameters
+ * @param {ButtonInteraction} b
+ */
+async function filter(b) {
+  if (b.member instanceof GuildMember) {
+    let isSameVoiceChannel =
+      b.guild?.members.me?.voice.channelId === b.member.voice.channelId;
+    if (isSameVoiceChannel) return true;
+  }
+
+  await b.reply({
+    content: t("player:notConnected", {
+      lng,
+      channel: b.guild?.members.me?.voice.channelId ?? "None"
+    }),
+    flags: MessageFlags.Ephemeral
+  });
+  return false;
 }
 
 //	case "clear_queue":
@@ -250,5 +230,13 @@ function handlePlayerButtons(client, message, embed, player, lng) {
 //			ephemeral: true,
 //		});
 //		break;
+
+//if (!(await checkDj(client, interaction))) {
+//  await interaction.followUp({
+//    content: T( "player.trackStart.need_dj_role"),
+//    flags: MessageFlags.Ephemeral
+//  });
+//  return;
+//}
 
 module.exports = { handlePlayerButtons };

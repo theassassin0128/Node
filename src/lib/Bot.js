@@ -1,9 +1,10 @@
 const { Client, Collection } = require("discord.js");
 const { Logger } = require("./Logger.js");
 const { Utils } = require("@src/utils");
-const { Lavalink } = require("./Lavalink.js");
-const { DataBase } = require("@src/database");
+const { MusicManager } = require("./Lavalink.js");
+const { DatabaseManager } = require("@db/Manager.js");
 const { Handlers } = require("@src/handlers");
+const { Helpers } = require("@src/helpers");
 
 class Bot extends Client {
   /**
@@ -13,17 +14,31 @@ class Bot extends Client {
   constructor(options) {
     super(options);
 
-    // Load configuration and package information
+    /**
+     * The base configuration file for the bot
+     * @type {import("@src/config.js")}
+     */
     this.config = require("@src/config.js");
+
+    /**
+     * The package.json file
+     * @type {import("@package.json")}
+     */
     this.pkg = require("@root/package.json");
 
-    // Initialize the database
-    this.db = new DataBase(this);
+    /**
+     * The database manager for the bot
+     * @type {DatabaseManager}
+     */
+    this.db = new DatabaseManager(this);
 
-    // Initialize global functions and utilities
+    /**
+     * The log manager for the bot
+     * @type {Logger}
+     */
     this.logger = new Logger();
     this.utils = new Utils(this);
-    this.helpers = require("@src/helpers");
+    this.helpers = new Helpers(this);
     this.handlers = new Handlers(this);
 
     /** @type {Collection<string, import("@types/index").CommandStructure>} */
@@ -33,7 +48,13 @@ class Bot extends Client {
     this.cooldowns = new Collection();
 
     // Initialize Music Manager if enabled
-    if (this.config.music.enabled) this.lavalink = new Lavalink(this);
+    if (this.config.music.enabled) {
+      /**
+       * The lavalink manager for the bot
+       * @type {MusicManager}
+       */
+      this.lavalink = new MusicManager(this);
+    }
   }
 }
 

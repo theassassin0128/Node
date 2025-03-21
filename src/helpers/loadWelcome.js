@@ -5,7 +5,7 @@ const pkg = require("@root/package.json");
 /**
  * A function to log Welcome Message
  * @returns {void}
- * @example logVanity(client);
+ * @example loadWelcome();
  */
 function loadWelcome() {
   // ansi chalk with escape
@@ -90,4 +90,4 @@ function loadWelcome() {
   console.log(table(data, config));
 }
 
-module.exports = loadWelcome;
+module.exports = { loadWelcome };

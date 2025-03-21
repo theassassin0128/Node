@@ -38,7 +38,6 @@ module.exports = {
     const { availableLanguages } = client.config;
     const { Languages } = client.config.resources;
     const locale = options.getString("language", true);
-    const guildConfig = await client.db.guilds.get(guild.id);
 
     if (!availableLanguages.includes(locale)) {
       return await interaction.followUp({
@@ -46,9 +45,9 @@ module.exports = {
       });
     }
 
+    console.log(await client.db.guilds.cache);
     const language = Languages.find((lng) => lng.locale === locale);
-    guildConfig.$set("locale", locale);
-    await guildConfig.save();
+    client.db.guilds.update(guild.id, "locale", locale);
 
     await interaction.followUp({
       content: t("commands:language.reply", {

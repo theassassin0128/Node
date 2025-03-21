@@ -36,11 +36,32 @@ module.exports = {
     // Default cooldown ammount in secconds
     defaultCooldown: 3,
     // Syncronization logs
-    showSyncLogs: true
+    showSyncLogs: true,
+    // default footer
+    footer: `developed by theassassin0128`
   },
 
   // Mongodb URI. Get it from mongodb.com
   mongodbUri: process.env.MONGO_URI,
+  /**
+   * MongoDB Client options
+   * @type {import("mongodb").MongoClientOptions}
+   */
+  mongodbOptions: {
+    dbName: "node",
+    timeoutMS: 10000,
+    connectTimeoutMS: 30000,
+    directConnection: true
+  },
+  // mongodb cache settings
+  mongodbCacheSettings: {
+    GuildManager: {
+      maxSize: 10000
+    },
+    UserManager: {
+      maxsize: 50000
+    }
+  },
 
   // Log channel ids
   logChannel: process.env.LOG_CHANNEL_ID,
@@ -169,7 +190,7 @@ module.exports = {
   emojis: require("./emojis.js"),
 
   // Resources to use for various perposes
-  resources: require("./resources.js"),
+  resources: require("./resources/index.js"),
 
   // Images to use everywhere
   images: {

@@ -1,8 +1,4 @@
-const {
-  ApplicationCommandType,
-  ApplicationIntegrationType,
-  Locale
-} = require("discord.js");
+const { ApplicationCommandType, Locale } = require("discord.js");
 
 /**
  * A function to check for changes in Application Command Data
@@ -249,4 +245,4 @@ function checkForChangeInLocalizations(oldLocalizations, newLocalizations) {
   return isLocalesChanged;
 }
 
-module.exports = checkForChange;
+module.exports = { checkForChange };

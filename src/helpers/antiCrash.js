@@ -5,7 +5,7 @@ const chalk = require("chalk");
  * @param {import("@lib/Bot.js").Bot} client
  * @returns {Promise<void>}
  */
-module.exports = (client) => {
+async function AntiCrash(client) {
   /**
    * A function to handle exit from terminal
    * @returns {Promise<void>}
@@ -22,28 +22,28 @@ module.exports = (client) => {
   process.on("SIGQUIT", handleExit);
 
   // Handle beforeExit event (Only for Debug)
-  process.on("beforeExit", (code) => {
-    console.log(
-      chalk.yellow(
-        "[AntiCrash] | [BeforeExit_Logs] | [Start] : ==============="
-      )
-    );
-    client.logger.log(code);
-    console.log(
-      chalk.yellow("[AntiCrash] | [BeforeExit_Logs] | [End] : ===============")
-    );
-  });
+  // process.on("beforeExit", (code) => {
+  //   console.log(
+  //     chalk.yellow(
+  //       "[AntiCrash] | [BeforeExit_Logs] | [Start] : ==============="
+  //     )
+  //   );
+  //   client.logger.log(code);
+  //   console.log(
+  //     chalk.yellow("[AntiCrash] | [BeforeExit_Logs] | [End] : ===============")
+  //   );
+  // });
 
   // Handle exit event (Only for Debug)
-  process.on("exit", (code) => {
-    console.log(
-      chalk.yellow("[AntiCrash] | [Exit_Logs] | [Start] : ===============")
-    );
-    client.logger.log(code);
-    console.log(
-      chalk.yellow("[AntiCrash] | [Exit_Logs] | [End] : ===============")
-    );
-  });
+  // process.on("exit", (code) => {
+  //   console.log(
+  //     chalk.yellow("[AntiCrash] | [Exit_Logs] | [Start] : ===============")
+  //   );
+  //   client.logger.log(code);
+  //   console.log(
+  //     chalk.yellow("[AntiCrash] | [Exit_Logs] | [End] : ===============")
+  //   );
+  // });
 
   // Handle unhandledRejection event
   process.on("unhandledRejection", (reason, promise) => {
@@ -100,4 +100,6 @@ module.exports = (client) => {
       chalk.yellow("[AntiCrash] | [Warning_Logs] | [End] : ===============")
     );
   });
-};
+}
+
+module.exports = { AntiCrash };

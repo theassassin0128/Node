@@ -6,7 +6,6 @@ const {
 const { handleCommands } = require("./commands.js");
 const { handleContext } = require("./context.js");
 const { handleAutocomplete } = require("./autocomplete.js");
-const { handlePlayerButtons } = require("./playerButtons.js");
 
 class Handlers {
   /**
@@ -16,6 +15,8 @@ class Handlers {
   constructor(client) {
     // Base Client as a property of this class
     this.client = client;
+
+    this.handlePlayerButtons = require("./playerButtons.js");
   }
 
   /**
@@ -43,19 +44,6 @@ class Handlers {
    */
   async handleAutocomplete(interaction) {
     await handleAutocomplete(this.client, interaction);
-  }
-
-  /**
-   * A function to handle player buttons controls
-   * @param {ButtonInteraction} interaction
-   * @param {Message} message
-   * @param {EmbedBuilder} embed
-   * @param {import("lavalink-client").Player} player
-   * @param {string} lng
-   * @returns {Promise<void>}
-   */
-  handlePlayerButtons(message, embed, player, lng) {
-    handlePlayerButtons(this.client, message, embed, player, lng);
   }
 }
 

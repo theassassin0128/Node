@@ -1,5 +1,6 @@
-const { EmbedBuilder, GuildMember, MessageFlags } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { t } = require("i18next");
+const { handlePlayerButtons } = require("@handlers/playerButtons.js");
 
 /** @type {import("@types/index").EventStructure} */
 module.exports = {
@@ -21,8 +22,9 @@ module.exports = {
     const channel = guild.channels.cache.get(player.textChannelId);
     if (!channel) return;
 
+    // client.config.colors.Transparent
     const embed = new EmbedBuilder()
-      .setColor(client.config.colors.Transparent)
+      .setColor(client.lavalink.embedColor(track.info.sourceName))
       .setAuthor({
         name: t("player:nowPlaying", { lng }),
         iconURL:
@@ -30,7 +32,7 @@ module.exports = {
           client.user?.displayAvatarURL({ extension: "png" })
       })
       .setDescription(`**[${track.info.title}](${track.info.uri})**`)
-      .setThumbnail(track.info.artworkUrl)
+      .setImage(track.info.artworkUrl)
       .addFields([
         {
           name: t("player:requestedBy", { lng }),
@@ -51,65 +53,21 @@ module.exports = {
         }
       ]);
 
-    // this.client.utils.updateStatus(this.client, guild.id);
-
-    // const setup = await this.client.db.getSetup(guild.id);
-    //
-    // if (setup?.textId) {
-    // 	const textChannel = guild.channels.cache.get(setup.textId)
-    // 	if (textChannel) {
-    // 		await trackStart(setup.messageId, textChannel, player, track, this.client, locale);
-    // 	}
-    // } else {
-    //	const message = await channel.send({
-    //		embeds: [embed],
-    //		components: [createButtonRow(player)],
-    //	});
-    //
-    //}
-
     const message = await channel.send({
       embeds: [embed],
-      components: client.utils.getPlayerButtons(player)
+      components: client.utils.buttons.player(player)
     });
-
     player.set("messageId", message.id);
-    client.handlers.handlePlayerButtons(message, embed, player, lng);
+    handlePlayerButtons(client, message, player);
   }
 };
 
-/*
-
-import { trackStart } from '../../utils/SetupSystem';
-
-/*
-		"requested_by": "Requested by {user}",
-		"duration": "Duration",
-		"author": "Author",
-		"need_dj_role": "You need to have the DJ role to use this command.",
-		*/
-
-/*
-export async function checkDj(
-	client: Lavamusic,
-	interaction:
-		| ButtonInteraction<'cached'>
-		| StringSelectMenuInteraction<'cached'>
-		| UserSelectMenuInteraction<'cached'>
-		| RoleSelectMenuInteraction<'cached'>
-		| MentionableSelectMenuInteraction<'cached'>
-		| ChannelSelectMenuInteraction<'cached'>,
-): Promise<boolean> {
-	const dj = await client.db.getDj(interaction.guildId);
-	if (dj?.mode) {
-		const djRole = await client.db.getRoles(interaction.guildId);
-		if (!djRole) return false;
-		const hasDjRole = interaction.member.roles.cache.some(role => djRole.map(r => r.roleId).includes(role.id));
-		if (!(hasDjRole || interaction.member.permissions.has(PermissionFlagsBits.ManageGuild))) {
-			return false;
-		}
-	}
-	return true;
-}
-
-*/
+// let message = (await channel.messages.fetch()).get(player.get("messageId"));
+// if (message) {
+//   const buttons = client.utils.buttons.player(player;
+//   if (message.embeds[0].footer) embed.setFooter(message.embeds[0].footer);
+//   await message.edit({
+//     embeds: [embed],
+//     components: buttons
+//   });
+// } else {}

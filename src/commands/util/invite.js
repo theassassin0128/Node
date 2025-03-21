@@ -3,7 +3,9 @@ const {
   ButtonBuilder,
   ActionRowBuilder,
   ButtonStyle,
-  OAuth2Scopes
+  OAuth2Scopes,
+  ApplicationIntegrationType,
+  InteractionContextType
 } = require("discord.js");
 const { t } = require("i18next");
 
@@ -11,7 +13,9 @@ const { t } = require("i18next");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("invite")
-    .setDescription("returns a link button with bots invite url."),
+    .setDescription("returns a link button with bots invite url.")
+    .setContexts(InteractionContextType.Guild)
+    .setIntegrationTypes(ApplicationIntegrationType.GuildInstall),
   usage: "",
   category: "utility",
   cooldown: 0,

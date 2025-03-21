@@ -33,6 +33,6 @@ module.exports = {
       client.user.setActivity(activities[i]);
       i++;
       if (i >= activities.length) i = 0;
-    }, 36e4);
+    }, 300000);
   }
 };

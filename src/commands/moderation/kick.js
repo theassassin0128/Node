@@ -1,7 +1,9 @@
 const {
   SlashCommandBuilder,
   EmbedBuilder,
-  PermissionFlagsBits
+  PermissionFlagsBits,
+  InteractionContextType,
+  ApplicationIntegrationType
 } = require("discord.js");
 const { t } = require("i18next");
 
@@ -11,6 +13,8 @@ module.exports = {
     .setName("kick")
     .setDescription("Kick a member from the server.")
     .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
+    .setContexts(InteractionContextType.Guild)
+    .setIntegrationTypes(ApplicationIntegrationType.GuildInstall)
     .addUserOption((option) =>
       option
         .setName("target")

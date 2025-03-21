@@ -46,4 +46,4 @@ async function loadFiles(path, ext) {
 }
 
 // Export the function
-module.exports = loadFiles;
+module.exports = { loadFiles };

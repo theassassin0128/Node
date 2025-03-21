@@ -22,7 +22,7 @@ async function handleContext(client, interaction) {
   const command = client.commands.get(commandName);
   const member = await guild.members.fetch(user.id);
   const bot = await guild.members.fetchMe();
-  const lng = (await client.db.guilds.get(guild))?.locale;
+  const lng = (await client.db.guilds.get(guild.id))?.locale;
 
   try {
     if (!command) {

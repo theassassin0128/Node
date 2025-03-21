@@ -1,6 +1,6 @@
 const chalk = require("chalk");
-const fetchCommands = require("./fetchCommands.js");
-const checkForChange = require("./checkForChange.js");
+const { fetchCommands } = require("./fetchCommands.js");
+const { checkForChange } = require("./checkForChange.js");
 
 /**
  * A function to synchronize Application Commands
@@ -8,14 +8,6 @@ const checkForChange = require("./checkForChange.js");
  * @returns {Promise<void>}
  */
 async function syncCommands(client) {
-  if (typeof client !== "object") {
-    throw new TypeError(
-      `The ${chalk.yellow(
-        "client"
-      )} parameter must be an object. Received type ${typeof client}`
-    );
-  }
-
   const { guildId, showSyncLogs } = client.config.bot;
   const oldCommands = await fetchCommands(client);
   client.logger.warn("Syncing application commands (This may take a while)");
@@ -147,4 +139,4 @@ async function syncCommands(client) {
   client.logger.success("All application commands are in sync");
 }
 
-module.exports = syncCommands;
+module.exports = { syncCommands };

@@ -6,7 +6,7 @@
 
 const { Signale, SignaleOptions } = require("signale");
 
-/** @@type {SignaleOptions} */
+/** @type {SignaleOptions} */
 const options = {
   disabled: false,
   interactive: false,
@@ -69,6 +69,10 @@ const options = {
   }
 };
 
+/**
+ * A manager to manage console logs, warnings, error and more;
+ * @extends {Signale}
+ */
 class Logger extends Signale {
   constructor() {
     super(options);

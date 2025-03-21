@@ -1,25 +1,39 @@
+const { Buttons } = require("./Buttons.js");
+const { Invites } = require("./Invites.js");
 const { generateInvite } = require("./generateInvite.js");
 const { sendError } = require("./sendError.js");
 const { getCooldown } = require("./getCooldown.js");
 const { validateSystem } = require("./validateSystem.js");
+const { getPlayerButtons } = require("./getPlayerButtons.js");
 
 class Utils {
-  /**
-   * Base Client to use in this class
-   * @param {import("@lib/Bot.js").Bot} client
-   */
   constructor(client) {
-    // base client property for this class
+    /**
+     * Base Client property for this class
+     * @type {import("@lib/Bot.js").Bot}
+     */
     this.client = client;
-    // config property for easier access in this class
+
+    /**
+     * Config property for easier access within this class
+     * @type {import("@src/config.js")}
+     */
     this.config = client.config;
 
-    // Functions to use in Lavalink Manager
-    this.requesterTransformer = require("./requesterTransformer.js");
-    this.autoPlayFunction = require("./autoPlayFunction.js");
+    /**
+     * A class dedicated to button related utility
+     * @type {Buttons}
+     */
+    this.buttons = new Buttons(this);
 
-    // functions which does now need base client to work
-    this.getPlayerButtons = require("./getPlayerButtons.js");
+    /**
+     * A class dedicated to invite related utility
+     * @type {Invites}
+     */
+    this.invites = new Invites(this);
+
+    // Function to create player button row
+    this.getPlayerButtons = getPlayerButtons;
   }
 
   /**

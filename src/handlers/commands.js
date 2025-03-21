@@ -21,7 +21,9 @@ async function handleCommands(client, interaction) {
 
   const command = client.commands.get(commandName);
   const bot = await guild.members.fetchMe();
-  const lng = (await client.db.guilds.get(guild.id))?.locale;
+  const guildData = await client.db.guilds.get(guild.id);
+  // console.log(guildData);
+  const lng = guildData?.locale;
 
   try {
     if (!command) {

@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const loadFiles = require("./loadFiles.js");
+const { loadFiles } = require("./loadFiles.js");
 
 /**
  * A function to load event files
@@ -9,14 +9,6 @@ const loadFiles = require("./loadFiles.js");
  * @example await loadEvents(client, "src/events");
  */
 async function loadEvents(client, dir) {
-  if (typeof client !== "object") {
-    throw new TypeError(
-      `The ${chalk.yellow(
-        "client"
-      )} parameter must be an Object. Received type ${typeof client}`
-    );
-  }
-
   if (typeof dir !== "string") {
     throw new TypeError(
       `The ${chalk.yellow(
@@ -66,4 +58,4 @@ async function loadEvents(client, dir) {
   client.logger.info(`Loaded ${chalk.yellow(i)} events successfully`);
 }
 
-module.exports = loadEvents;
+module.exports = { loadEvents };

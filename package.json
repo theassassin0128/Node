@@ -1,6 +1,6 @@
 {
   "name": "node",
-  "version": "3.3.6",
+  "version": "4.0.0-dev",
   "description": "A multipurpose discord bot.",
   "main": "src/index.js",
   "engines": {
@@ -13,8 +13,8 @@
     "shard": "node src/shard.js",
     "dev": "nodemon src/index.js",
     "devShard": "nodemon src/shard.js",
-    "destroyGlobal": "node scripts/destroyGlobal.js",
-    "destroyGuild": "node scripts/destroyGuild.js",
+    "clearGlobal": "node scripts/clearGlobal.js",
+    "clearGuild": "node scripts/clearGuild.js",
     "fetchEmojis": "node scripts/fetchEmojis.js"
   },
   "keywords": [
@@ -35,7 +35,7 @@
   "devDependencies": {
     "axios": "^1.7.7",
     "express": "^4.21.0",
-    "mongodb": "^6.12.0",
+    "mongoose": "^8.5.2",
     "nodemon": "^3.1.4"
   },
   "dependencies": {
@@ -49,7 +49,7 @@
     "lavalink-client": "^2.4.7",
     "luxon": "^3.5.0",
     "module-alias": "^2.2.3",
-    "mongoose": "^8.5.2",
+    "mongodb": "^6.12.0",
     "ms": "^2.1.3",
     "readline": "^1.3.0",
     "signale": "^1.4.0",
@@ -78,8 +78,10 @@
   "_moduleAliases": {
     "@root": ".",
     "@src": "src/",
+    "@db": "src/db/",
     "@lib": "src/lib/",
     "@types": "src/types/",
-    "@database": "src/database/"
+    "@handlers": "src/handlers/",
+    "@utils": "src/utils/"
   }
 }

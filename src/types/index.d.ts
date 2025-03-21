@@ -1,3 +1,4 @@
+export * from "./classes.js";
 export * from "./event.js";
 export * from "./command.js";
 export * from "./database.js";

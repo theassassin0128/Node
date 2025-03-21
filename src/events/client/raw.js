@@ -1,4 +1,4 @@
-/** @type {import("@typings/index").EventStructure} */
+/** @type {import("@types/index").EventStructure} */
 module.exports = {
   name: "raw",
   once: false,

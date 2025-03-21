@@ -1,7 +1,7 @@
 const { Collection } = require("discord.js");
 const chalk = require("chalk");
-const loadFiles = require("./loadFiles.js");
-const categories = require("@src/categories.js");
+const { loadFiles } = require("./loadFiles.js");
+const categories = require("@root/src/categories.js");
 
 /**
  * A function to load command modules
@@ -11,14 +11,6 @@ const categories = require("@src/categories.js");
  * @example await loadCommands(client, "src/commands");
  */
 async function loadCommands(client, dir) {
-  if (typeof client !== "object") {
-    throw new TypeError(
-      `The ${chalk.yellow(
-        "client"
-      )} parameter must be an Object. Received type ${typeof client}`
-    );
-  }
-
   if (typeof dir !== "string") {
     throw new TypeError(
       `The ${chalk.yellow(
@@ -54,6 +46,7 @@ async function loadCommands(client, dir) {
         client.cooldowns.set(command.data.name, new Collection());
       }
 
+      if (!bot.global && command.global) command.global = bot.global;
       if (command.global === undefined) command.global = bot.global;
 
       if (command?.userPermissions?.length > 0) {
@@ -91,4 +84,4 @@ async function loadCommands(client, dir) {
   );
 }
 
-module.exports = loadCommands;
+module.exports = { loadCommands };

@@ -1,4 +1,4 @@
-const config = require("@src/config.js");
+const config = require("@root/src/config.js");
 const { join } = require("path");
 const { readdirSync, lstatSync } = require("fs");
 const i18next = require("i18next");
@@ -16,10 +16,10 @@ function getDefaultLanguage() {
 }
 
 /**
- * A function to load locales
+ * A function to load languages
  * @param {import("@lib/Bot.js").Bot} client
  * @returns {Promise<void>}
- * @example loadLocales(client);
+ * @example loadLanguages(client);
  */
 async function loadLanguages(client) {
   // initializing i18next with i18next-fs-backend
@@ -50,4 +50,4 @@ async function loadLanguages(client) {
   client.logger.info("Loaded languages successfully");
 }
 
-module.exports = loadLanguages;
+module.exports = { loadLanguages };

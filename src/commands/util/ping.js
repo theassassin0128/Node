@@ -1,11 +1,18 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  EmbedBuilder,
+  InteractionContextType,
+  ApplicationIntegrationType
+} = require("discord.js");
 const { t } = require("i18next");
 
 /** @type {import("@root/src/types/command").CommandStructure} */
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("🏓 Pong! Replies with bot's response time."),
+    .setDescription("🏓 Pong! Replies with bot's response time.")
+    .setContexts(InteractionContextType.Guild)
+    .setIntegrationTypes(ApplicationIntegrationType.GuildInstall),
   usage: "",
   category: "utility",
   cooldown: 5,
